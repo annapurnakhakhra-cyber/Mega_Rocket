@@ -1,0 +1,88 @@
+[
+  {
+    "items": [
+      {
+        "id": "1",
+        "name": "Test Product",
+        "price": 100,
+        "quantity": 2
+      }
+    ],
+    "total": 200,
+    "userId": "user123",
+    "email": "test@example.com",
+    "sessionId": "test-session-123",
+    "status": "active",
+    "updatedAt": "2025-12-09T06:37:09.997Z"
+  },
+  {
+    "items": [
+      {
+        "id": "1",
+        "name": "iPhone 15",
+        "price": 999.99,
+        "quantity": 1
+      },
+      {
+        "id": "2",
+        "name": "AirPods Pro",
+        "price": 249.99,
+        "quantity": 2
+      }
+    ],
+    "total": 1499.97,
+    "userId": "user_12345",
+    "email": "john@example.com",
+    "sessionId": "sess_abc123",
+    "status": "active",
+    "updatedAt": "2025-12-09T06:36:09.378Z"
+  },
+  {
+    "items": [
+      {
+        "id": "101",
+        "name": "Laptop",
+        "price": 1299.99,
+        "quantity": 1
+      }
+    ],
+    "total": 1299.99,
+    "userId": "user_67890",
+    "email": "jane@example.com",
+    "sessionId": "test_session_$(date +%s)",
+    "status": "active",
+    "updatedAt": "2025-12-09T06:36:39.635Z"
+  },
+  {
+    "items": [
+      {
+        "id": "1",
+        "name": "Test Product",
+        "price": 29.99,
+        "quantity": 2
+      }
+    ],
+    "total": 59.98,
+    "userId": "user123",
+    "email": "test@example.com",
+    "sessionId": "test_session_123",
+    "updatedAt": "2025-12-09T06:51:48.871Z",
+    "createdAt": "2025-12-09T06:51:48.871Z"
+  },
+  {
+    "items": [
+      {
+        "id": "A1",
+        "name": "Laptop",
+        "price": 999.99,
+        "quantity": 1
+      }
+    ],
+    "total": 999.99,
+    "userId": "user1",
+    "email": "user1@example.com",
+    "sessionId": "session_1",
+    "updatedAt": "2025-12-09T06:53:55.333Z",
+    "createdAt": "2025-12-09T06:53:55.333Z"
+  }
+]

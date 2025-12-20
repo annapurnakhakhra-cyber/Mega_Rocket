@@ -1,0 +1,16 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/finance/layout,_N_T_/finance/refunds/layout,_N_T_/finance/refunds/page,_N_T_/finance/refunds"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/finance/refunds/__PAGE__",
+    "/finance/refunds",
+    "/finance",
+    "/_index",
+    "/_head"
+  ]
+}

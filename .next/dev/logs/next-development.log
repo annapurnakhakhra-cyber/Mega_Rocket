@@ -1,0 +1,807 @@
+[00:00:15.961] Server  ERROR   (node:10456) Warning: Setting the NODE_TLS_REJECT_UNAUTHORIZED environment variable to '0' makes TLS connections and HTTPS requests insecure by disabling certificate verification.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[00:00:15.971] Server  LOG      ✓ Ready in 10s
+[00:00:37.558] Server  LOG      ○ Compiling /auth/login ...
+[00:00:47.217] Server  WARN     ⚠ Cross origin request detected from 10.27.4.11 to /_next/* resource. In a future major version of Next.js, you will need to explicitly configure "allowedDevOrigins" in next.config to allow this.
+Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
+[00:00:47.246] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:01:43.784] Server  LOG     ✅ Database connected
+[00:02:43.964] Server  LOG     {}
+[00:02:43.998] Server  LOG     Decoded token: {}
+[00:02:45.172] Server  LOG     {}
+[00:02:45.204] Server  LOG     Decoded token: {}
+[00:03:48.277] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:04:12.431] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:04:12.749] Server  LOG     ✅ MongoDB connected successfully
+[00:06:15.732] Server  LOG     ✅ DB: "shopify-app"
+[00:06:15.734] Server  LOG     📦 Body: {}
+[00:06:15.778] Server  LOG     ✅ Saved: {}
+[00:18:55.287] Server  LOG     {}
+[00:18:55.321] Server  LOG     Decoded token: {}
+[00:18:56.198] Server  LOG     {}
+[00:18:56.229] Server  LOG     Decoded token: {}
+[00:19:13.994] Server  LOG     {}
+[00:19:14.029] Server  LOG     Decoded token: {}
+[00:20:23.601] Server  LOG     {}
+[00:20:23.635] Server  LOG     Decoded token: {}
+[00:21:43.898] Server  LOG     {}
+[00:21:43.932] Server  LOG     Decoded token: {}
+[00:22:49.310] Server  LOG     {}
+[00:22:49.344] Server  LOG     Decoded token: {}
+[00:23:50.105] Server  LOG     {}
+[00:23:50.141] Server  LOG     Decoded token: {}
+[00:24:22.843] Server  LOG        Reload env: .env.local
+[00:24:24.741] Server  LOG        Reload env: .env.local
+[00:24:31.335] Server  LOG        Reload env: .env.local
+[00:24:46.187] Server  LOG     ✅ Database connected
+[00:24:59.514] Server  LOG     {}
+[00:24:59.548] Server  LOG     Decoded token: {}
+[00:26:02.990] Server  LOG     {}
+[00:26:03.024] Server  LOG     Decoded token: {}
+[00:27:30.391] Server  LOG     {}
+[00:27:30.429] Server  LOG     Decoded token: {}
+[00:28:51.820] Server  LOG     {}
+[00:28:51.855] Server  LOG     Decoded token: {}
+[00:30:00.713] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[00:30:00.714] Server  LOG     Query params - activeOnly: "true"
+[00:30:00.715] Server  LOG     Connecting to MongoDB...
+[00:30:00.716] Server  LOG     ✅ MongoDB connected successfully
+[00:30:00.716] Server  LOG     Query: {}
+[00:30:00.716] Server  LOG     Fetching suggested products from database...
+[00:30:00.720] Server  ERROR   (node:10456) [MONGOOSE] Warning: Duplicate schema index on {"shopifyProductId":1} found. This is often due to declaring an index using both "index: true" and "schema.index()". Please remove the duplicate index definition.
+[00:30:00.753] Server  LOG     ✅ Found 5 suggested products
+[00:30:00.773] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[00:30:00.774] Server  LOG     Query params - activeOnly: "true"
+[00:30:00.774] Server  LOG     Connecting to MongoDB...
+[00:30:00.775] Server  LOG     ✅ MongoDB connected successfully
+[00:30:00.775] Server  LOG     Query: {}
+[00:30:00.776] Server  LOG     Fetching suggested products from database...
+[00:30:00.807] Server  LOG     ✅ Found 5 suggested products
+[00:30:15.665] Server  LOG     {}
+[00:30:15.701] Server  LOG     Decoded token: {}
+[00:31:36.923] Server  LOG     {}
+[00:31:36.980] Server  LOG     Decoded token: {}
+[00:31:55.658] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[00:31:55.659] Server  LOG     Query params - activeOnly: "true"
+[00:31:55.659] Server  LOG     Connecting to MongoDB...
+[00:31:55.660] Server  LOG     ✅ MongoDB connected successfully
+[00:31:55.660] Server  LOG     Query: {}
+[00:31:55.660] Server  LOG     Fetching suggested products from database...
+[00:31:55.691] Server  LOG     ✅ Found 5 suggested products
+[00:31:55.702] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[00:31:55.703] Server  LOG     Query params - activeOnly: "true"
+[00:31:55.703] Server  LOG     Connecting to MongoDB...
+[00:31:55.704] Server  LOG     ✅ MongoDB connected successfully
+[00:31:55.704] Server  LOG     Query: {}
+[00:31:55.704] Server  LOG     Fetching suggested products from database...
+[00:31:55.736] Server  LOG     ✅ Found 5 suggested products
+[00:31:56.326] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[00:31:56.326] Server  LOG     Query params - activeOnly: "true"
+[00:31:56.327] Server  LOG     Connecting to MongoDB...
+[00:31:56.327] Server  LOG     ✅ MongoDB connected successfully
+[00:31:56.328] Server  LOG     Query: {}
+[00:31:56.328] Server  LOG     Fetching suggested products from database...
+[00:31:56.358] Server  LOG     ✅ Found 5 suggested products
+[00:31:56.374] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[00:31:56.374] Server  LOG     Query params - activeOnly: "true"
+[00:31:56.374] Server  LOG     Connecting to MongoDB...
+[00:31:56.375] Server  LOG     ✅ MongoDB connected successfully
+[00:31:56.375] Server  LOG     Query: {}
+[00:31:56.375] Server  LOG     Fetching suggested products from database...
+[00:31:56.421] Server  LOG     ✅ Found 5 suggested products
+[00:33:01.018] Server  LOG     {}
+[00:33:01.050] Server  LOG     Decoded token: {}
+[00:34:26.206] Server  LOG     {}
+[00:34:26.238] Server  LOG     Decoded token: {}
+[00:35:53.970] Server  LOG     {}
+[00:35:54.002] Server  LOG     Decoded token: {}
+[00:37:02.651] Server  LOG     {}
+[00:37:02.683] Server  LOG     Decoded token: {}
+[00:38:05.015] Server  LOG     {}
+[00:38:05.050] Server  LOG     Decoded token: {}
+[00:39:31.232] Server  LOG     {}
+[00:39:31.263] Server  LOG     Decoded token: {}
+[00:40:43.277] Server  LOG     {}
+[00:40:43.328] Server  LOG     Decoded token: {}
+[00:40:45.621] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[00:40:45.622] Server  LOG     Query params - activeOnly: "true"
+[00:40:45.622] Server  LOG     Connecting to MongoDB...
+[00:40:45.623] Server  LOG     ✅ MongoDB connected successfully
+[00:40:45.623] Server  LOG     Query: {}
+[00:40:45.624] Server  LOG     Fetching suggested products from database...
+[00:40:45.659] Server  LOG     ✅ Found 5 suggested products
+[00:40:45.670] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[00:40:45.670] Server  LOG     Query params - activeOnly: "true"
+[00:40:45.671] Server  LOG     Connecting to MongoDB...
+[00:40:45.671] Server  LOG     ✅ MongoDB connected successfully
+[00:40:45.672] Server  LOG     Query: {}
+[00:40:45.672] Server  LOG     Fetching suggested products from database...
+[00:40:45.702] Server  LOG     ✅ Found 5 suggested products
+[00:40:46.147] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[00:40:46.148] Server  LOG     Query params - activeOnly: "true"
+[00:40:46.148] Server  LOG     Connecting to MongoDB...
+[00:40:46.148] Server  LOG     ✅ MongoDB connected successfully
+[00:40:46.149] Server  LOG     Query: {}
+[00:40:46.149] Server  LOG     Fetching suggested products from database...
+[00:40:46.179] Server  LOG     ✅ Found 5 suggested products
+[00:40:46.189] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[00:40:46.190] Server  LOG     Query params - activeOnly: "true"
+[00:40:46.190] Server  LOG     Connecting to MongoDB...
+[00:40:46.191] Server  LOG     ✅ MongoDB connected successfully
+[00:40:46.191] Server  LOG     Query: {}
+[00:40:46.191] Server  LOG     Fetching suggested products from database...
+[00:40:46.221] Server  LOG     ✅ Found 5 suggested products
+[00:40:49.500] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[00:40:49.501] Server  LOG     Query params - activeOnly: "true"
+[00:40:49.501] Server  LOG     Connecting to MongoDB...
+[00:40:49.502] Server  LOG     ✅ MongoDB connected successfully
+[00:40:49.502] Server  LOG     Query: {}
+[00:40:49.503] Server  LOG     Fetching suggested products from database...
+[00:40:49.533] Server  LOG     ✅ Found 5 suggested products
+[00:40:49.544] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[00:40:49.544] Server  LOG     Query params - activeOnly: "true"
+[00:40:49.545] Server  LOG     Connecting to MongoDB...
+[00:40:49.545] Server  LOG     ✅ MongoDB connected successfully
+[00:40:49.545] Server  LOG     Query: {}
+[00:40:49.545] Server  LOG     Fetching suggested products from database...
+[00:40:49.575] Server  LOG     ✅ Found 5 suggested products
+[00:40:53.343] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[00:40:53.344] Server  LOG     Query params - activeOnly: "true"
+[00:40:53.344] Server  LOG     Connecting to MongoDB...
+[00:40:53.345] Server  LOG     ✅ MongoDB connected successfully
+[00:40:53.345] Server  LOG     Query: {}
+[00:40:53.346] Server  LOG     Fetching suggested products from database...
+[00:40:53.390] Server  LOG     ✅ Found 5 suggested products
+[00:40:53.400] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[00:40:53.401] Server  LOG     Query params - activeOnly: "true"
+[00:40:53.401] Server  LOG     Connecting to MongoDB...
+[00:40:53.402] Server  LOG     ✅ MongoDB connected successfully
+[00:40:53.402] Server  LOG     Query: {}
+[00:40:53.402] Server  LOG     Fetching suggested products from database...
+[00:40:53.433] Server  LOG     ✅ Found 5 suggested products
+[00:41:11.345] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[00:41:11.346] Server  LOG     Query params - activeOnly: "true"
+[00:41:11.346] Server  LOG     Connecting to MongoDB...
+[00:41:11.347] Server  LOG     ✅ MongoDB connected successfully
+[00:41:11.347] Server  LOG     Query: {}
+[00:41:11.347] Server  LOG     Fetching suggested products from database...
+[00:41:11.377] Server  LOG     ✅ Found 5 suggested products
+[00:41:11.388] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[00:41:11.388] Server  LOG     Query params - activeOnly: "true"
+[00:41:11.388] Server  LOG     Connecting to MongoDB...
+[00:41:11.389] Server  LOG     ✅ MongoDB connected successfully
+[00:41:11.389] Server  LOG     Query: {}
+[00:41:11.389] Server  LOG     Fetching suggested products from database...
+[00:41:11.419] Server  LOG     ✅ Found 5 suggested products
+[00:41:15.330] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[00:41:15.330] Server  LOG     Query params - activeOnly: "true"
+[00:41:15.330] Server  LOG     Connecting to MongoDB...
+[00:41:15.331] Server  LOG     ✅ MongoDB connected successfully
+[00:41:15.331] Server  LOG     Query: {}
+[00:41:15.331] Server  LOG     Fetching suggested products from database...
+[00:41:15.361] Server  LOG     ✅ Found 5 suggested products
+[00:41:15.372] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[00:41:15.373] Server  LOG     Query params - activeOnly: "true"
+[00:41:15.373] Server  LOG     Connecting to MongoDB...
+[00:41:15.374] Server  LOG     ✅ MongoDB connected successfully
+[00:41:15.375] Server  LOG     Query: {}
+[00:41:15.375] Server  LOG     Fetching suggested products from database...
+[00:41:15.405] Server  LOG     ✅ Found 5 suggested products
+[00:41:15.636] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[00:41:15.636] Server  LOG     Query params - activeOnly: "true"
+[00:41:15.637] Server  LOG     Connecting to MongoDB...
+[00:41:15.638] Server  LOG     ✅ MongoDB connected successfully
+[00:41:15.639] Server  LOG     Query: {}
+[00:41:15.640] Server  LOG     Fetching suggested products from database...
+[00:41:15.675] Server  LOG     ✅ Found 5 suggested products
+[00:41:15.690] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[00:41:15.690] Server  LOG     Query params - activeOnly: "true"
+[00:41:15.691] Server  LOG     Connecting to MongoDB...
+[00:41:15.691] Server  LOG     ✅ MongoDB connected successfully
+[00:41:15.692] Server  LOG     Query: {}
+[00:41:15.692] Server  LOG     Fetching suggested products from database...
+[00:41:15.722] Server  LOG     ✅ Found 5 suggested products
+[00:41:37.438] Server  LOG     {}
+[00:41:37.468] Server  LOG     Decoded token: {}
+[00:42:03.081] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[00:42:03.082] Server  LOG     Query params - activeOnly: "true"
+[00:42:03.082] Server  LOG     Connecting to MongoDB...
+[00:42:03.082] Server  LOG     ✅ MongoDB connected successfully
+[00:42:03.083] Server  LOG     Query: {}
+[00:42:03.083] Server  LOG     Fetching suggested products from database...
+[00:42:03.113] Server  LOG     ✅ Found 5 suggested products
+[00:42:03.124] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[00:42:03.125] Server  LOG     Query params - activeOnly: "true"
+[00:42:03.125] Server  LOG     Connecting to MongoDB...
+[00:42:03.126] Server  LOG     ✅ MongoDB connected successfully
+[00:42:03.127] Server  LOG     Query: {}
+[00:42:03.127] Server  LOG     Fetching suggested products from database...
+[00:42:03.161] Server  LOG     ✅ Found 5 suggested products
+[00:42:03.509] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[00:42:03.509] Server  LOG     Query params - activeOnly: "true"
+[00:42:03.510] Server  LOG     Connecting to MongoDB...
+[00:42:03.510] Server  LOG     ✅ MongoDB connected successfully
+[00:42:03.511] Server  LOG     Query: {}
+[00:42:03.511] Server  LOG     Fetching suggested products from database...
+[00:42:03.563] Server  LOG     ✅ Found 5 suggested products
+[00:42:03.584] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[00:42:03.585] Server  LOG     Query params - activeOnly: "true"
+[00:42:03.585] Server  LOG     Connecting to MongoDB...
+[00:42:03.586] Server  LOG     ✅ MongoDB connected successfully
+[00:42:03.586] Server  LOG     Query: {}
+[00:42:03.586] Server  LOG     Fetching suggested products from database...
+[00:42:03.616] Server  LOG     ✅ Found 5 suggested products
+[00:42:26.926] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[00:42:26.927] Server  LOG     Query params - activeOnly: "true"
+[00:42:26.927] Server  LOG     Connecting to MongoDB...
+[00:42:26.928] Server  LOG     ✅ MongoDB connected successfully
+[00:42:26.928] Server  LOG     Query: {}
+[00:42:26.929] Server  LOG     Fetching suggested products from database...
+[00:42:26.961] Server  LOG     ✅ Found 5 suggested products
+[00:42:26.975] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[00:42:26.976] Server  LOG     Query params - activeOnly: "true"
+[00:42:26.976] Server  LOG     Connecting to MongoDB...
+[00:42:26.977] Server  LOG     ✅ MongoDB connected successfully
+[00:42:26.977] Server  LOG     Query: {}
+[00:42:26.977] Server  LOG     Fetching suggested products from database...
+[00:42:27.009] Server  LOG     ✅ Found 5 suggested products
+[00:42:53.255] Server  LOG     {}
+[00:42:53.292] Server  LOG     Decoded token: {}
+[00:43:46.896] Server  LOG     {}
+[00:43:46.926] Server  LOG     Decoded token: {}
+[00:45:03.408] Server  LOG     {}
+[00:45:03.438] Server  LOG     Decoded token: {}
+[00:46:29.847] Server  LOG     {}
+[00:46:29.879] Server  LOG     Decoded token: {}
+[00:47:50.590] Server  LOG     {}
+[00:47:50.621] Server  LOG     Decoded token: {}
+[00:49:00.259] Server  LOG     {}
+[00:49:00.289] Server  LOG     Decoded token: {}
+[00:50:01.158] Server  LOG     {}
+[00:50:01.191] Server  LOG     Decoded token: {}
+[00:51:09.284] Server  LOG     {}
+[00:51:09.315] Server  LOG     Decoded token: {}
+[00:52:15.297] Server  LOG     {}
+[00:52:15.327] Server  LOG     Decoded token: {}
+[00:53:18.344] Server  LOG     {}
+[00:53:18.377] Server  LOG     Decoded token: {}
+[00:54:23.829] Server  LOG     {}
+[00:54:23.861] Server  LOG     Decoded token: {}
+[00:55:54.643] Server  LOG     {}
+[00:55:54.675] Server  LOG     Decoded token: {}
+[00:57:21.224] Server  LOG     {}
+[00:57:21.256] Server  LOG     Decoded token: {}
+[00:58:39.454] Server  LOG     {}
+[00:58:39.486] Server  LOG     Decoded token: {}
+[00:59:31.826] Server  LOG     {}
+[00:59:31.863] Server  LOG     Decoded token: {}
+[01:00:45.293] Server  LOG     {}
+[01:00:45.323] Server  LOG     Decoded token: {}
+[01:01:38.613] Server  LOG     {}
+[01:01:38.645] Server  LOG     Decoded token: {}
+[01:01:44.701] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[01:01:44.701] Server  LOG     Query params - activeOnly: "true"
+[01:01:44.701] Server  LOG     Connecting to MongoDB...
+[01:01:44.702] Server  LOG     ✅ MongoDB connected successfully
+[01:01:44.702] Server  LOG     Query: {}
+[01:01:44.702] Server  LOG     Fetching suggested products from database...
+[01:01:44.749] Server  LOG     ✅ Found 5 suggested products
+[01:01:44.759] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[01:01:44.761] Server  LOG     Query params - activeOnly: "true"
+[01:01:44.762] Server  LOG     Connecting to MongoDB...
+[01:01:44.763] Server  LOG     ✅ MongoDB connected successfully
+[01:01:44.763] Server  LOG     Query: {}
+[01:01:44.763] Server  LOG     Fetching suggested products from database...
+[01:01:44.800] Server  LOG     ✅ Found 5 suggested products
+[01:01:45.212] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[01:01:45.213] Server  LOG     Query params - activeOnly: "true"
+[01:01:45.213] Server  LOG     Connecting to MongoDB...
+[01:01:45.214] Server  LOG     ✅ MongoDB connected successfully
+[01:01:45.214] Server  LOG     Query: {}
+[01:01:45.214] Server  LOG     Fetching suggested products from database...
+[01:01:45.274] Server  LOG     ✅ Found 5 suggested products
+[01:01:45.284] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[01:01:45.285] Server  LOG     Query params - activeOnly: "true"
+[01:01:45.285] Server  LOG     Connecting to MongoDB...
+[01:01:45.285] Server  LOG     ✅ MongoDB connected successfully
+[01:01:45.286] Server  LOG     Query: {}
+[01:01:45.286] Server  LOG     Fetching suggested products from database...
+[01:01:45.350] Server  LOG     ✅ Found 5 suggested products
+[01:02:06.615] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[01:02:06.616] Server  LOG     Query params - activeOnly: "true"
+[01:02:06.616] Server  LOG     Connecting to MongoDB...
+[01:02:06.618] Server  LOG     ✅ MongoDB connected successfully
+[01:02:06.618] Server  LOG     Query: {}
+[01:02:06.619] Server  LOG     Fetching suggested products from database...
+[01:02:06.651] Server  LOG     ✅ Found 5 suggested products
+[01:02:06.661] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[01:02:06.661] Server  LOG     Query params - activeOnly: "true"
+[01:02:06.662] Server  LOG     Connecting to MongoDB...
+[01:02:06.662] Server  LOG     ✅ MongoDB connected successfully
+[01:02:06.663] Server  LOG     Query: {}
+[01:02:06.663] Server  LOG     Fetching suggested products from database...
+[01:02:06.693] Server  LOG     ✅ Found 5 suggested products
+[01:02:39.156] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[01:02:39.156] Server  LOG     Query params - activeOnly: "true"
+[01:02:39.156] Server  LOG     Connecting to MongoDB...
+[01:02:39.157] Server  LOG     ✅ MongoDB connected successfully
+[01:02:39.157] Server  LOG     Query: {}
+[01:02:39.157] Server  LOG     Fetching suggested products from database...
+[01:02:39.187] Server  LOG     ✅ Found 5 suggested products
+[01:02:39.199] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[01:02:39.200] Server  LOG     Query params - activeOnly: "true"
+[01:02:39.200] Server  LOG     Connecting to MongoDB...
+[01:02:39.201] Server  LOG     ✅ MongoDB connected successfully
+[01:02:39.201] Server  LOG     Query: {}
+[01:02:39.202] Server  LOG     Fetching suggested products from database...
+[01:02:39.231] Server  LOG     ✅ Found 5 suggested products
+[01:02:39.659] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[01:02:39.660] Server  LOG     Query params - activeOnly: "true"
+[01:02:39.660] Server  LOG     Connecting to MongoDB...
+[01:02:39.661] Server  LOG     ✅ MongoDB connected successfully
+[01:02:39.661] Server  LOG     Query: {}
+[01:02:39.662] Server  LOG     Fetching suggested products from database...
+[01:02:39.693] Server  LOG     ✅ Found 5 suggested products
+[01:02:39.707] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[01:02:39.708] Server  LOG     Query params - activeOnly: "true"
+[01:02:39.708] Server  LOG     Connecting to MongoDB...
+[01:02:39.709] Server  LOG     ✅ MongoDB connected successfully
+[01:02:39.709] Server  LOG     Query: {}
+[01:02:39.710] Server  LOG     Fetching suggested products from database...
+[01:02:39.740] Server  LOG     ✅ Found 5 suggested products
+[01:02:58.133] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[01:02:58.134] Server  LOG     Query params - activeOnly: "true"
+[01:02:58.134] Server  LOG     Connecting to MongoDB...
+[01:02:58.135] Server  LOG     ✅ MongoDB connected successfully
+[01:02:58.135] Server  LOG     Query: {}
+[01:02:58.135] Server  LOG     Fetching suggested products from database...
+[01:02:58.166] Server  LOG     ✅ Found 5 suggested products
+[01:02:58.175] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[01:02:58.176] Server  LOG     Query params - activeOnly: "true"
+[01:02:58.176] Server  LOG     Connecting to MongoDB...
+[01:02:58.176] Server  LOG     ✅ MongoDB connected successfully
+[01:02:58.177] Server  LOG     Query: {}
+[01:02:58.177] Server  LOG     Fetching suggested products from database...
+[01:02:58.206] Server  LOG     ✅ Found 5 suggested products
+[01:02:58.460] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[01:02:58.460] Server  LOG     Query params - activeOnly: "true"
+[01:02:58.461] Server  LOG     Connecting to MongoDB...
+[01:02:58.461] Server  LOG     ✅ MongoDB connected successfully
+[01:02:58.462] Server  LOG     Query: {}
+[01:02:58.462] Server  LOG     Fetching suggested products from database...
+[01:02:58.491] Server  LOG     ✅ Found 5 suggested products
+[01:02:58.503] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[01:02:58.504] Server  LOG     Query params - activeOnly: "true"
+[01:02:58.504] Server  LOG     Connecting to MongoDB...
+[01:02:58.505] Server  LOG     ✅ MongoDB connected successfully
+[01:02:58.505] Server  LOG     Query: {}
+[01:02:58.505] Server  LOG     Fetching suggested products from database...
+[01:02:58.536] Server  LOG     ✅ Found 5 suggested products
+[01:03:03.444] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[01:03:03.444] Server  LOG     Query params - activeOnly: "true"
+[01:03:03.444] Server  LOG     Connecting to MongoDB...
+[01:03:03.445] Server  LOG     ✅ MongoDB connected successfully
+[01:03:03.445] Server  LOG     Query: {}
+[01:03:03.446] Server  LOG     Fetching suggested products from database...
+[01:03:03.479] Server  LOG     ✅ Found 5 suggested products
+[01:03:03.488] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[01:03:03.488] Server  LOG     Query params - activeOnly: "true"
+[01:03:03.489] Server  LOG     Connecting to MongoDB...
+[01:03:03.489] Server  LOG     ✅ MongoDB connected successfully
+[01:03:03.489] Server  LOG     Query: {}
+[01:03:03.490] Server  LOG     Fetching suggested products from database...
+[01:03:03.537] Server  LOG     ✅ Found 5 suggested products
+[01:03:06.628] Server  LOG     {}
+[01:03:06.660] Server  LOG     Decoded token: {}
+[01:03:22.357] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[01:03:22.357] Server  LOG     Query params - activeOnly: "true"
+[01:03:22.358] Server  LOG     Connecting to MongoDB...
+[01:03:22.359] Server  LOG     ✅ MongoDB connected successfully
+[01:03:22.361] Server  LOG     Query: {}
+[01:03:22.362] Server  LOG     Fetching suggested products from database...
+[01:03:22.395] Server  LOG     ✅ Found 5 suggested products
+[01:03:22.415] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[01:03:22.415] Server  LOG     Query params - activeOnly: "true"
+[01:03:22.416] Server  LOG     Connecting to MongoDB...
+[01:03:22.416] Server  LOG     ✅ MongoDB connected successfully
+[01:03:22.417] Server  LOG     Query: {}
+[01:03:22.417] Server  LOG     Fetching suggested products from database...
+[01:03:22.450] Server  LOG     ✅ Found 5 suggested products
+[01:03:26.970] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[01:03:26.971] Server  LOG     Query params - activeOnly: "true"
+[01:03:26.971] Server  LOG     Connecting to MongoDB...
+[01:03:26.972] Server  LOG     ✅ MongoDB connected successfully
+[01:03:26.972] Server  LOG     Query: {}
+[01:03:26.973] Server  LOG     Fetching suggested products from database...
+[01:03:27.003] Server  LOG     ✅ Found 5 suggested products
+[01:03:29.868] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[01:03:29.868] Server  LOG     Query params - activeOnly: "true"
+[01:03:29.869] Server  LOG     Connecting to MongoDB...
+[01:03:29.869] Server  LOG     ✅ MongoDB connected successfully
+[01:03:29.869] Server  LOG     Query: {}
+[01:03:29.870] Server  LOG     Fetching suggested products from database...
+[01:03:29.901] Server  LOG     ✅ Found 5 suggested products
+[01:03:29.915] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[01:03:29.915] Server  LOG     Query params - activeOnly: "true"
+[01:03:29.916] Server  LOG     Connecting to MongoDB...
+[01:03:29.916] Server  LOG     ✅ MongoDB connected successfully
+[01:03:29.917] Server  LOG     Query: {}
+[01:03:29.917] Server  LOG     Fetching suggested products from database...
+[01:03:29.948] Server  LOG     ✅ Found 5 suggested products
+[01:03:30.319] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[01:03:30.319] Server  LOG     Query params - activeOnly: "true"
+[01:03:30.319] Server  LOG     Connecting to MongoDB...
+[01:03:30.320] Server  LOG     ✅ MongoDB connected successfully
+[01:03:30.320] Server  LOG     Query: {}
+[01:03:30.321] Server  LOG     Fetching suggested products from database...
+[01:03:30.352] Server  LOG     ✅ Found 5 suggested products
+[01:03:30.364] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[01:03:30.365] Server  LOG     Query params - activeOnly: "true"
+[01:03:30.365] Server  LOG     Connecting to MongoDB...
+[01:03:30.365] Server  LOG     ✅ MongoDB connected successfully
+[01:03:30.366] Server  LOG     Query: {}
+[01:03:30.366] Server  LOG     Fetching suggested products from database...
+[01:03:30.402] Server  LOG     ✅ Found 5 suggested products
+[01:03:33.994] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[01:03:33.995] Server  LOG     Query params - activeOnly: "true"
+[01:03:33.995] Server  LOG     Connecting to MongoDB...
+[01:03:33.996] Server  LOG     ✅ MongoDB connected successfully
+[01:03:33.996] Server  LOG     Query: {}
+[01:03:33.996] Server  LOG     Fetching suggested products from database...
+[01:03:34.027] Server  LOG     ✅ Found 5 suggested products
+[01:03:34.039] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[01:03:34.039] Server  LOG     Query params - activeOnly: "true"
+[01:03:34.040] Server  LOG     Connecting to MongoDB...
+[01:03:34.040] Server  LOG     ✅ MongoDB connected successfully
+[01:03:34.040] Server  LOG     Query: {}
+[01:03:34.041] Server  LOG     Fetching suggested products from database...
+[01:03:34.070] Server  LOG     ✅ Found 5 suggested products
+[01:03:38.396] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[01:03:38.396] Server  LOG     Query params - activeOnly: "true"
+[01:03:38.396] Server  LOG     Connecting to MongoDB...
+[01:03:38.397] Server  LOG     ✅ MongoDB connected successfully
+[01:03:38.397] Server  LOG     Query: {}
+[01:03:38.397] Server  LOG     Fetching suggested products from database...
+[01:03:38.881] Server  LOG     ✅ Found 5 suggested products
+[01:03:38.898] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[01:03:38.899] Server  LOG     Query params - activeOnly: "true"
+[01:03:38.900] Server  LOG     Connecting to MongoDB...
+[01:03:38.912] Server  LOG     ✅ MongoDB connected successfully
+[01:03:38.912] Server  LOG     Query: {}
+[01:03:38.913] Server  LOG     Fetching suggested products from database...
+[01:03:38.978] Server  LOG     ✅ Found 5 suggested products
+[01:03:38.988] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[01:03:38.988] Server  LOG     Query params - activeOnly: "true"
+[01:03:38.989] Server  LOG     Connecting to MongoDB...
+[01:03:38.989] Server  LOG     ✅ MongoDB connected successfully
+[01:03:38.989] Server  LOG     Query: {}
+[01:03:38.990] Server  LOG     Fetching suggested products from database...
+[01:03:39.021] Server  LOG     ✅ Found 5 suggested products
+[01:03:39.030] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[01:03:39.031] Server  LOG     Query params - activeOnly: "true"
+[01:03:39.031] Server  LOG     Connecting to MongoDB...
+[01:03:39.032] Server  LOG     ✅ MongoDB connected successfully
+[01:03:39.032] Server  LOG     Query: {}
+[01:03:39.032] Server  LOG     Fetching suggested products from database...
+[01:03:39.064] Server  LOG     ✅ Found 5 suggested products
+[01:03:41.806] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[01:03:41.806] Server  LOG     Query params - activeOnly: "true"
+[01:03:41.807] Server  LOG     Connecting to MongoDB...
+[01:03:41.807] Server  LOG     ✅ MongoDB connected successfully
+[01:03:41.807] Server  LOG     Query: {}
+[01:03:41.808] Server  LOG     Fetching suggested products from database...
+[01:03:41.839] Server  LOG     ✅ Found 5 suggested products
+[01:03:41.852] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[01:03:41.853] Server  LOG     Query params - activeOnly: "true"
+[01:03:41.853] Server  LOG     Connecting to MongoDB...
+[01:03:41.853] Server  LOG     ✅ MongoDB connected successfully
+[01:03:41.854] Server  LOG     Query: {}
+[01:03:41.854] Server  LOG     Fetching suggested products from database...
+[01:03:41.885] Server  LOG     ✅ Found 5 suggested products
+[01:03:42.061] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[01:03:42.061] Server  LOG     Query params - activeOnly: "true"
+[01:03:42.061] Server  LOG     Connecting to MongoDB...
+[01:03:42.062] Server  LOG     ✅ MongoDB connected successfully
+[01:03:42.063] Server  LOG     Query: {}
+[01:03:42.065] Server  LOG     Fetching suggested products from database...
+[01:03:42.122] Server  LOG     ✅ Found 5 suggested products
+[01:03:42.136] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[01:03:42.136] Server  LOG     Query params - activeOnly: "true"
+[01:03:42.137] Server  LOG     Connecting to MongoDB...
+[01:03:42.137] Server  LOG     ✅ MongoDB connected successfully
+[01:03:42.138] Server  LOG     Query: {}
+[01:03:42.138] Server  LOG     Fetching suggested products from database...
+[01:03:42.171] Server  LOG     ✅ Found 5 suggested products
+[01:04:39.288] Server  LOG     {}
+[01:04:39.320] Server  LOG     Decoded token: {}
+[01:05:00.763] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[01:05:00.764] Server  LOG     Query params - activeOnly: "true"
+[01:05:00.764] Server  LOG     Connecting to MongoDB...
+[01:05:00.765] Server  LOG     ✅ MongoDB connected successfully
+[01:05:00.765] Server  LOG     Query: {}
+[01:05:00.765] Server  LOG     Fetching suggested products from database...
+[01:05:00.770] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[01:05:00.770] Server  LOG     Query params - activeOnly: "true"
+[01:05:00.771] Server  LOG     Connecting to MongoDB...
+[01:05:00.771] Server  LOG     ✅ MongoDB connected successfully
+[01:05:00.772] Server  LOG     Query: {}
+[01:05:00.772] Server  LOG     Fetching suggested products from database...
+[01:05:00.797] Server  LOG     ✅ Found 5 suggested products
+[01:05:00.802] Server  LOG     ✅ Found 5 suggested products
+[01:05:01.319] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[01:05:01.320] Server  LOG     Query params - activeOnly: "true"
+[01:05:01.320] Server  LOG     Connecting to MongoDB...
+[01:05:01.321] Server  LOG     ✅ MongoDB connected successfully
+[01:05:01.321] Server  LOG     Query: {}
+[01:05:01.321] Server  LOG     Fetching suggested products from database...
+[01:05:01.335] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[01:05:01.336] Server  LOG     Query params - activeOnly: "true"
+[01:05:01.336] Server  LOG     Connecting to MongoDB...
+[01:05:01.337] Server  LOG     ✅ MongoDB connected successfully
+[01:05:01.337] Server  LOG     Query: {}
+[01:05:01.337] Server  LOG     Fetching suggested products from database...
+[01:05:01.352] Server  LOG     ✅ Found 5 suggested products
+[01:05:01.367] Server  LOG     ✅ Found 5 suggested products
+[01:05:14.062] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[01:05:14.063] Server  LOG     Query params - activeOnly: "true"
+[01:05:14.063] Server  LOG     Connecting to MongoDB...
+[01:05:14.064] Server  LOG     ✅ MongoDB connected successfully
+[01:05:14.064] Server  LOG     Query: {}
+[01:05:14.065] Server  LOG     Fetching suggested products from database...
+[01:05:14.106] Server  LOG     ✅ Found 5 suggested products
+[01:05:14.115] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[01:05:14.115] Server  LOG     Query params - activeOnly: "true"
+[01:05:14.116] Server  LOG     Connecting to MongoDB...
+[01:05:14.116] Server  LOG     ✅ MongoDB connected successfully
+[01:05:14.116] Server  LOG     Query: {}
+[01:05:14.117] Server  LOG     Fetching suggested products from database...
+[01:05:14.147] Server  LOG     ✅ Found 5 suggested products
+[01:05:31.851] Server  LOG     {}
+[01:05:31.881] Server  LOG     Decoded token: {}
+[01:06:43.964] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[01:06:43.965] Server  LOG     Query params - activeOnly: "true"
+[01:06:43.965] Server  LOG     Connecting to MongoDB...
+[01:06:43.966] Server  LOG     ✅ MongoDB connected successfully
+[01:06:43.966] Server  LOG     Query: {}
+[01:06:43.967] Server  LOG     Fetching suggested products from database...
+[01:06:43.997] Server  LOG     ✅ Found 5 suggested products
+[01:06:44.010] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[01:06:44.011] Server  LOG     Query params - activeOnly: "true"
+[01:06:44.011] Server  LOG     Connecting to MongoDB...
+[01:06:44.012] Server  LOG     ✅ MongoDB connected successfully
+[01:06:44.012] Server  LOG     Query: {}
+[01:06:44.012] Server  LOG     Fetching suggested products from database...
+[01:06:44.043] Server  LOG     ✅ Found 5 suggested products
+[01:06:44.338] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[01:06:44.339] Server  LOG     Query params - activeOnly: "true"
+[01:06:44.340] Server  LOG     Connecting to MongoDB...
+[01:06:44.342] Server  LOG     ✅ MongoDB connected successfully
+[01:06:44.342] Server  LOG     Query: {}
+[01:06:44.342] Server  LOG     Fetching suggested products from database...
+[01:06:44.373] Server  LOG     ✅ Found 5 suggested products
+[01:06:44.382] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[01:06:44.383] Server  LOG     Query params - activeOnly: "true"
+[01:06:44.383] Server  LOG     Connecting to MongoDB...
+[01:06:44.384] Server  LOG     ✅ MongoDB connected successfully
+[01:06:44.384] Server  LOG     Query: {}
+[01:06:44.384] Server  LOG     Fetching suggested products from database...
+[01:06:44.414] Server  LOG     ✅ Found 5 suggested products
+[01:06:48.327] Server  LOG     {}
+[01:06:48.359] Server  LOG     Decoded token: {}
+[01:06:52.113] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[01:06:52.114] Server  LOG     Query params - activeOnly: "true"
+[01:06:52.114] Server  LOG     Connecting to MongoDB...
+[01:06:52.115] Server  LOG     ✅ MongoDB connected successfully
+[01:06:52.115] Server  LOG     Query: {}
+[01:06:52.115] Server  LOG     Fetching suggested products from database...
+[01:06:52.145] Server  LOG     ✅ Found 5 suggested products
+[01:06:52.154] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[01:06:52.154] Server  LOG     Query params - activeOnly: "true"
+[01:06:52.155] Server  LOG     Connecting to MongoDB...
+[01:06:52.155] Server  LOG     ✅ MongoDB connected successfully
+[01:06:52.156] Server  LOG     Query: {}
+[01:06:52.156] Server  LOG     Fetching suggested products from database...
+[01:06:52.186] Server  LOG     ✅ Found 5 suggested products
+[01:06:54.262] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[01:06:54.263] Server  LOG     Query params - activeOnly: "true"
+[01:06:54.263] Server  LOG     Connecting to MongoDB...
+[01:06:54.263] Server  LOG     ✅ MongoDB connected successfully
+[01:06:54.264] Server  LOG     Query: {}
+[01:06:54.264] Server  LOG     Fetching suggested products from database...
+[01:06:54.294] Server  LOG     ✅ Found 5 suggested products
+[01:06:54.302] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[01:06:54.303] Server  LOG     Query params - activeOnly: "true"
+[01:06:54.303] Server  LOG     Connecting to MongoDB...
+[01:06:54.304] Server  LOG     ✅ MongoDB connected successfully
+[01:06:54.304] Server  LOG     Query: {}
+[01:06:54.304] Server  LOG     Fetching suggested products from database...
+[01:06:54.334] Server  LOG     ✅ Found 5 suggested products
+[01:06:58.165] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[01:06:58.166] Server  LOG     Query params - activeOnly: "true"
+[01:06:58.166] Server  LOG     Connecting to MongoDB...
+[01:06:58.166] Server  LOG     ✅ MongoDB connected successfully
+[01:06:58.167] Server  LOG     Query: {}
+[01:06:58.167] Server  LOG     Fetching suggested products from database...
+[01:06:58.197] Server  LOG     ✅ Found 5 suggested products
+[01:06:58.205] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[01:06:58.206] Server  LOG     Query params - activeOnly: "true"
+[01:06:58.206] Server  LOG     Connecting to MongoDB...
+[01:06:58.207] Server  LOG     ✅ MongoDB connected successfully
+[01:06:58.207] Server  LOG     Query: {}
+[01:06:58.208] Server  LOG     Fetching suggested products from database...
+[01:06:58.238] Server  LOG     ✅ Found 5 suggested products
+[01:06:58.427] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[01:06:58.427] Server  LOG     Query params - activeOnly: "true"
+[01:06:58.427] Server  LOG     Connecting to MongoDB...
+[01:06:58.428] Server  LOG     ✅ MongoDB connected successfully
+[01:06:58.428] Server  LOG     Query: {}
+[01:06:58.429] Server  LOG     Fetching suggested products from database...
+[01:06:58.458] Server  LOG     ✅ Found 5 suggested products
+[01:06:58.466] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[01:06:58.466] Server  LOG     Query params - activeOnly: "true"
+[01:06:58.466] Server  LOG     Connecting to MongoDB...
+[01:06:58.467] Server  LOG     ✅ MongoDB connected successfully
+[01:06:58.467] Server  LOG     Query: {}
+[01:06:58.467] Server  LOG     Fetching suggested products from database...
+[01:06:58.497] Server  LOG     ✅ Found 5 suggested products
+[01:07:00.072] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[01:07:00.073] Server  LOG     Query params - activeOnly: "true"
+[01:07:00.073] Server  LOG     Connecting to MongoDB...
+[01:07:00.073] Server  LOG     ✅ MongoDB connected successfully
+[01:07:00.074] Server  LOG     Query: {}
+[01:07:00.074] Server  LOG     Fetching suggested products from database...
+[01:07:00.104] Server  LOG     ✅ Found 5 suggested products
+[01:07:00.111] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[01:07:00.111] Server  LOG     Query params - activeOnly: "true"
+[01:07:00.112] Server  LOG     Connecting to MongoDB...
+[01:07:00.112] Server  LOG     ✅ MongoDB connected successfully
+[01:07:00.113] Server  LOG     Query: {}
+[01:07:00.113] Server  LOG     Fetching suggested products from database...
+[01:07:00.142] Server  LOG     ✅ Found 5 suggested products
+[01:07:01.220] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[01:07:01.221] Server  LOG     Query params - activeOnly: "true"
+[01:07:01.221] Server  LOG     Connecting to MongoDB...
+[01:07:01.222] Server  LOG     ✅ MongoDB connected successfully
+[01:07:01.222] Server  LOG     Query: {}
+[01:07:01.222] Server  LOG     Fetching suggested products from database...
+[01:07:01.252] Server  LOG     ✅ Found 5 suggested products
+[01:07:01.259] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[01:07:01.260] Server  LOG     Query params - activeOnly: "true"
+[01:07:01.260] Server  LOG     Connecting to MongoDB...
+[01:07:01.261] Server  LOG     ✅ MongoDB connected successfully
+[01:07:01.261] Server  LOG     Query: {}
+[01:07:01.262] Server  LOG     Fetching suggested products from database...
+[01:07:01.293] Server  LOG     ✅ Found 5 suggested products
+[01:07:04.600] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[01:07:04.601] Server  LOG     Query params - activeOnly: "true"
+[01:07:04.602] Server  LOG     Connecting to MongoDB...
+[01:07:04.602] Server  LOG     ✅ MongoDB connected successfully
+[01:07:04.602] Server  LOG     Query: {}
+[01:07:04.603] Server  LOG     Fetching suggested products from database...
+[01:07:04.632] Server  LOG     ✅ Found 5 suggested products
+[01:07:04.640] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[01:07:04.641] Server  LOG     Query params - activeOnly: "true"
+[01:07:04.641] Server  LOG     Connecting to MongoDB...
+[01:07:04.642] Server  LOG     ✅ MongoDB connected successfully
+[01:07:04.642] Server  LOG     Query: {}
+[01:07:04.643] Server  LOG     Fetching suggested products from database...
+[01:07:04.673] Server  LOG     ✅ Found 5 suggested products
+[01:07:41.459] Server  LOG     {}
+[01:07:41.490] Server  LOG     Decoded token: {}
+[01:09:09.092] Server  LOG     {}
+[01:09:09.140] Server  LOG     Decoded token: {}
+[01:10:25.831] Server  LOG     New contact: {}
+[01:10:36.803] Server  LOG     {}
+[01:10:36.834] Server  LOG     Decoded token: {}
+[01:10:41.816] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[01:11:28.660] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[01:11:28.661] Server  LOG     Query params - activeOnly: "true"
+[01:11:28.661] Server  LOG     Connecting to MongoDB...
+[01:11:28.662] Server  LOG     ✅ MongoDB connected successfully
+[01:11:28.662] Server  LOG     Query: {}
+[01:11:28.662] Server  LOG     Fetching suggested products from database...
+[01:11:28.693] Server  LOG     ✅ Found 5 suggested products
+[01:11:28.702] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[01:11:28.703] Server  LOG     Query params - activeOnly: "true"
+[01:11:28.703] Server  LOG     Connecting to MongoDB...
+[01:11:28.703] Server  LOG     ✅ MongoDB connected successfully
+[01:11:28.704] Server  LOG     Query: {}
+[01:11:28.704] Server  LOG     Fetching suggested products from database...
+[01:11:28.734] Server  LOG     ✅ Found 5 suggested products
+[01:11:29.080] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[01:11:29.080] Server  LOG     Query params - activeOnly: "true"
+[01:11:29.081] Server  LOG     Connecting to MongoDB...
+[01:11:29.081] Server  LOG     ✅ MongoDB connected successfully
+[01:11:29.081] Server  LOG     Query: {}
+[01:11:29.082] Server  LOG     Fetching suggested products from database...
+[01:11:29.113] Server  LOG     ✅ Found 5 suggested products
+[01:11:29.120] Server  LOG     === LIST SUGGESTED PRODUCTS API CALLED ===
+[01:11:29.120] Server  LOG     Query params - activeOnly: "true"
+[01:11:29.121] Server  LOG     Connecting to MongoDB...
+[01:11:29.121] Server  LOG     ✅ MongoDB connected successfully
+[01:11:29.122] Server  LOG     Query: {}
+[01:11:29.122] Server  LOG     Fetching suggested products from database...
+[01:11:29.152] Server  LOG     ✅ Found 5 suggested products
+[01:11:58.404] Server  LOG     {}
+[01:11:58.434] Server  LOG     Decoded token: {}
+[01:12:19.138] Server  ERROR   C:\Users\admin\Desktop\next-shiprocket\shiprocket\.next\dev\server\chunks\aabcd_5f4e3681._.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
+[01:12:19.149] Server  ERROR   💥 OTP API Error: Error: Invalid login: 534-5.7.14 <https://accounts.google.com/signin/continue?sarp=1&scc=1&plt=AKgnsbu
+534-5.7.14 3JofGZ0fUaWBEMURaPj8Kgu7a92jZXrtEFEoDr6yCzzoI7vwBuMGfWkggRYt-3K705Fpk
+534-5.7.14 zgIrN-2_WP6ZfZBXMe5bvy-qS5gxGjANei-oXQxqoj6hva9L2qkSHs1pvpeKjocT>
+534-5.7.14 Please log in via your web browser and then try again.
+534-5.7.14  For more information, go to
+534 5.7.14  https://support.google.com/mail/answer/78754 d9443c01a7336-2a2f3d5d32dsm37147285ad.70 - gsmtp
+[01:13:10.266] Server  LOG     {}
+[01:13:10.302] Server  LOG     Decoded token: {}
+[01:14:08.941] Server  LOG     {}
+[01:14:08.973] Server  LOG     Decoded token: {}
+[01:14:15.273] Server  LOG     New contact: {}
+[01:15:18.114] Server  LOG     New contact: {}
+[01:18:06.913] Server  LOG      ✓ Compiled in 238ms
+[01:18:07.294] Browser ERROR   Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version. Expert Assistance Requests
+[01:18:11.759] Server  LOG      ✓ Compiled in 213ms
+[01:18:12.291] Browser ERROR   Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version. Expert Assistance Requests
+[01:18:16.974] Server  LOG      ✓ Compiled in 173ms
+[01:20:03.633] Server  LOG      ✓ Compiled in 365ms
+[01:20:12.609] Server  LOG      ✓ Compiled in 165ms
+[01:20:13.295] Browser ERROR   uncaughtError: ReferenceError: Download is not defined
+[01:20:16.202] Server  LOG      ✓ Compiled in 104ms
+[01:20:16.964] Browser ERROR   ./shiprocket/src/app/components/Sidebar.js:10:61
+Parsing ecmascript source code failed
+   8 | import { useState } from "react";
+   9 | import { usePathname } from "next/navigation";
+> 10 | import { X, House, BarChart3, ShoppingCart, Clock,Download  MailQuestionMark, DollarSign, CreditCard, Users, FileText, Settings, Percent, Package, ChevronDown, Contact, ShoppingBag  } from "lucide-react";
+     |                                                             ^^^^^^^^^^^^^^^^
+  11 |
+  12 | export default function Sidebar({ isOpen, setIsOpen }) {
+  13 |   const pathname = usePathname();
+
+Expected ',', got 'MailQuestionMark'
+
+Import traces:
+  Client Component Browser:
+    ./shiprocket/src/app/components/Sidebar.js [Client Component Browser]
+    ./shiprocket/src/app/components/ClientLayout.js [Client Component Browser]
+    ./shiprocket/src/app/components/ClientLayout.js [Server Component]
+    ./shiprocket/src/app/layout.js [Server Component]
+
+  Client Component SSR:
+    ./shiprocket/src/app/components/Sidebar.js [Client Component SSR]
+    ./shiprocket/src/app/components/ClientLayout.js [Client Component SSR]
+    ./shiprocket/src/app/components/ClientLayout.js [Server Component]
+    ./shiprocket/src/app/layout.js [Server Component]
+[01:20:17.299] Browser ERROR   ./shiprocket/src/app/components/Sidebar.js:10:61
+Parsing ecmascript source code failed
+   8 | import { useState } from "react";
+   9 | import { usePathname } from "next/navigation";
+> 10 | import { X, House, BarChart3, ShoppingCart, Clock,Download  MailQuestionMark, DollarSign, CreditCard, Users, FileText, Settings, Percent, Package, ChevronDown, Contact, ShoppingBag  } from "lucide-react";
+     |                                                             ^^^^^^^^^^^^^^^^
+  11 |
+  12 | export default function Sidebar({ isOpen, setIsOpen }) {
+  13 |   const pathname = usePathname();
+
+Expected ',', got 'MailQuestionMark'
+
+Import traces:
+  Client Component Browser:
+    ./shiprocket/src/app/components/Sidebar.js [Client Component Browser]
+    ./shiprocket/src/app/components/ClientLayout.js [Client Component Browser]
+    ./shiprocket/src/app/components/ClientLayout.js [Server Component]
+    ./shiprocket/src/app/layout.js [Server Component]
+
+  Client Component SSR:
+    ./shiprocket/src/app/components/Sidebar.js [Client Component SSR]
+    ./shiprocket/src/app/components/ClientLayout.js [Client Component SSR]
+    ./shiprocket/src/app/components/ClientLayout.js [Server Component]
+    ./shiprocket/src/app/layout.js [Server Component]
+[01:20:18.481] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[01:20:19.152] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[01:20:19.207] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[01:20:20.347] Server  LOG      ✓ Compiled in 168ms
+[01:20:24.090] Server  LOG      ✓ Compiled in 157ms
+[01:22:46.569] Server  LOG      ✓ Compiled in 193ms
+[01:23:50.160] Server  LOG     {}
+[01:23:50.191] Server  LOG     Decoded token: {}
+[01:23:51.030] Server  LOG     {}
+[01:23:51.060] Server  LOG     Decoded token: {}
+[01:24:12.977] Server  LOG      ✓ Compiled in 119ms

@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 4, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/admin/Desktop/next-shiprocket/shiprocket/src/app/auth/layout.js"],"sourcesContent":["// src/app/auth/layout.js\r\nexport const metadata = {\r\n  title: \"Login / Register\",\r\n  description: \"Authentication pages\",\r\n};\r\n\r\nexport default function AuthLayout({ children }) {\r\n  return (\r\n    // <html lang=\"en\">\r\n     <div className=\"h-screen flex items-center justify-center bg-gray-50\">\r\n        <main className=\"w-full h-full bg-white shadow-lg\">\r\n          {children}\r\n        </main>\r\n      </div>\r\n    // </html>\r\n  );\r\n}\r\n"],"names":[],"mappings":"AAAA,yBAAyB;;;;;;;;;AAClB,MAAM,WAAW;IACtB,OAAO;IACP,aAAa;AACf;AAEe,SAAS,WAAW,EAAE,QAAQ,EAAE;IAC7C,OACE,mBAAmB;kBAClB,4PAAC;QAAI,WAAU;kBACZ,cAAA,4PAAC;YAAK,WAAU;sBACb;;;;;;;;;;;AAKX"}}]
+}

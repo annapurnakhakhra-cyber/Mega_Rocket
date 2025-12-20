@@ -1,0 +1,15 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/ContactsList/layout,_N_T_/ContactsList/page,_N_T_/ContactsList"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/ContactsList/__PAGE__",
+    "/ContactsList",
+    "/_index",
+    "/_head"
+  ]
+}
