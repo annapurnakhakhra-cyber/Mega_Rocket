@@ -1,6 +1,6 @@
 var R=require("../../../../chunks/[turbopack]_runtime.js")("server/app/api/suggested/list/route.js")
-R.c("server/chunks/aabcd_next_01d40203._.js")
-R.c("server/chunks/[root-of-the-server]__6ff3c578._.js")
-R.c("server/chunks/shiprocket__next-internal_server_app_api_suggested_list_route_actions_23f4efb6.js")
-R.m("[project]/shiprocket/node_modules/next/dist/esm/build/templates/app-route.js { INNER_APP_ROUTE => \"[project]/shiprocket/src/app/api/suggested/list/route.js [app-route] (ecmascript)\" } [app-route] (ecmascript)")
-module.exports=R.m("[project]/shiprocket/node_modules/next/dist/esm/build/templates/app-route.js { INNER_APP_ROUTE => \"[project]/shiprocket/src/app/api/suggested/list/route.js [app-route] (ecmascript)\" } [app-route] (ecmascript)").exports
+R.c("server/chunks/node_modules_09d7d38f._.js")
+R.c("server/chunks/[root-of-the-server]__e6e4f3b0._.js")
+R.c("server/chunks/_next-internal_server_app_api_suggested_list_route_actions_fe0453ba.js")
+R.m("[project]/node_modules/next/dist/esm/build/templates/app-route.js { INNER_APP_ROUTE => \"[project]/src/app/api/suggested/list/route.js [app-route] (ecmascript)\" } [app-route] (ecmascript)")
+module.exports=R.m("[project]/node_modules/next/dist/esm/build/templates/app-route.js { INNER_APP_ROUTE => \"[project]/src/app/api/suggested/list/route.js [app-route] (ecmascript)\" } [app-route] (ecmascript)").exports

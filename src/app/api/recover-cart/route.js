@@ -143,9 +143,20 @@ export async function POST(request) {
       );
     }
 
-    // --- Prepare email content ---
+    // --- Prepare email content with tracking ---
     const storeDomain = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN || "your-store.myshopify.com";
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || `https://${storeDomain}`;
     const finalRecoveryUrl = checkoutRecoveryUrl || `https://${storeDomain}/checkouts/${checkoutId}/recover`;
+
+    // Generate tracking ID for this email
+    const trackingId = `track_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+
+    // Create tracked recovery URL
+    const trackedRecoveryUrl = `${baseUrl}/api/tracking?event=link_click&tid=${trackingId}&url=${encodeURIComponent(finalRecoveryUrl)}`;
+
+    // Create tracking pixel URL
+    const trackingPixelUrl = `${baseUrl}/api/tracking?event=email_open&tid=${trackingId}`;
+
     const emailSubject = subject || `Complete your purchase — ${customerName}`;
     const emailBody =
       message ||
@@ -155,10 +166,29 @@ We noticed you left items in your cart worth ${currency} ${Number(totalAmount ||
 
 ${itemsList.length ? itemsList.join("\n") : "Your selected items await in your cart."}
 
-Complete your purchase here: ${finalRecoveryUrl}
+Complete your purchase here: ${trackedRecoveryUrl}
 
 Thanks,
 The Store Team`;
+
+    // HTML version with tracking pixel
+    const emailHtml = (message ? message.replace(/\n/g, "<br>") : `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+        <h2>Complete Your Purchase</h2>
+        <p>Hi ${customerName},</p>
+        <p>We noticed you left items in your cart worth <strong>${currency} ${Number(totalAmount || 0).toFixed(2)}</strong>:</p>
+        <ul>
+          ${itemsList.length ? itemsList.map(item => `<li>${item}</li>`).join("") : "<li>Your selected items await in your cart.</li>"}
+        </ul>
+        <p style="margin: 30px 0;">
+          <a href="${trackedRecoveryUrl}" style="background-color: #007bff; color: white; padding: 12px 24px; text-decoration: none; border-radius: 5px; display: inline-block;">
+            Complete Your Purchase
+          </a>
+        </p>
+        <p>Thanks,<br>The Store Team</p>
+        <img src="${trackingPixelUrl}" width="1" height="1" style="display: none;" alt="" />
+      </div>
+    `);
 
     // --- Setup Nodemailer transport ---
     const nodemailer = await import("nodemailer");
@@ -214,13 +244,48 @@ The Store Team`;
       });
     }
 
+    // --- Store tracking data ---
+    const trackingData = {
+      id: checkoutId,
+      customer: customerName,
+      email: checkoutEmail,
+      totalValue: `${currency} ${Number(totalAmount || 0).toFixed(2)}`,
+      recoveryUrl: finalRecoveryUrl,
+      tracking: {
+        emailOpened: false,
+        emailOpenedAt: null,
+        linkClicked: false,
+        linkClickedAt: null,
+        recovered: false,
+        recoveredAt: null,
+        recoveryEmailSentAt: new Date().toISOString(),
+        trackingId: trackingId,
+      }
+    };
+
+    // Store tracking data
+    try {
+      await fetch(`${baseUrl}/api/tracking`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          event: 'store_tracking_data',
+          trackingId: trackingId,
+          checkoutData: trackingData
+        })
+      });
+    } catch (trackingErr) {
+      console.error('Failed to store tracking data:', trackingErr);
+      // Don't fail the email sending if tracking fails
+    }
+
     // --- Send email ---
     const mailOptions = {
       from: `"Store Team" <${SMTP_USER || "no-reply@example.com"}>`,
       to: checkoutEmail,
       subject: emailSubject,
       text: emailBody,
-      html: emailBody.replace(/\n/g, "<br>"),
+      html: emailHtml,
     };
 
     let info;
@@ -249,16 +314,18 @@ The Store Team`;
       success: true,
       message: usingTestAccount
         ? "Email sent via Nodemailer test account (Ethereal). Use previewUrl to view."
-        : "Recovery email sent successfully.",
+        : "Recovery email sent successfully with tracking enabled.",
       data: {
         to: checkoutEmail,
         subject: emailSubject,
         recoveryUrl: finalRecoveryUrl,
+        trackedUrl: trackedRecoveryUrl,
         total: `${currency} ${Number(totalAmount || 0).toFixed(2)}`,
         itemsCount: itemsList.length,
         messageId: info?.messageId || null,
         previewUrl: testPreviewUrl, // null when real SMTP used
         usingTestAccount,
+        trackingId: trackingId,
       },
     });
   } catch (err) {

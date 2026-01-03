@@ -19,10 +19,8 @@ const CheckoutLayout = () => {
     const [addressData, setAddressData] = useState(null); 
     const [isLoading, setIsLoading] = useState(false);
 
-    // 🔴 1. CRITICAL: Item details for Shopify. REPLACE VARIANT_ID and NAME.
     const [initialOrderItems] = useState([{
-        // Example product with base price (1250)
-        variant_id: 45678901234567, // <--- REPLACE THIS WITH A VALID VARIANT ID
+        variant_id: 45678901234567, 
         name: "Shiprocket Integration Service", 
         quantity: 1,
         base_price: 1250 
@@ -80,7 +78,6 @@ const CheckoutLayout = () => {
             
             alert(`✅ Order Placed Successfully! Shopify ID: ${result.shopifyId}. Final Total: ₹${finalTotal}.`);
             
-            // Reset state after successful order placement
             setUserData(null);
             setAddressData(null);
             setCurrentStep(STEPS.LOGIN);

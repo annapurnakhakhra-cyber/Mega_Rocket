@@ -1,4 +1,4 @@
-// File: C:\Users\admin\Desktop\next-shiprocket\shiprocket\src\app\auth\login\layout.js
+// File: C:\Users\admin\Downloads\shiprocket\src\app\auth\login\layout.js
 import * as entry from '../../../../../../src/app/auth/login/layout.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

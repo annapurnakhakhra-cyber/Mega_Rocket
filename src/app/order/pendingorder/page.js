@@ -12,7 +12,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { jwtDecode } from "jwt-decode";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://10.27.4.11:3001";
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://10.27.4.11:3000";
 
 const PendingOrdersPage = () => {
   const router = useRouter();

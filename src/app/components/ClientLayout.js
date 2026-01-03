@@ -30,7 +30,6 @@ export default function ClientLayout({ children }) {
 
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
 
-  // ----------------- AUTH PAGES (NO LAYOUT) -----------------
   if (hideLayout) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -39,7 +38,6 @@ export default function ClientLayout({ children }) {
     );
   }
 
-  // ----------------- MAIN LAYOUT -----------------
   return (
     <div className="flex h-screen overflow-hidden">
 

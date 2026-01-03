@@ -2,16 +2,12 @@
 
 import { NextResponse } from 'next/server';
 
-// 🔴 1. CRITICAL: REPLACE WITH YOUR CREDENTIALS
 const SHOPIFY_STORE_URL = "hit-megascale.myshopify.com"; 
 const SHOPIFY_API_VERSION = "2023-10"; 
 const SHOPIFY_API_TOKEN = process.env.SHOPIFY_ADMIN_TOKEN; 
 
 
-/**
- * Next.js API Route Handler for POST method
- * Handles Order Placement in Shopify. Fixes 422 (phone_number already taken) error.
- */
+
 export async function POST(request) {
     try {
         const orderData = await request.json();
@@ -34,14 +30,10 @@ export async function POST(request) {
              throw new Error("Line Items are missing or Variant ID is invalid.");
         }
 
-        // FIX for 422 Error: We only use customer details for creation and avoid the phone number 
-        // in the top-level customer object to prevent conflicts. Phone number is kept in shipping_address.
-        
         const customerDetails = {
             email: `user_${userMobile}@fastcheckout.demo`, 
             first_name: address.first_name || "Guest",
             last_name: address.last_name || "Customer",
-            // phone: is REMOVED from here.
         };
         
         const shopifyPayload = {
@@ -49,7 +41,6 @@ export async function POST(request) {
                 customer: customerDetails,
                 line_items: shopifyLineItems,
                 
-                // Shipping Address (Phone number must be here for shipping)
                 shipping_address: {
                     first_name: address.first_name,
                     last_name: address.last_name,
@@ -59,7 +50,6 @@ export async function POST(request) {
                     province: address.state,
                     zip: address.pincode,
                     country_code: address.country,
-                    // 🟢 IMPORTANT: Phone number goes here
                     phone: `+91${userMobile}`, 
                 },
 

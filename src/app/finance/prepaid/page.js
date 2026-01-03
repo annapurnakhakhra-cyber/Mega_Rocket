@@ -16,7 +16,7 @@ import { jwtDecode } from 'jwt-decode';
 
 const ShopifyOrdersDashboard = () => {
   const router = useRouter();
-  const API_URL = `${process.env.NEXT_PUBLIC_API_URL || 'http://10.27.4.11:3001'}/api/prepaid-orders`;
+  const API_URL = `${process.env.NEXT_PUBLIC_API_URL || 'http://10.27.4.11:3000'}/api/prepaid-orders`;
 
   const [prepaidOrders, setPrepaidOrders] = useState([]);
   const [loading, setLoading] = useState(true);

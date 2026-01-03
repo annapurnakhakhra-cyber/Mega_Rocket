@@ -1,29 +1,67 @@
-// app/api/products/list/route.js (Next.js App Router)
+export const dynamic = "force-dynamic";
 
-import { getAllProducts } from '@/lib/shopify';
-import { NextResponse } from 'next/server';
+import { NextResponse } from "next/server";
+import connectToDB from "@/lib/db";
+import User from "@/models/User";
+import { verifyToken } from "@/lib/jwt";
+import { getAllProducts } from "@/lib/shopify";
 
-export async function GET(request) {
-  try {
-    // Get limit from URL params (default 100)
-    const { searchParams } = new URL(request.url);
-    const limit = parseInt(searchParams.get('limit')) || 100;
-    
-    // Fetch products from Shopify
-    const products = await getAllProducts(limit);
+export async function GET(req) {
+  await connectToDB();
 
-    return NextResponse.json({ 
-      success: true, 
-      products,
-      count: products.length
-    });
-  } catch (error) {
-    console.error('Error fetching products:', error);
+  // 1️⃣ Authorization
+  const authHeader = req.headers.get("authorization");
+  if (!authHeader) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const token = authHeader.split(" ")[1];
+  const decoded = verifyToken(token);
+
+  if (!decoded) {
+    return NextResponse.json({ error: "Invalid token" }, { status: 401 });
+  }
+
+  // 2️⃣ Load admin
+  const admin = await User.findOne({ email: decoded.email }).select(
+    "+accessToken +shopUrl"
+  );
+
+  if (!admin) {
+    return NextResponse.json({ error: "Admin not found" }, { status: 404 });
+  }
+
+  if (!admin.accessToken || !admin.shopUrl) {
     return NextResponse.json(
-      { 
+      { error: "Shopify credentials missing" },
+      { status: 400 }
+    );
+  }
+
+  try {
+    // 3️⃣ Query params
+    const { searchParams } = new URL(req.url);
+    const limit = parseInt(searchParams.get("limit")) || 100;
+
+    // 4️⃣ Fetch products from Shopify
+    const products = await getAllProducts(limit, {
+      accessToken: admin.accessToken,
+      shopUrl: admin.shopUrl,
+    });
+
+    return NextResponse.json({
+      success: true,
+      products,
+      count: products.length,
+    });
+  } catch (err) {
+    console.error("Error fetching products:", err);
+
+    return NextResponse.json(
+      {
         success: false,
-        error: 'Failed to fetch products',
-        message: error.message 
+        error: "Failed to fetch products",
+        details: err.message,
       },
       { status: 500 }
     );

@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 const LoginStep = ({ onLoginSuccess }) => {
-    // Setting a default number for easy testing, but this should be dynamic
     const [mobile, setMobile] = useState('9876543210'); 
     const [otp, setOtp] = useState('');
     const [isOtpSent, setIsOtpSent] = useState(false);
@@ -14,7 +13,6 @@ const LoginStep = ({ onLoginSuccess }) => {
     const handleSendOtp = async () => {
         if (mobile.length !== 10) return;
         setIsLoading(true);
-        // Simulate OTP sending delay
         await new Promise(resolve => setTimeout(resolve, 1500)); 
         
         setIsOtpSent(true); 
@@ -42,7 +40,6 @@ const LoginStep = ({ onLoginSuccess }) => {
                 throw new Error(errorData.message || 'Failed to fetch user data from API.');
             }
 
-            // 🟢 SUCCESS: Receive dynamic data from the API
             const userData = await response.json(); 
             
             console.log("✅ Dynamic User Data Received:", userData);

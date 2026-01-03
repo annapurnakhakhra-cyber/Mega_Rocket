@@ -1,14 +1,14 @@
 import { NextResponse } from "next/server";
 import connectDB from "@/lib/db";
-import AskExpert from "@/models/AskExpert"; // <-- your model
+import AskExpert from "@/models/AskExpert"; 
 
 export async function GET() {
   try {
     await connectDB();
 
     const experts = await AskExpert.find({})
-      .sort({ createdAt: -1 })        // latest first
-      .select("name email phone message createdAt")
+      .sort({ createdAt: -1 })        
+      .select("name email phone message store createdAt")
       .lean();
 
     return NextResponse.json(experts, { status: 200 });

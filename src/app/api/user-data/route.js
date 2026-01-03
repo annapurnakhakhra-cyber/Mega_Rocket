@@ -2,7 +2,6 @@
 
 import { NextResponse } from "next/server";
 
-// 🔴 Replace with your Shopify credentials
 const SHOPIFY_STORE_URL = "hit-megascale.myshopify.com"; // e.g., mystore.myshopify.com
 const SHOPIFY_ADMIN_API_VERSION = "2023-10";
 const SHOPIFY_ADMIN_ACCESS_TOKEN = process.env.SHOPIFY_ADMIN_TOKEN;

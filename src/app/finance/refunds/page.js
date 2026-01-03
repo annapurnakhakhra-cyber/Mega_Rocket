@@ -34,7 +34,7 @@ const RefundsDashboard = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
-  const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://10.27.4.11:3001";
+  const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://10.27.4.11:3000";
 
   // Check token from localStorage + validate
   useEffect(() => {

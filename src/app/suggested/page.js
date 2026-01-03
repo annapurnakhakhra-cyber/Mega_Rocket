@@ -1,8 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://10.27.4.11:3001";
 import { Search, Filter, Loader2, Plus, Trash2, Check } from "lucide-react";
+import { useState, useEffect } from "react";
 
 export default function ManageSuggestedProducts() {
   const [allProducts, setAllProducts] = useState([]);
@@ -15,6 +14,8 @@ export default function ManageSuggestedProducts() {
   const [selectedVendor, setSelectedVendor] = useState("all");
   const [sortBy, setSortBy] = useState("default");
 
+  const API_BASE = process.env.NEXT_PUBLIC_BASE_URL || "http://10.27.4.11:3000";
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -23,50 +24,57 @@ export default function ManageSuggestedProducts() {
     filterAndSortProducts();
   }, [searchTerm, selectedVendor, sortBy, allProducts, suggestedProducts]);
 
-  const fetchData = async () => {
-    try {
-      setLoading(true);
-      setError(null);
+ const fetchData = async () => {
+  try {
+    setLoading(true);
+    setError(null);
 
-      console.log('Fetching all products...');
-      const productsRes = await fetch(`${API_BASE}/api/products/list`);
-      console.log('Products response status:', productsRes.status);
-      
-      if (!productsRes.ok) {
-        throw new Error(`Failed to fetch products: ${productsRes.status}`);
+    const token = localStorage.getItem("token");
+    if (!token) throw new Error("No auth token found");
+
+    // Fetch all products
+    const productsRes = await fetch(`${API_BASE}/api/products/list`, {
+      headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+    });
+    if (!productsRes.ok) throw new Error(`Products fetch failed: ${productsRes.status}`);
+    const productsData = await productsRes.json();
+    setAllProducts(productsData.products || []);
+
+    // Fetch suggested products for ALL vendors (merge them)
+    const allSuggested = [];
+
+    // List of vendors you care about – add more if needed
+    const vendors = ["Swing", "Annapurna Khakhra", "Hit", "OtherVendor"];
+
+    for (const vendor of vendors) {
+      try {
+        // If your backend accepts vendor as query param
+        const res = await fetch(`${API_BASE}/api/suggested/list?vendor=${encodeURIComponent(vendor)}`, {
+          headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+        });
+        if (res.ok) {
+          const data = await res.json();
+          if (data.products) allSuggested.push(...data.products);
+        }
+      } catch (err) {
+        console.warn(`Failed to fetch suggested for ${vendor}:`, err);
       }
-      
-      const productsData = await productsRes.json();
-      const products = productsData.products || productsData.data || productsData || [];
-      console.log('Parsed products:', products.length);
-      
-      if (!Array.isArray(products)) {
-        throw new Error('Products is not an array');
-      }
-
-      setAllProducts(products);
-
-      console.log('Fetching suggested products...');
-      const suggestedRes = await fetch(`${API_BASE}/api/suggested/list`);
-      console.log('Suggested response status:', suggestedRes.status);
-      
-      if (suggestedRes.ok) {
-        const suggestedData = await suggestedRes.json();
-        console.log('Suggested data:', suggestedData);
-        const suggested = suggestedData.products || [];
-        setSuggestedProducts(suggested);
-      } else {
-        console.log('Suggested products API not available yet');
-        setSuggestedProducts([]);
-      }
-
-    } catch (error) {
-      console.error('Error fetching data:', error);
-      setError(error.message);
-    } finally {
-      setLoading(false);
     }
-  };
+
+    // Remove duplicates if any
+    const uniqueSuggested = allSuggested.filter(
+      (p, index, self) => self.findIndex(t => t.shopifyProductId === p.shopifyProductId) === index
+    );
+
+    setSuggestedProducts(uniqueSuggested);
+
+  } catch (error) {
+    console.error("Fetch error:", error);
+    setError(error.message);
+  } finally {
+    setLoading(false);
+  }
+};
 
   const filterAndSortProducts = () => {
     if (!Array.isArray(allProducts) || allProducts.length === 0) {
@@ -111,26 +119,31 @@ export default function ManageSuggestedProducts() {
     setFilteredProducts(filtered);
   };
 
+  // FIXED: Compare only numeric part of Shopify Product ID
   const isSuggested = (productId) => {
-    return suggestedProducts.some(p => p.shopifyProductId === productId);
+    const numericId = productId.toString().split('/').pop();
+
+    return suggestedProducts.some(p => {
+      const suggestedNumericId = p.shopifyProductId.toString().split('/').pop();
+      return suggestedNumericId === numericId;
+    });
   };
 
   const handleAddToSuggested = async (product) => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      alert("❌ Authentication token missing. Please log in again.");
+      return;
+    }
+
     setProcessing({ ...processing, [product.id]: true });
 
     try {
-      console.log('Adding product to suggested:', product.id);
-      console.log('Request payload:', {
-        shopifyProductId: product.id,
-        productHandle: product.handle,
-        title: product.title,
-        vendor: product.vendor,
-        price: parseFloat(product.price?.amount || 0),
-      });
-
       const res = await fetch(`${API_BASE}/api/suggested/add`, {
         method: 'POST',
-        headers: { 
+        headers: {
+          Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
           'Accept': 'application/json',
         },
@@ -140,46 +153,37 @@ export default function ManageSuggestedProducts() {
           title: product.title,
           vendor: product.vendor || '',
           price: parseFloat(product.price?.amount || 0),
-          compareAtPrice: product.compareAtPrice?.amount 
-            ? parseFloat(product.compareAtPrice.amount) 
+          compareAtPrice: product.compareAtPrice?.amount
+            ? parseFloat(product.compareAtPrice.amount)
             : null,
           featuredImageUrl: product.featuredImage?.url || '',
           variantId: product.variantId || '',
         }),
       });
 
-      console.log('Add response status:', res.status);
-      console.log('Add response headers:', res.headers);
-
-      // Check if response has content
-      const contentType = res.headers.get('content-type');
-      console.log('Content-Type:', contentType);
-
       let data;
       const responseText = await res.text();
-      console.log('Response text:', responseText);
 
       if (responseText) {
         try {
           data = JSON.parse(responseText);
         } catch (parseError) {
-          console.error('JSON parse error:', parseError);
           throw new Error(`Invalid JSON response: ${responseText.substring(0, 100)}`);
         }
       } else {
         throw new Error('Empty response from server');
       }
 
-      if (!res.ok) {
+      if (!res.ok || !data.success) {
         throw new Error(data.error || data.message || `Server error: ${res.status}`);
       }
 
-      if (!data.success) {
-        throw new Error(data.error || 'Failed to add product');
-      }
+      // Optimistic UI Update
+      setSuggestedProducts(prev => [...prev, { shopifyProductId: product.id }]);
 
-      console.log('Product added successfully!');
+      // Refresh data from server (for consistency)
       await fetchData();
+
       alert('✅ Product added to suggested list!');
     } catch (error) {
       console.error('Error adding product:', error);
@@ -190,14 +194,19 @@ export default function ManageSuggestedProducts() {
   };
 
   const handleRemoveFromSuggested = async (product) => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("❌ Authentication token missing. Please log in again.");
+      return;
+    }
+
     setProcessing({ ...processing, [product.id]: true });
 
     try {
-      console.log('Removing product from suggested:', product.id);
-
       const res = await fetch(`${API_BASE}/api/suggested/remove`, {
         method: 'DELETE',
-        headers: { 
+        headers: {
+          Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
           'Accept': 'application/json',
         },
@@ -206,32 +215,30 @@ export default function ManageSuggestedProducts() {
         }),
       });
 
-      console.log('Remove response status:', res.status);
-
-      const responseText = await res.text();
-      console.log('Response text:', responseText);
-
       let data;
+      const responseText = await res.text();
+
       if (responseText) {
         try {
           data = JSON.parse(responseText);
         } catch (parseError) {
-          console.error('JSON parse error:', parseError);
           throw new Error(`Invalid JSON response: ${responseText.substring(0, 100)}`);
         }
       } else {
         throw new Error('Empty response from server');
       }
 
-      if (!res.ok) {
+      if (!res.ok || !data.success) {
         throw new Error(data.error || data.message || `Server error: ${res.status}`);
       }
 
-      if (!data.success) {
-        throw new Error(data.error || 'Failed to remove product');
-      }
+      // Optimistic UI Update
+      const numericId = product.id.toString().split('/').pop();
+      setSuggestedProducts(prev => prev.filter(p => {
+        const suggestedNumericId = p.shopifyProductId.toString().split('/').pop();
+        return suggestedNumericId !== numericId;
+      }));
 
-      console.log('Product removed successfully!');
       await fetchData();
       alert('✅ Product removed from suggested list!');
     } catch (error) {
@@ -244,12 +251,13 @@ export default function ManageSuggestedProducts() {
 
   const vendors = ["all", ...new Set(allProducts.map(p => p.vendor).filter(Boolean))];
 
+  // Rest of your JSX remains exactly the same...
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 to-orange-50">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-[#7C4A0E] mb-2">
+          <h1 className="text-4xl font-bold text-gray-800 mb-2">
             Manage Suggested Products
           </h1>
           <p className="text-gray-600">
@@ -293,7 +301,7 @@ export default function ManageSuggestedProducts() {
                 placeholder="Search products..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
               />
             </div>
 
@@ -302,7 +310,7 @@ export default function ManageSuggestedProducts() {
               <select
                 value={selectedVendor}
                 onChange={(e) => setSelectedVendor(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 appearance-none bg-white"
+                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 appearance-none bg-white"
               >
                 {vendors.map(vendor => (
                   <option key={vendor} value={vendor}>
@@ -316,7 +324,7 @@ export default function ManageSuggestedProducts() {
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 appearance-none bg-white"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 appearance-none bg-white"
               >
                 <option value="default">Default Order</option>
                 <option value="price-low">Price: Low to High</option>
@@ -335,7 +343,7 @@ export default function ManageSuggestedProducts() {
         {/* Loading State */}
         {loading && (
           <div className="flex flex-col justify-center items-center py-20">
-            <Loader2 className="w-12 h-12 text-orange-600 animate-spin mb-4" />
+            <Loader2 className="w-12 h-12 text-indigo-600 animate-spin mb-4" />
             <p className="text-gray-600">Loading products...</p>
           </div>
         )}
@@ -345,7 +353,7 @@ export default function ManageSuggestedProducts() {
           <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full">
-                <thead className="bg-[#7C4A0E] text-white">
+                <thead className="bg-gray-900 text-white">
                   <tr>
                     <th className="px-6 py-4 text-left text-sm font-semibold">Image</th>
                     <th className="px-6 py-4 text-left text-sm font-semibold">Product</th>
@@ -366,9 +374,7 @@ export default function ManageSuggestedProducts() {
                     return (
                       <tr
                         key={product.id}
-                        className={`hover:bg-gray-50 transition ${
-                          isInSuggested ? 'bg-green-50' : ''
-                        }`}
+                        className={`hover:bg-gray-50 transition ${isInSuggested ? 'bg-green-50' : ''}`}
                       >
                         <td className="px-6 py-4">
                           <div className="relative w-20 h-20 rounded-lg overflow-hidden">
@@ -405,7 +411,7 @@ export default function ManageSuggestedProducts() {
 
                         <td className="px-6 py-4">
                           <div className="flex flex-col">
-                            <span className="text-lg font-bold text-orange-600">
+                            <span className="text-lg font-bold text-blue-600">
                               ₹{price}
                             </span>
                             {hasDiscount && (
@@ -448,7 +454,7 @@ export default function ManageSuggestedProducts() {
                               <button
                                 onClick={() => handleAddToSuggested(product)}
                                 disabled={isProcessing}
-                                className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                                className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
                               >
                                 {isProcessing ? (
                                   <Loader2 className="w-4 h-4 animate-spin" />
