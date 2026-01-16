@@ -12,7 +12,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { jwtDecode } from "jwt-decode";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://10.27.4.11:3001";
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://10.27.4.11:3000";
 
 const PendingOrdersPage = () => {
   const router = useRouter();
@@ -192,7 +192,7 @@ const PendingOrdersPage = () => {
               <div className="flex flex-col sm:flex-row flex-wrap gap-3 w-full sm:w-auto mt-2 sm:mt-0">
                 <button
                   onClick={() => setShowFilters(!showFilters)}
-                  className="flex items-center justify-center gap-2 px-4 py-3 bg-gray-100 hover:bg-gray-200 rounded-lg w-full sm:w-auto transition"
+                  className="flex items-center justify-center gap-2 px-4 py-3 bg-gray-100 hover:bg-gray-200 rounded-lg w-full sm:w-auto transition cursor-pointer"
                 >
                   <Filter className="w-5 h-5" /> Filters
                 </button>
@@ -200,7 +200,7 @@ const PendingOrdersPage = () => {
                 <button
                   onClick={fetchPendingOrders}
                   disabled={loading}
-                  className="flex items-center justify-center gap-2 px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg w-full sm:w-auto transition disabled:opacity-50"
+                  className="flex items-center justify-center gap-2 px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg w-full sm:w-auto transition disabled:opacity-50 cursor-pointer"
                 >
                   <RefreshCw className={`w-5 h-5 ${loading ? "animate-spin" : ""}`} />
                   Refresh
@@ -208,7 +208,7 @@ const PendingOrdersPage = () => {
 
                 <button
                   onClick={downloadExcel}
-                  className="flex items-center justify-center gap-2 px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg w-full sm:w-auto transition"
+                  className="flex items-center justify-center gap-2 px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg w-full sm:w-auto transition cursor-pointer"
                 >
                   <Download className="w-5 h-5" /> Excel
                 </button>
@@ -232,7 +232,7 @@ const PendingOrdersPage = () => {
               <p className="mb-4">{error}</p>
               <button
                 onClick={fetchPendingOrders}
-                className="px-6 py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg font-medium transition"
+                className="px-6 py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg font-medium transition cursor-pointer"
               >
                 Try Again
               </button>
@@ -322,7 +322,7 @@ const PendingOrdersPage = () => {
                   <button
                     onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
                     disabled={currentPage === 1}
-                    className="px-6 py-2 bg-blue-600 text-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-blue-700 transition font-medium"
+                    className="px-6 py-2 bg-blue-600 text-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-blue-700 transition font-medium cursor-pointer"
                   >
                     Previous
                   </button>
@@ -332,7 +332,7 @@ const PendingOrdersPage = () => {
                   <button
                     onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
                     disabled={currentPage === totalPages}
-                    className="px-6 py-2 bg-blue-600 text-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-blue-700 transition font-medium"
+                    className="px-6 py-2 bg-blue-600 text-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-blue-700 transition font-medium cursor-pointer"
                   >
                     Next
                   </button>
@@ -348,7 +348,7 @@ const PendingOrdersPage = () => {
                 <div className="sticky top-0 bg-gradient-to-r from-yellow-500 to-orange-500 text-white p-4 sm:p-6 rounded-t-2xl">
                   <div className="flex justify-between items-center">
                     <h2 className="text-xl sm:text-2xl font-bold">Order {selectedOrder.name} (Pending)</h2>
-                    <button onClick={() => setShowModal(false)} className="p-2 hover:bg-white/20 rounded-full transition">
+                    <button onClick={() => setShowModal(false)} className="p-2 hover:bg-white/20 rounded-full transition cursor-pointer">
                       <X className="w-6 h-6" />
                     </button>
                   </div>

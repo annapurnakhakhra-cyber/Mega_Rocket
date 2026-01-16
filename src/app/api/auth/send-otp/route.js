@@ -5,8 +5,9 @@ import { sendMail } from "@/lib/sendMail";
 export async function POST(req) {
   try {
     await connectToDB();
-
+    
     const { email } = await req.json();
+    console.log("🔗 Connected to DB",email) ;
     if (!email) {
       return new Response(JSON.stringify({ success: false, msg: "Email is required" }), {
         status: 400,

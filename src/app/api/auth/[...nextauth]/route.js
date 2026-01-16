@@ -1,6 +1,6 @@
 // app/api/auth/[...nextauth]/route.js
 import NextAuth from 'next-auth';
-import CredentialsProvider from 'next-auth/providers/credentials'; // અથવા Google, etc.
+import CredentialsProvider from 'next-auth/providers/credentials';
 
 const handler = NextAuth({
   providers: [
@@ -11,7 +11,6 @@ const handler = NextAuth({
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
-        // તમારી login logic અહીં (e.g., database check)
         if (credentials.email === 'admin@example.com' && credentials.password === 'password') {
           return { id: 1, email: 'admin@example.com', role: 'admin' };
         }

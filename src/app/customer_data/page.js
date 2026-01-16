@@ -14,7 +14,7 @@ const pageSize = 10;
 
 const CustomerManager = () => {
   const router = useRouter();
-  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://10.27.4.11:3001";
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://10.27.4.11:3000";
 
   const [shopName, setShopName] = useState("");
   const [customers, setCustomers] = useState([]);
@@ -185,7 +185,7 @@ const CustomerManager = () => {
                 <button
                   onClick={fetchCustomers}
                   disabled={loading}
-                  className="flex items-center gap-2 px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg disabled:opacity-50"
+                  className="flex items-center gap-2 px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg disabled:opacity-50 cursor-pointer"
                 >
                   <RefreshCcw className={`w-5 h-5 ${loading ? "animate-spin" : ""}`} />
                   Refresh
@@ -193,7 +193,7 @@ const CustomerManager = () => {
 
                 <button
                   onClick={downloadCSV}
-                  className="flex items-center gap-2 px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg"
+                  className="flex items-center gap-2 px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg cursor-pointer"
                 >
                   <Download className="w-5 h-5" /> Export CSV
                 </button>
@@ -308,7 +308,7 @@ const CustomerManager = () => {
                         <td className="px-6 py-4">
                           <button
                             onClick={() => setModalData(c)}
-                            className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium flex items-center gap-1 transition"
+                            className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium flex items-center gap-1 transition cursor-pointer"
                           >
                             <Eye size={16} /> View
                           </button>
@@ -327,7 +327,7 @@ const CustomerManager = () => {
               <button
                 onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
                 disabled={currentPage === 1}
-                className="px-6 py-3 bg-blue-600 text-white rounded-lg disabled:opacity-50 hover:bg-blue-700 flex items-center gap-2"
+                className="px-6 py-3 bg-blue-600 text-white rounded-lg disabled:opacity-50 hover:bg-blue-700 flex items-center gap-2 cursor-pointer"
               >
                 <ChevronLeft className="w-5 h-5" /> Previous
               </button>
@@ -337,7 +337,7 @@ const CustomerManager = () => {
               <button
                 onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
                 disabled={currentPage === totalPages}
-                className="px-6 py-3 bg-blue-600 text-white rounded-lg disabled:opacity-50 hover:bg-blue-700 flex items-center gap-2"
+                className="px-6 py-3 bg-blue-600 text-white rounded-lg disabled:opacity-50 hover:bg-blue-700 flex items-center gap-2 cursor-pointer"
               >
                 Next <ChevronRight className="w-5 h-5" />
               </button>
@@ -358,7 +358,7 @@ const CustomerManager = () => {
                   <h2 className="text-xl font-bold">Customer Details</h2>
                   <button
                     onClick={() => setModalData(null)}
-                    className="p-2 hover:bg-white/20 rounded-full transition"
+                    className="p-2 hover:bg-white/20 rounded-full transition cursor-pointer"
                   >
                     <X className="w-6 h-6" />
                   </button>

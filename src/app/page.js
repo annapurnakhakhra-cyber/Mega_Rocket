@@ -21,12 +21,13 @@ export default function ShiprocketLanding() {
   const router = useRouter();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+   const [openFaq, setOpenFaq] = useState(null);
 
   useEffect(() => {
     const token = localStorage.getItem("token"); // Adjust 'token' key if your auth token uses a different name (e.g., 'authToken')
     
     if (!token) {
-      router.push("/auth/login"); // Redirect to login if no token
+      router.replace("/auth/login"); // Redirect to login if no token
     } else {
       setIsAuthenticated(true); // Allow rendering if token exists
     }
@@ -48,7 +49,7 @@ export default function ShiprocketLanding() {
     return null; // Or a fallback UI
   }
 
-  const [openFaq, setOpenFaq] = useState(null);
+ 
 
   const toggleFaq = (index) => {
     setOpenFaq(openFaq === index ? null : index);
@@ -149,7 +150,7 @@ export default function ShiprocketLanding() {
                 Conversions made easy, Shopping made fun
               </p>
 
-              <button className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-8 py-4 rounded-lg font-semibold hover:shadow-lg hover:scale-105 transition flex items-center space-x-2">
+              <button className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-8 py-4 rounded-lg font-semibold hover:shadow-lg hover:scale-105 transition flex items-center space-x-2 cursor-pointer">
                 <span>Get Started</span>
                 <ArrowRight className="w-5 h-5" />
               </button>
@@ -328,7 +329,7 @@ export default function ShiprocketLanding() {
               <div key={i} className="bg-white rounded-lg shadow">
                 <button
                   onClick={() => toggleFaq(i)}
-                  className="w-full p-6 flex justify-between items-center text-left hover:bg-gray-50"
+                  className="w-full p-6 flex justify-between items-center text-left hover:bg-gray-50 cursor-pointer"
                 >
                   <span className="font-semibold text-black">{faq.question}</span>
                   {openFaq === i ? (

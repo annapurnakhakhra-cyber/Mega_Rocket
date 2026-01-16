@@ -26,7 +26,7 @@ const PaymentTransactionsDashboard = () => {
               Almost there! Complete your KYC and billing setup to go live. Your checkout will stay inactive until onboarding is done.
             </p>
           </div>
-          <button className="text-sm text-orange-600 hover:text-orange-700 font-medium">
+          <button className="text-sm text-orange-600 hover:text-orange-700 font-medium cursor-pointer">
             Update now
           </button>
         </div>
@@ -100,7 +100,7 @@ const PaymentTransactionsDashboard = () => {
                 className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
               />
             </div>
-            <button className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+            <button className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors cursor-pointer">
               <Download className="w-4 h-4" />
               Download All
             </button>

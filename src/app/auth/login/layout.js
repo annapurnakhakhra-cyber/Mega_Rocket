@@ -9,8 +9,8 @@ export const metadata = {
 export default function AuthLayout({ children }) {
   return (
     // <html lang="en">
-       <div className="min-h-screen flex items-center justify-center bg-white">
-        <main className="w-full min-h-screen p-6 shadow-md flex items-center justify-center">
+       <div className="min-h-screen flex items-center justify-center">
+        <main className="w-full min-h-screen p-6 flex items-center justify-center">
           {children}
         </main>
      </div>

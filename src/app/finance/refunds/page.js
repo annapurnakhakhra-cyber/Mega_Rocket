@@ -34,7 +34,7 @@ const RefundsDashboard = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
-  const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://10.27.4.11:3001";
+  const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://10.27.4.11:3000";
 
   // Check token from localStorage + validate
   useEffect(() => {
@@ -336,14 +336,14 @@ const RefundsDashboard = () => {
               <div className="flex flex-wrap gap-3">
                 <button
                   onClick={() => setFilterOpen(!filterOpen)}
-                  className="flex items-center gap-2 px-4 py-3 bg-gray-100 hover:bg-gray-200 rounded-lg lg:hidden"
+                  className="flex items-center gap-2 px-4 py-3 bg-gray-100 hover:bg-gray-200 rounded-lg lg:hidden cursor-pointer"
                 >
                   <Filter className="w-5 h-5" /> Filters
                 </button>
                 <button
                   onClick={downloadExcel}
                   disabled={loading || refunds.length === 0}
-                  className="flex items-center gap-2 px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg disabled:opacity-50 font-medium"
+                  className="flex items-center gap-2 px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg disabled:opacity-50 font-medium cursor-pointer"
                 >
                   <Download className="w-5 h-5" /> Export Excel
                 </button>
@@ -365,7 +365,7 @@ const RefundsDashboard = () => {
               <AlertTriangle className="w-16 h-16 mx-auto mb-4" />
               <p className="text-xl font-bold mb-2">Error</p>
               <p className="mb-4">{error}</p>
-              <button onClick={() => window.location.reload()} className="px-6 py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg">
+              <button onClick={() => window.location.reload()} className="px-6 py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg cursor-pointer">
                 Retry
               </button>
             </div>
@@ -513,7 +513,7 @@ const RefundsDashboard = () => {
                   <button
                     onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
                     disabled={currentPage === 1}
-                    className="px-6 py-3 bg-blue-600 text-white rounded-lg disabled:opacity-50 hover:bg-blue-700 flex items-center gap-2"
+                    className="px-6 py-3 bg-blue-600 text-white rounded-lg disabled:opacity-50 hover:bg-blue-700 flex items-center gap-2 cursor-pointer"
                   >
                     <ChevronLeft className="w-5 h-5" /> Previous
                   </button>
@@ -523,7 +523,7 @@ const RefundsDashboard = () => {
                   <button
                     onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
                     disabled={currentPage === totalPages}
-                    className="px-6 py-3 bg-blue-600 text-white rounded-lg disabled:opacity-50 hover:bg-blue-700 flex items-center gap-2"
+                    className="px-6 py-3 bg-blue-600 text-white rounded-lg disabled:opacity-50 hover:bg-blue-700 flex items-center gap-2 cursor-pointer"
                   >
                     Next <ChevronRight className="w-5 h-5" />
                   </button>

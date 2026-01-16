@@ -26,7 +26,7 @@ export default function OTPLogin() {
   const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
   if (token) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-50">
+      <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600 mx-auto"></div>
           <p className="mt-4 text-lg text-gray-600">Redirecting to dashboard...</p>
@@ -163,7 +163,7 @@ export default function OTPLogin() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full py-4 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold text-lg rounded-2xl hover:from-purple-700 hover:to-indigo-700 transition shadow-lg disabled:opacity-70"
+              className="w-full py-4 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold text-lg rounded-2xl hover:from-purple-700 hover:to-indigo-700 transition shadow-lg disabled:opacity-70 cursor-pointer"
             >
               {isLoading ? "Sending OTP..." : "Send Magic Code"}
             </button>
@@ -198,7 +198,7 @@ export default function OTPLogin() {
             <button
               type="submit"
               disabled={isLoading || otp.length !== 6}
-              className="w-full py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold text-lg rounded-2xl hover:from-indigo-700 hover:to-purple-700 transition shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold text-lg rounded-2xl hover:from-indigo-700 hover:to-purple-700 transition shadow-lg disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
             >
               {isLoading ? "Verifying..." : "Verify & Login"}
             </button>
@@ -211,7 +211,7 @@ export default function OTPLogin() {
                 setError("");
                 setMessage("");
               }}
-              className="w-full text-center text-purple-600 font-medium hover:underline"
+              className="w-full text-center text-purple-600 font-medium hover:underline cursor-pointer"
             >
               ← Back to Email
             </button>

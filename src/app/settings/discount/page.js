@@ -279,7 +279,7 @@ const RefundsDashboard = () => {
               <h3 className="text-lg font-semibold text-gray-900">Filters</h3>
               <button
                 onClick={() => setFilterOpen(!filterOpen)}
-                className="md:hidden flex items-center space-x-2 text-blue-600 hover:text-blue-700"
+                className="md:hidden flex items-center space-x-2 text-blue-600 hover:text-blue-700 cursor-pointer"
               >
                 <Filter className="w-4 h-4" />
                 <span>Toggle Filters</span>
@@ -456,14 +456,14 @@ const RefundsDashboard = () => {
                 <button
                   onClick={() => paginate(currentPage - 1)}
                   disabled={currentPage === 1}
-                  className="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+                  className="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 cursor-pointer"
                 >
                   Previous
                 </button>
                 <button
                   onClick={() => paginate(currentPage + 1)}
                   disabled={currentPage === totalPages}
-                  className="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+                  className="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 cursor-pointer"
                 >
                   Next
                 </button>

@@ -20,6 +20,6 @@ export async function POST(req) {
 
   const token = signToken({ email: user.email });
 
-  return Response.json({ token }, { status: 200 });
+  return Response.json({ token,  }, { status: 200 });
 }
   

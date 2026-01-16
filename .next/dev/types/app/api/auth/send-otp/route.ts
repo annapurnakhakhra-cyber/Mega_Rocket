@@ -1,4 +1,4 @@
-// File: C:\Users\admin\Desktop\next-shiprocket\shiprocket\src\app\api\auth\send-otp\route.js
+// File: C:\Users\admin\Downloads\shiprocket\src\app\api\auth\send-otp\route.js
 import * as entry from '../../../../../../../src/app/api/auth/send-otp/route.js'
 import type { NextRequest } from 'next/server.js'
 

@@ -48,7 +48,7 @@ export default function OTPLogin() {
     if (otp === MOCK_OTP) {
       // Fake login success
       sessionStorage.setItem('token', 'fake-jwt-token-for-demo');
-      sessionStorage.setItem('user', JSON.stringify({ email, name: 'Demo User' }));
+      sessionStorage.setItem('user', JSON.stringify({ email, name: email.split('@')[0] }));
 
       // Success message
       setMessage('Login Successful! Redirecting...');

@@ -119,7 +119,7 @@ export default function ShopTokenPage() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-gradient-to-r from-indigo-500 to-purple-500 text-white py-3 px-4 rounded-md hover:opacity-90 transition disabled:opacity-50 flex items-center justify-center gap-2"
+          className="w-full bg-gradient-to-r from-indigo-500 to-purple-500 text-white py-3 px-4 rounded-md hover:opacity-90 transition disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer"
         >
           {loading ? "⏳ Saving..." : "🔑 Save Token"}
         </button>

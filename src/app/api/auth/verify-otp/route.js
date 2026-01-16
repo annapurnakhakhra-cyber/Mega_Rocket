@@ -21,5 +21,11 @@ export async function POST(req) {
   // Optionally delete the OTP after verification
   await Otp.deleteOne({ email, otp });
 
-  return Response.json({ success: true, token });
+  return Response.json({ success: true, token,
+    user: {
+      email: user.email,
+      shopName: user.shopName || null,
+      shopUrl: user.shopUrl || null,
+    }
+   });
 }

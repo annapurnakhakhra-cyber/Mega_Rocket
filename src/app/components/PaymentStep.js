@@ -4,7 +4,6 @@ import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner, faArrowLeft, faTimesCircle, faCheckCircle, faQrcode, faTag } from '@fortawesome/free-solid-svg-icons';
 
-// --- SIMULATED DISCOUNT LOGIC (Dynamic Promo Codes) ---
 const verifyPromoCode = (code, subtotal) => {
     const defaultDiscount = 50; // Base discount for prepaid orders
     
@@ -38,7 +37,6 @@ const verifyPromoCode = (code, subtotal) => {
 };
 
 
-// --- SIMULATED ORDER DATA (MODIFIED to accept Dynamic Discount) ---
 const getSimulatedOrderData = (isCodSelected, initialOrderItems, appliedDiscountAmount) => {
     const BASE_TOTAL = initialOrderItems.reduce((acc, item) => acc + (item.base_price * item.quantity), 0); 
     
@@ -65,10 +63,8 @@ const getSimulatedOrderData = (isCodSelected, initialOrderItems, appliedDiscount
         totalPayable: parseFloat(finalTotal.toFixed(2)),
     };
 };
-// ----------------------------------------------------------------------
 
 
-// ⭐️ NEW UI/UX COMPONENT: QR Code Overlay ⭐️
 const QrCodeOverlay = ({ totalPayable, onGoBack, onOrderPlace, isLoading }) => {
     const [timeLeft, setTimeLeft] = useState(300); // 5 minutes in seconds
     const [paymentStatus, setPaymentStatus] = useState('pending'); // pending, success, failed
@@ -114,7 +110,7 @@ const QrCodeOverlay = ({ totalPayable, onGoBack, onOrderPlace, isLoading }) => {
         <div className="space-y-6 text-center">
             <button 
                 onClick={onGoBack}
-                className="flex items-center text-gray-500 hover:text-gray-800 transition duration-150"
+                className="flex items-center text-gray-500 hover:text-gray-800 transition duration-150 cursor-pointer"
                 disabled={paymentStatus !== 'pending'}
             >
                 <FontAwesomeIcon icon={faArrowLeft} className="mr-2" />
@@ -146,7 +142,7 @@ const QrCodeOverlay = ({ totalPayable, onGoBack, onOrderPlace, isLoading }) => {
                  <button
                     onClick={handleManualConfirm} 
                     disabled={isLoading || timeLeft <= 0}
-                    className="w-full bg-green-600 text-white p-3 rounded-lg font-bold text-lg hover:bg-green-700 disabled:bg-gray-400 flex items-center justify-center shadow-lg"
+                    className="w-full bg-green-600 text-white p-3 rounded-lg font-bold text-lg hover:bg-green-700 disabled:bg-gray-400 flex items-center justify-center shadow-lg cursor-pointer"
                 >
                     {isLoading ? (
                         <>
@@ -161,28 +157,24 @@ const QrCodeOverlay = ({ totalPayable, onGoBack, onOrderPlace, isLoading }) => {
         </div>
     );
 };
-// ----------------------------------------------------------------------
 
 
 const PaymentStep = ({ onOrderPlace, onFinalizeAddress, isLoading, initialOrderItems }) => {
     const [selectedPayment, setSelectedPayment] = useState('prepaid');
     const [showQrCode, setShowQrCode] = useState(false); 
     
-    // ⭐️ NEW DISCOUNT STATES ⭐️
     const [promoCode, setPromoCode] = useState('');
     const [appliedDiscount, setAppliedDiscount] = useState({ 
-        amount: 50, // Default prepaid discount
+        amount: 50,
         message: 'Prepaid discount applied.',
         valid: true 
     });
 
-    // 🔴 FIX: Define the banner object here to fix "banner is not defined" error
     const banner = {
         bgColor: '#F74435', 
         textColor: '#FFFFFF',
         text: 'Prepaid 5% discount | COD Rs.40 Extra',
     };
-    // -------------------------------------------------------------------
 
     const isCodSelected = selectedPayment === 'cod';
     const subtotal = initialOrderItems.reduce((acc, item) => acc + (item.base_price * item.quantity), 0); 
@@ -194,12 +186,10 @@ const PaymentStep = ({ onOrderPlace, onFinalizeAddress, isLoading, initialOrderI
         taxAmount, shipping, paymentFee, totalPayable 
     } = orderDetails;
 
-    // --- EFFECT: Update Parent State on Change ---
     useEffect(() => {
         onFinalizeAddress(prev => ({ ...prev, paymentDetails: orderDetails }));
     }, [isCodSelected, onFinalizeAddress, orderDetails]);
     
-    // --- EFFECT: Recalculate default discount when changing payment method ---
     useEffect(() => {
         if (!isCodSelected) {
             if (promoCode === '') {
@@ -213,7 +203,6 @@ const PaymentStep = ({ onOrderPlace, onFinalizeAddress, isLoading, initialOrderI
     }, [isCodSelected]); 
 
 
-    // ⭐️ NEW HANDLER: Apply Promo Code ⭐️
     const handleApplyPromo = () => {
         if (isCodSelected) {
             alert("Promo codes are only applicable for Prepaid orders.");
@@ -261,7 +250,6 @@ const PaymentStep = ({ onOrderPlace, onFinalizeAddress, isLoading, initialOrderI
         );
     }
 
-    // --- Default Payment Selection Screen Rendering ---
     return (
         <div className="space-y-6">
             <h3 className="text-2xl font-bold text-blue-600">Payment Options</h3>
@@ -274,7 +262,6 @@ const PaymentStep = ({ onOrderPlace, onFinalizeAddress, isLoading, initialOrderI
                 {banner.text}
             </div>
             
-            {/* ⭐️ NEW: Discount Input Field ⭐️ */}
             <div className="border p-4 rounded-lg shadow-sm space-y-2">
                 <h4 className="font-bold text-gray-800 flex items-center">
                     <FontAwesomeIcon icon={faTag} className="mr-2 text-blue-500" />
@@ -292,7 +279,7 @@ const PaymentStep = ({ onOrderPlace, onFinalizeAddress, isLoading, initialOrderI
                     <button
                         onClick={handleApplyPromo}
                         disabled={isLoading || isCodSelected}
-                        className={`p-2 rounded-lg font-semibold text-white transition duration-150 ${
+                        className={`p-2 rounded-lg font-semibold text-white transition duration-150 cursor-pointer ${
                             isCodSelected ? 'bg-gray-400' : 'bg-green-600 hover:bg-green-700'
                         }`}
                     >
@@ -358,7 +345,7 @@ const PaymentStep = ({ onOrderPlace, onFinalizeAddress, isLoading, initialOrderI
             <button
                 onClick={handlePaymentAction}
                 disabled={isLoading}
-                className={`w-full text-white p-3 rounded-lg font-bold text-lg shadow-lg flex items-center justify-center ${buttonBg}`}
+                className={`w-full text-white p-3 rounded-lg font-bold text-lg shadow-lg flex items-center justify-center cursor-pointer ${buttonBg}`}
             >
                 {isLoading ? (
                     <>

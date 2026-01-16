@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 const LoginStep = ({ onLoginSuccess }) => {
-    // Setting a default number for easy testing, but this should be dynamic
     const [mobile, setMobile] = useState('9876543210'); 
     const [otp, setOtp] = useState('');
     const [isOtpSent, setIsOtpSent] = useState(false);
@@ -14,7 +13,6 @@ const LoginStep = ({ onLoginSuccess }) => {
     const handleSendOtp = async () => {
         if (mobile.length !== 10) return;
         setIsLoading(true);
-        // Simulate OTP sending delay
         await new Promise(resolve => setTimeout(resolve, 1500)); 
         
         setIsOtpSent(true); 
@@ -42,7 +40,6 @@ const LoginStep = ({ onLoginSuccess }) => {
                 throw new Error(errorData.message || 'Failed to fetch user data from API.');
             }
 
-            // 🟢 SUCCESS: Receive dynamic data from the API
             const userData = await response.json(); 
             
             console.log("✅ Dynamic User Data Received:", userData);
@@ -77,7 +74,7 @@ const LoginStep = ({ onLoginSuccess }) => {
                     <button
                         onClick={handleSendOtp}
                         disabled={isLoading || mobile.length !== 10}
-                        className="w-full bg-blue-600 text-white p-3 rounded-lg font-bold hover:bg-blue-700 disabled:bg-blue-300 flex items-center justify-center shadow-md"
+                        className="w-full bg-blue-600 text-white p-3 rounded-lg font-bold hover:bg-blue-700 disabled:bg-blue-300 flex items-center justify-center shadow-md cursor-pointer"
                     >
                         {isLoading ? <FontAwesomeIcon icon={faSpinner} spin className="mr-2" /> : 'Get OTP & Auto-fill'}
                     </button>
@@ -96,13 +93,13 @@ const LoginStep = ({ onLoginSuccess }) => {
                     <button
                         onClick={handleVerifyOtp}
                         disabled={isLoading || otp.length !== 4}
-                        className="w-full bg-green-600 text-white p-3 rounded-lg font-bold hover:bg-green-700 disabled:bg-green-300 flex items-center justify-center shadow-md"
+                        className="w-full bg-green-600 text-white p-3 rounded-lg font-bold hover:bg-green-700 disabled:bg-green-300 flex items-center justify-center shadow-md cursor-pointer"
                     >
                         {isLoading ? <FontAwesomeIcon icon={faSpinner} spin className="mr-2" /> : 'Verify OTP'}
                     </button>
                     <button 
                         onClick={() => setIsOtpSent(false)} 
-                        className="w-full text-blue-600 text-sm mt-2 hover:underline"
+                        className="w-full text-blue-600 text-sm mt-2 hover:underline cursor-pointer"
                     >
                         Change Number
                     </button>

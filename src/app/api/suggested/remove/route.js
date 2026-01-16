@@ -8,13 +8,11 @@ export async function DELETE(request) {
   console.log('=== REMOVE SUGGESTED PRODUCT API CALLED ===');
   
   try {
-    // Parse request body
     const body = await request.json();
     console.log('Request body:', body);
 
     const { shopifyProductId } = body;
 
-    // Validation
     if (!shopifyProductId) {
       console.log('Validation failed: Missing shopifyProductId');
       return NextResponse.json(
@@ -30,7 +28,6 @@ export async function DELETE(request) {
     await connectDB();
     console.log('MongoDB connected successfully');
 
-    // Find and delete the product
     console.log('Removing product:', shopifyProductId);
     const deletedProduct = await SuggestedProduct.findOneAndDelete({ 
       shopifyProductId 

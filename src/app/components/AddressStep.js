@@ -2,9 +2,8 @@
 
 import React, { useState } from 'react';
 
-// --- External Data: Comprehensive Country List ---
 const COUNTRIES = [
-    { code: '', name: 'Select Country/Region *' }, // Placeholder
+    { code: '', name: 'Select Country/Region *' }, 
     { code: 'IN', name: 'India' },
     { code: 'US', name: 'United States' },
     { code: 'GB', name: 'United Kingdom' },
@@ -14,12 +13,9 @@ const COUNTRIES = [
     { code: 'FR', name: 'France' },
     { code: 'AE', name: 'United Arab Emirates' },
     { code: 'SG', name: 'Singapore' },
-    // Add many more countries here...
 ];
-// ------------------------------------------------
 
 const AddressStep = ({ initialAddress, onAddressConfirm, userName }) => {
-    // Expanded state structure to handle all address fields
     const [address, setAddress] = useState(initialAddress || {
         country: '', 
         first_name: '',
@@ -162,7 +158,7 @@ const AddressStep = ({ initialAddress, onAddressConfirm, userName }) => {
             
             <button
                 type="submit"
-                className="w-full bg-blue-600 text-white p-3 rounded-lg font-bold hover:bg-blue-700 mt-6"
+                className="w-full bg-blue-600 text-white p-3 rounded-lg font-bold hover:bg-blue-700 mt-6 cursor-pointer"
             >
                 Proceed to Payment
             </button>

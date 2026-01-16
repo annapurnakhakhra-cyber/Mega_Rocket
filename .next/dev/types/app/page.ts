@@ -1,4 +1,4 @@
-// File: C:\Users\admin\Desktop\next-shiprocket\shiprocket\src\app\page.js
+// File: C:\Users\admin\Downloads\shiprocket\src\app\page.js
 import * as entry from '../../../../src/app/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

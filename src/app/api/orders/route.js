@@ -70,7 +70,7 @@ export async function GET(req) {
     const graphqlQuery = {
       query: `
         {
-          orders(first: 50, sortKey: CREATED_AT, reverse: true) {
+          orders(first: 250, sortKey: CREATED_AT, reverse: true) {
             edges {
               node {
                 id

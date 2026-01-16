@@ -1,84 +1,159 @@
+// export const dynamic = "force-dynamic";
+
+// import { NextResponse } from "next/server";
+// import connectToDB from "@/lib/db";
+// import SuggestedProduct from "@/models/SuggestedProduct";
+// import User from "@/models/User";
+// import { verifyToken } from "@/lib/jwt";
+
+// export async function GET(req) {
+//   await connectToDB();
+
+//   // 1️⃣ Authorization
+//   const authHeader = req.headers.get("authorization");
+//   if (!authHeader) {
+//     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+//   }
+
+//   const token = authHeader.split(" ")[1];
+//   const decoded = verifyToken(token);
+
+//   if (!decoded) {
+//     return NextResponse.json({ error: "Invalid token" }, { status: 401 });
+//   }
+
+//   // 2️⃣ Load admin/user
+//   const admin = await User.findOne({ email: decoded.email });
+
+//   if (!admin) {
+//     return NextResponse.json({ error: "Admin not found" }, { status: 404 });
+//   }
+
+//   try {
+//     // 3️⃣ Query params
+//     const { searchParams } = new URL(req.url);
+//     const activeOnly = searchParams.get("activeOnly") ?? "true";
+
+//     const query = activeOnly === "true" ? { isActive: true } : {};
+
+//     // 4️⃣ Fetch suggested products
+//     const products = await SuggestedProduct.find(query)
+//       .sort({ displayOrder: 1, createdAt: -1 })
+//       .lean();
+
+//     return NextResponse.json({
+//       success: true,
+//       products,
+//       count: products.length,
+//     });
+//   } catch (err) {
+//     return NextResponse.json(
+//       {
+//         error: "Failed to fetch suggested products",
+//         details: err.message,
+//       },
+//       { status: 500 }
+//     );
+//   }
+// }
+
+
+
+
 // app/api/suggested/list/route.js
 
-import { NextResponse } from 'next/server';
-import connectDB from '@/lib/mongodb';
-import SuggestedProduct from '@/models/SuggestedProduct';
+export const dynamic = "force-dynamic";
 
-export async function GET(request) {
-  console.log('=== LIST SUGGESTED PRODUCTS API CALLED ===');
-  
+import { NextResponse } from "next/server";
+import connectToDB from "@/lib/db";
+import SuggestedProduct from "@/models/SuggestedProduct";
+import User from "@/models/User";
+import { verifyToken } from "@/lib/jwt";
+
+export async function GET(req) {
+  await connectToDB();
+
   try {
-    // Get query params
-    const { searchParams } = new URL(request.url);
-    const activeOnly = searchParams.get('activeOnly') || 'true';
-    console.log('Query params - activeOnly:', activeOnly);
-    
-    console.log('Connecting to MongoDB...');
-    await connectDB();
-    console.log('✅ MongoDB connected successfully');
-    
-    // Build query
-    const query = activeOnly === 'true' ? { isActive: true } : {};
-    console.log('Query:', query);
+    const { searchParams } = new URL(req.url);
+    const activeOnly = searchParams.get("activeOnly") ?? "true";
+    const requestedVendor = searchParams.get("vendor"); 
 
-    // Fetch suggested products
-    console.log('Fetching suggested products from database...');
-    const suggestedProducts = await SuggestedProduct.find(query)
+    let vendor = null;
+    let isAdminRequest = false;
+
+    const authHeader = req.headers.get("authorization");
+    if (authHeader) {
+      const token = authHeader.split(" ")[1];
+      const decoded = verifyToken(token);
+
+      if (decoded) {
+        const admin = await User.findOne({ email: decoded.email }).select("shopUrl vendorName");
+        if (admin) {
+          isAdminRequest = true;
+
+         
+          if (admin.vendorName) {
+            vendor = admin.vendorName;
+          } else if (admin.shopUrl) {
+            vendor = admin.shopUrl
+              .replace(".myshopify.com", "")
+              .split("-")[0]
+              .charAt(0)
+              .toUpperCase() + admin.shopUrl.replace(".myshopify.com", "").split("-")[0].slice(1);
+          }
+        }
+      }
+    }
+
+ 
+    
+   if (requestedVendor) {
+      const lower = requestedVendor.toLowerCase();
+      if (lower === "all" && isAdminRequest) {
+        vendor = null; // Admin explicitly wants all vendors
+      } else if (lower !== "all") {
+        vendor = requestedVendor.trim(); // Force this vendor (e.g., "Swing")
+      }
+    }
+
+    if (!vendor) {
+      return NextResponse.json(
+        { success: false, error: "Vendor not identified" },
+        { status: 400 }
+      );
+    }
+
+    // Final query
+    let query = { vendor };
+
+    if (activeOnly === "true") {
+      query.isActive = true;
+    }
+
+    if (isAdminRequest && requestedVendor && requestedVendor.toLowerCase() === "all") {
+      delete query.vendor; 
+    }
+
+    const products = await SuggestedProduct.find(query)
       .sort({ displayOrder: 1, createdAt: -1 })
       .lean();
 
-    console.log(`✅ Found ${suggestedProducts.length} suggested products`);
-
-    // Return with CORS headers
+    return NextResponse.json({
+      success: true,
+      products,
+      count: products.length,
+      currentVendor: vendor,  
+      isAdmin: isAdminRequest,
+    });
+  } catch (err) {
+    console.error("Error fetching suggested products:", err);
     return NextResponse.json(
       {
-        success: true,
-        products: suggestedProducts,
-        count: suggestedProducts.length
+        success: false,
+        error: "Failed to fetch suggested products",
+        details: err.message,
       },
-      {
-        status: 200,
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Methods': 'GET, OPTIONS',
-          'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-        }
-      }
-    );
-
-  } catch (error) {
-    console.error('=== ERROR IN LIST SUGGESTED API ===');
-    console.error('Error:', error);
-    
-    return NextResponse.json(
-      { 
-        success: false, 
-        error: 'Internal server error',
-        message: error.message,
-        products: [],
-        count: 0
-      },
-      { 
-        status: 500,
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-        }
-      }
+      { status: 500 }
     );
   }
-}
-
-// Handle OPTIONS preflight request
-export async function OPTIONS(request) {
-  return new NextResponse(null, {
-    status: 200,
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-      'Access-Control-Max-Age': '86400',
-    },
-  });
 }

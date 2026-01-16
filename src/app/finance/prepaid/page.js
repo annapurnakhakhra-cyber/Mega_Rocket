@@ -16,7 +16,7 @@ import { jwtDecode } from 'jwt-decode';
 
 const ShopifyOrdersDashboard = () => {
   const router = useRouter();
-  const API_URL = `${process.env.NEXT_PUBLIC_API_URL || 'http://10.27.4.11:3001'}/api/prepaid-orders`;
+  const API_URL = `${process.env.NEXT_PUBLIC_API_URL || 'http://10.27.4.11:3000'}/api/prepaid-orders`;
 
   const [prepaidOrders, setPrepaidOrders] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -154,10 +154,10 @@ const ShopifyOrdersDashboard = () => {
                 <p className="text-gray-600">High-priority prepaid transactions</p>
               </div>
               <div className="flex gap-3">
-                <button onClick={fetchPrepaidOrders} disabled={loading} className="px-5 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg flex items-center gap-2 disabled:opacity-50">
+                <button onClick={fetchPrepaidOrders} disabled={loading} className="px-5 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg flex items-center gap-2 disabled:opacity-50 cursor-pointer">
                   <RefreshCw className={`w-5 h-5 ${loading ? 'animate-spin' : ''}`} /> Refresh
                 </button>
-                <button onClick={exportExcel} className="px-5 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg flex items-center gap-2">
+                <button onClick={exportExcel} className="px-5 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg flex items-center gap-2 cursor-pointer">
                   <Download className="w-5 h-5" /> Excel
                 </button>
               </div>
@@ -264,11 +264,11 @@ const ShopifyOrdersDashboard = () => {
               {/* Pagination */}
               {totalPages > 1 && (
                 <div className="flex justify-center gap-4 mt-8">
-                  <button onClick={() => setPrepaidPage(p => Math.max(1, p - 1))} disabled={prepaidPage === 1} className="px-6 py-3 bg-blue-600 text-white rounded-lg disabled:opacity-50">
+                  <button onClick={() => setPrepaidPage(p => Math.max(1, p - 1))} disabled={prepaidPage === 1} className="px-6 py-3 bg-blue-600 text-white rounded-lg disabled:opacity-50 cursor-pointer">
                     Previous
                   </button>
                   <span className="self-center text-lg font-bold">{prepaidPage} / {totalPages}</span>
-                  <button onClick={() => setPrepaidPage(p => Math.min(totalPages, p + 1))} disabled={prepaidPage === totalPages} className="px-6 py-3 bg-blue-600 text-white rounded-lg disabled:opacity-50">
+                  <button onClick={() => setPrepaidPage(p => Math.min(totalPages, p + 1))} disabled={prepaidPage === totalPages} className="px-6 py-3 bg-blue-600 text-white rounded-lg disabled:opacity-50 cursor-pointer">
                     Next
                   </button>
                 </div>

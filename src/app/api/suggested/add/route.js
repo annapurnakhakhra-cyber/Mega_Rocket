@@ -8,8 +8,7 @@ export async function POST(request) {
   console.log('=== ADD SUGGESTED PRODUCT API CALLED ===');
   
   try {
-    // Parse request body
-    const body = await request.json();
+       const body = await request.json();
     console.log('Request body:', body);
 
     const {
@@ -23,7 +22,6 @@ export async function POST(request) {
       variantId,
     } = body;
 
-    // Validation
     if (!shopifyProductId || !productHandle || !title) {
       console.log('Validation failed: Missing required fields');
       return NextResponse.json(
@@ -39,8 +37,7 @@ export async function POST(request) {
     await connectDB();
     console.log('MongoDB connected successfully');
 
-    // Check if already exists
-    console.log('Checking if product already exists...');
+        console.log('Checking if product already exists...');
     const existing = await SuggestedProduct.findOne({ shopifyProductId });
     
     if (existing) {
@@ -54,13 +51,11 @@ export async function POST(request) {
       );
     }
 
-    // Get the highest display order and add 1
-    console.log('Getting display order...');
+       console.log('Getting display order...');
     const lastProduct = await SuggestedProduct.findOne().sort({ displayOrder: -1 });
     const displayOrder = lastProduct ? lastProduct.displayOrder + 1 : 0;
     console.log('Display order:', displayOrder);
 
-    // Create new suggested product
     console.log('Creating suggested product...');
     const suggestedProduct = await SuggestedProduct.create({
       shopifyProductId,

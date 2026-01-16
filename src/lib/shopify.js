@@ -23,7 +23,94 @@ async function request(query, variables = {}) {
 // ===========================
 // GET ALL PRODUCTS
 // ===========================
-export async function getAllProducts(first = 50) {
+// export async function getAllProducts(first = 50) {
+//   const query = `
+//     query getProducts($first: Int!) {
+//       products(first: $first) {
+//         edges {
+//           node {
+//             id
+//             title
+//             handle
+//             vendor
+//             description
+//             featuredImage { 
+//               url 
+//               altText 
+//             }
+//             variants(first: 1) {
+//               edges {
+//                 node {
+//                   id
+//                   title
+//                   price { 
+//                     amount 
+//                     currencyCode 
+//                   }
+//                   compareAtPrice: compareAtPriceV2 { 
+//                     amount 
+//                     currencyCode 
+//                   }
+//                 }
+//               }
+//             }
+//           }
+//         }
+//       }
+//     }
+//   `;
+
+//   const data = await request(query, { first });
+
+//   return data.products.edges.map(edge => ({
+//     ...edge.node,
+//     variantId: edge.node.variants.edges[0]?.node.id || null,
+//     price: edge.node.variants.edges[0]?.node.price || null,
+//     compareAtPrice: edge.node.variants.edges[0]?.node.compareAtPrice || null,
+//   }));
+// }
+
+
+// lib/shopify.js
+
+async function requestShopify(query, variables, accessToken, shopUrl) {
+  if (!accessToken || !shopUrl) {
+    throw new Error("Missing Shopify accessToken or shopUrl");
+  }
+
+  // December 2025 में latest stable version 2025-10 है
+  const endpoint = `https://${shopUrl}/admin/api/2025-10/graphql.json`;
+
+  const response = await fetch(endpoint, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "X-Shopify-Access-Token": accessToken,
+    },
+    body: JSON.stringify({ query, variables }),
+  });
+
+  if (!response.ok) {
+    const text = await response.text();
+    throw new Error(`Shopify API Error ${response.status}: ${text}`);
+  }
+
+  const { data, errors } = await response.json();
+
+  if (errors && errors.length > 0) {
+    throw new Error(errors.map(e => e.message).join(", "));
+  }
+
+  return data;
+}
+
+export async function getAllProducts(first = 50, credentials = {}) {
+  const { accessToken, shopUrl } = credentials;
+
+  if (!accessToken || !shopUrl) {
+    throw new Error("accessToken and shopUrl are required");
+  }
+
   const query = `
     query getProducts($first: Int!) {
       products(first: $first) {
@@ -34,23 +121,17 @@ export async function getAllProducts(first = 50) {
             handle
             vendor
             description
-            featuredImage { 
-              url 
-              altText 
+            featuredImage {
+              url
+              altText
             }
             variants(first: 1) {
               edges {
                 node {
                   id
                   title
-                  price { 
-                    amount 
-                    currencyCode 
-                  }
-                  compareAtPrice: compareAtPriceV2 { 
-                    amount 
-                    currencyCode 
-                  }
+                  price        # अब सिर्फ string (e.g. "199.00")
+                  compareAtPrice  # अब सिर्फ string या null
                 }
               }
             }
@@ -60,12 +141,18 @@ export async function getAllProducts(first = 50) {
     }
   `;
 
-  const data = await request(query, { first });
+  const variables = { first };
+
+  const data = await requestShopify(query, variables, accessToken, shopUrl);
 
   return data.products.edges.map(edge => ({
     ...edge.node,
     variantId: edge.node.variants.edges[0]?.node.id || null,
-    price: edge.node.variants.edges[0]?.node.price || null,
-    compareAtPrice: edge.node.variants.edges[0]?.node.compareAtPrice || null,
+    price: edge.node.variants.edges[0]?.node.price 
+      ? { amount: edge.node.variants.edges[0].node.price, currencyCode: "INR" }  // default currency मान लो INR, या store से fetch करो
+      : null,
+    compareAtPrice: edge.node.variants.edges[0]?.node.compareAtPrice
+      ? { amount: edge.node.variants.edges[0].node.compareAtPrice, currencyCode: "INR" }
+      : null,
   }));
 }
