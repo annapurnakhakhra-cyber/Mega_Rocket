@@ -1,9 +1,9 @@
 // app/preview/page.js
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 
-export default function StandaloneCheckoutPreview() {
+function PreviewContent() {
   const searchParams = useSearchParams();
   const storeId = searchParams.get('storeId');
 
@@ -114,11 +114,10 @@ export default function StandaloneCheckoutPreview() {
               <button
                 key={step}
                 onClick={() => setActiveStep(step)}
-                className={`pb-2 border-b-2 transition-colors ${
-                  activeStep === step
-                    ? 'border-blue-600 text-blue-600'
-                    : 'border-transparent hover:text-gray-900'
-                }`}
+                className={`pb-2 border-b-2 transition-colors ${activeStep === step
+                  ? 'border-blue-600 text-blue-600'
+                  : 'border-transparent hover:text-gray-900'
+                  }`}
               >
                 {step}
               </button>
@@ -253,5 +252,13 @@ export default function StandaloneCheckoutPreview() {
         </div>
       </div>
     </>
+  );
+}
+
+export default function StandaloneCheckoutPreview({ settings, error }) { // Added props here too
+  return (
+    <Suspense fallback={<div>Loading preview...</div>}>
+      <PreviewContent settings={settings} error={error} />
+    </Suspense>
   );
 }

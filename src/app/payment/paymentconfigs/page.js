@@ -1,7 +1,7 @@
 // app/payment/paymentconfigs/page.js
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 
 // Import your component
@@ -16,7 +16,7 @@ import NetbankingSettings from '@/app/components/payment/NetbankingSettings';
 import WalletsSettings from '@/app/components/payment/WalletsSettings';
 import NativePaymentSettings from '@/app/components/payment/NativePaymentSettings';
 
-export default function PaymentConfigsPage() {
+function PaymentConfigsContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -162,10 +162,10 @@ export default function PaymentConfigsPage() {
     }
 
 
-    
+
   };
 
-  
+
 
   // Navigation functions - when click Customise
   const openONPLSettings = () => {
@@ -742,7 +742,7 @@ export default function PaymentConfigsPage() {
               </div>
             </div>
           </div>
-          
+
         </div>
 
         {/* Bottom Fixed Buttons - with save functionality */}
@@ -763,5 +763,13 @@ export default function PaymentConfigsPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function PaymentConfigsPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <PaymentConfigsContent />
+    </Suspense>
   );
 }
