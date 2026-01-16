@@ -99,7 +99,7 @@
         "transform": "lodash/{{member}}"
       }
     },
-    "outputFileTracingRoot": "C:\\Users\\admin\\Desktop\\next-shiprocket\\shiprocket",
+    "outputFileTracingRoot": "C:\\Users\\admin\\Downloads\\shiprocket (4)\\shiprocket",
     "cacheComponents": false,
     "cacheLife": {
       "default": {
@@ -157,7 +157,7 @@
       "proxyPrefetch": "flexible",
       "optimisticClientCache": true,
       "manualClientBasePath": false,
-      "cpus": 5,
+      "cpus": 7,
       "memoryBasedWorkersCount": false,
       "imgOptConcurrency": null,
       "imgOptTimeoutInSeconds": 7,
@@ -290,11 +290,11 @@
     "configFileName": "next.config.mjs",
     "reactCompiler": true,
     "turbopack": {
-      "root": "C:\\Users\\admin\\Desktop\\next-shiprocket\\shiprocket"
+      "root": "C:\\Users\\admin\\Downloads\\shiprocket (4)\\shiprocket"
     },
     "distDirRoot": ".next"
   },
-  "appDir": "C:\\Users\\admin\\Desktop\\next-shiprocket\\shiprocket",
+  "appDir": "C:\\Users\\admin\\Downloads\\shiprocket (4)\\shiprocket",
   "relativeAppDir": "",
   "files": [
     ".next\\routes-manifest.json",

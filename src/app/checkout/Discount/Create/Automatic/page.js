@@ -8,7 +8,7 @@ import React, { useState, useEffect } from 'react';
 
 // const STORE_ID = 'swing-9926.myshopify.com';
 // Use this proxy path if you added the rewrite in next.config.js
-// Otherwise, keep your original http://10.27.4.11:3000/api/discount/automatic
+// Otherwise, keep your original https://adminrocket,megascale.co.in/api/discount/automatic
 const API_URL = '/api/discount/automatic';  // ← Proxy recommended to fix CORS
 
 export default function ConfigureAutomaticDiscount() {

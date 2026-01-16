@@ -1,7 +1,10 @@
 var R=require("../../../chunks/[turbopack]_runtime.js")("server/app/api/abandoned-checkouts/route.js")
-R.c("server/chunks/[root-of-the-server]__bc18cdb6._.js")
-R.c("server/chunks/_a0c1682c._.js")
-R.c("server/chunks/[root-of-the-server]__8f5ebbc3._.js")
+R.c("server/chunks/[root-of-the-server]__84380a8c._.js")
+R.c("server/chunks/node_modules_next_dist_bfd7b269._.js")
+R.c("server/chunks/node_modules_next_dist_esm_build_templates_app-route_25cb4521.js")
+R.c("server/chunks/node_modules_next_f2da0d3e._.js")
+R.c("server/chunks/[root-of-the-server]__f625010c._.js")
+R.c("server/chunks/_c913fce1._.js")
 R.c("server/chunks/_next-internal_server_app_api_abandoned-checkouts_route_actions_393ff3c4.js")
 R.m(38214)
 module.exports=R.m(38214).exports

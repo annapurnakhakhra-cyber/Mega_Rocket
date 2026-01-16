@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
-const API_BASE = 'http://10.27.4.11:3000/api';
+const API_BASE = 'https://adminrocket,megascale.co.in/api';
 // const STORE_ID = 'swing-9926.myshopify.com';
 
 const AllDiscounts = () => {

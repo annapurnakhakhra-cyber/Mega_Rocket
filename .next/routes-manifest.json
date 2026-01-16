@@ -29,6 +29,38 @@
       "namedRegex": "^/api/auth/(?<nxtPnextauth>.+?)(?:/)?$"
     },
     {
+      "page": "/api/discount/code/[id]",
+      "regex": "^/api/discount/code/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/discount/code/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/api/discount/set/[id]",
+      "regex": "^/api/discount/set/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/discount/set/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/api/payment-offers/[id]",
+      "regex": "^/api/payment\\-offers/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/payment\\-offers/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/api/payments/cod/settings/tiered/[discountId]",
+      "regex": "^/api/payments/cod/settings/tiered/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPdiscountId": "nxtPdiscountId"
+      },
+      "namedRegex": "^/api/payments/cod/settings/tiered/(?<nxtPdiscountId>[^/]+?)(?:/)?$"
+    },
+    {
       "page": "/order-confirmation/[orderId]",
       "regex": "^/order\\-confirmation/([^/]+?)(?:/)?$",
       "routeKeys": {
@@ -73,6 +105,18 @@
       "regex": "^/api/abandoned\\-checkouts(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/api/abandoned\\-checkouts(?:/)?$"
+    },
+    {
+      "page": "/api/abandoned-checkouts/note",
+      "regex": "^/api/abandoned\\-checkouts/note(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/abandoned\\-checkouts/note(?:/)?$"
+    },
+    {
+      "page": "/api/abandoned-checkouts/notes",
+      "regex": "^/api/abandoned\\-checkouts/notes(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/abandoned\\-checkouts/notes(?:/)?$"
     },
     {
       "page": "/api/ask-expert",
@@ -123,10 +167,34 @@
       "namedRegex": "^/api/brochure\\-download\\-admin(?:/)?$"
     },
     {
+      "page": "/api/c2p-settings",
+      "regex": "^/api/c2p\\-settings(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/c2p\\-settings(?:/)?$"
+    },
+    {
+      "page": "/api/cards-settings",
+      "regex": "^/api/cards\\-settings(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/cards\\-settings(?:/)?$"
+    },
+    {
       "page": "/api/checkout/processOrder",
       "regex": "^/api/checkout/processOrder(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/api/checkout/processOrder(?:/)?$"
+    },
+    {
+      "page": "/api/checkout-ui",
+      "regex": "^/api/checkout\\-ui(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/checkout\\-ui(?:/)?$"
+    },
+    {
+      "page": "/api/cod-settings",
+      "regex": "^/api/cod\\-settings(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/cod\\-settings(?:/)?$"
     },
     {
       "page": "/api/contact",
@@ -153,6 +221,36 @@
       "namedRegex": "^/api/dashboard(?:/)?$"
     },
     {
+      "page": "/api/discount",
+      "regex": "^/api/discount(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/discount(?:/)?$"
+    },
+    {
+      "page": "/api/discount/automatic",
+      "regex": "^/api/discount/automatic(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/discount/automatic(?:/)?$"
+    },
+    {
+      "page": "/api/discount/bulk",
+      "regex": "^/api/discount/bulk(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/discount/bulk(?:/)?$"
+    },
+    {
+      "page": "/api/discount/manual",
+      "regex": "^/api/discount/manual(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/discount/manual(?:/)?$"
+    },
+    {
+      "page": "/api/discount/settings",
+      "regex": "^/api/discount/settings(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/discount/settings(?:/)?$"
+    },
+    {
       "page": "/api/discounts",
       "regex": "^/api/discounts(?:/)?$",
       "routeKeys": {},
@@ -165,6 +263,30 @@
       "namedRegex": "^/api/gokwik\\-checkout(?:/)?$"
     },
     {
+      "page": "/api/me",
+      "regex": "^/api/me(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/me(?:/)?$"
+    },
+    {
+      "page": "/api/native-payment-settings",
+      "regex": "^/api/native\\-payment\\-settings(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/native\\-payment\\-settings(?:/)?$"
+    },
+    {
+      "page": "/api/netbanking-settings",
+      "regex": "^/api/netbanking\\-settings(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/netbanking\\-settings(?:/)?$"
+    },
+    {
+      "page": "/api/onpl-settings",
+      "regex": "^/api/onpl\\-settings(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/onpl\\-settings(?:/)?$"
+    },
+    {
       "page": "/api/orders",
       "regex": "^/api/orders(?:/)?$",
       "routeKeys": {},
@@ -175,6 +297,36 @@
       "regex": "^/api/orders/pending(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/api/orders/pending(?:/)?$"
+    },
+    {
+      "page": "/api/payment-config",
+      "regex": "^/api/payment\\-config(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/payment\\-config(?:/)?$"
+    },
+    {
+      "page": "/api/payment-offers",
+      "regex": "^/api/payment\\-offers(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/payment\\-offers(?:/)?$"
+    },
+    {
+      "page": "/api/payment-page-settings",
+      "regex": "^/api/payment\\-page\\-settings(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/payment\\-page\\-settings(?:/)?$"
+    },
+    {
+      "page": "/api/payments/cod/settings",
+      "regex": "^/api/payments/cod/settings(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/payments/cod/settings(?:/)?$"
+    },
+    {
+      "page": "/api/payments/cod/settings/tiered",
+      "regex": "^/api/payments/cod/settings/tiered(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/payments/cod/settings/tiered(?:/)?$"
     },
     {
       "page": "/api/place-order",
@@ -243,6 +395,48 @@
       "namedRegex": "^/api/settings(?:/)?$"
     },
     {
+      "page": "/api/shipping/discount-based",
+      "regex": "^/api/shipping/discount\\-based(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/shipping/discount\\-based(?:/)?$"
+    },
+    {
+      "page": "/api/shipping/discount-based/enabled",
+      "regex": "^/api/shipping/discount\\-based/enabled(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/shipping/discount\\-based/enabled(?:/)?$"
+    },
+    {
+      "page": "/api/shipping/settings",
+      "regex": "^/api/shipping/settings(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/shipping/settings(?:/)?$"
+    },
+    {
+      "page": "/api/shipping/value-based",
+      "regex": "^/api/shipping/value\\-based(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/shipping/value\\-based(?:/)?$"
+    },
+    {
+      "page": "/api/shipping/weight-based",
+      "regex": "^/api/shipping/weight\\-based(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/shipping/weight\\-based(?:/)?$"
+    },
+    {
+      "page": "/api/shopify/create-draft-order",
+      "regex": "^/api/shopify/create\\-draft\\-order(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/shopify/create\\-draft\\-order(?:/)?$"
+    },
+    {
+      "page": "/api/shopify/recover-cart-by-id",
+      "regex": "^/api/shopify/recover\\-cart\\-by\\-id(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/shopify/recover\\-cart\\-by\\-id(?:/)?$"
+    },
+    {
       "page": "/api/suggested/add",
       "regex": "^/api/suggested/add(?:/)?$",
       "routeKeys": {},
@@ -265,6 +459,18 @@
       "regex": "^/api/testdb(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/api/testdb(?:/)?$"
+    },
+    {
+      "page": "/api/track/checkout",
+      "regex": "^/api/track/checkout(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/track/checkout(?:/)?$"
+    },
+    {
+      "page": "/api/track/checkout/get",
+      "regex": "^/api/track/checkout/get(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/track/checkout/get(?:/)?$"
     },
     {
       "page": "/api/user-data",
@@ -301,6 +507,48 @@
       "regex": "^/checkout(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/checkout(?:/)?$"
+    },
+    {
+      "page": "/checkout/CustomiseUI",
+      "regex": "^/checkout/CustomiseUI(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/checkout/CustomiseUI(?:/)?$"
+    },
+    {
+      "page": "/checkout/Discount",
+      "regex": "^/checkout/Discount(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/checkout/Discount(?:/)?$"
+    },
+    {
+      "page": "/checkout/Discount/Create/Automatic",
+      "regex": "^/checkout/Discount/Create/Automatic(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/checkout/Discount/Create/Automatic(?:/)?$"
+    },
+    {
+      "page": "/checkout/Discount/Create/Bulkdiscount",
+      "regex": "^/checkout/Discount/Create/Bulkdiscount(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/checkout/Discount/Create/Bulkdiscount(?:/)?$"
+    },
+    {
+      "page": "/checkout/Discount/Create/Manual",
+      "regex": "^/checkout/Discount/Create/Manual(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/checkout/Discount/Create/Manual(?:/)?$"
+    },
+    {
+      "page": "/checkout/Payment",
+      "regex": "^/checkout/Payment(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/checkout/Payment(?:/)?$"
+    },
+    {
+      "page": "/checkout/Shipping",
+      "regex": "^/checkout/Shipping(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/checkout/Shipping(?:/)?$"
     },
     {
       "page": "/ContactsList",
@@ -363,6 +611,30 @@
       "namedRegex": "^/order/pendingorder(?:/)?$"
     },
     {
+      "page": "/payment/paymentconfigs",
+      "regex": "^/payment/paymentconfigs(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/payment/paymentconfigs(?:/)?$"
+    },
+    {
+      "page": "/payment/paymentoffers",
+      "regex": "^/payment/paymentoffers(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/payment/paymentoffers(?:/)?$"
+    },
+    {
+      "page": "/payment/paymentoffers/create",
+      "regex": "^/payment/paymentoffers/create(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/payment/paymentoffers/create(?:/)?$"
+    },
+    {
+      "page": "/preview",
+      "regex": "^/preview(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/preview(?:/)?$"
+    },
+    {
       "page": "/report",
       "regex": "^/report(?:/)?$",
       "routeKeys": {},
@@ -385,6 +657,12 @@
       "regex": "^/settings/inventory(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/settings/inventory(?:/)?$"
+    },
+    {
+      "page": "/shipping",
+      "regex": "^/shipping(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/shipping(?:/)?$"
     },
     {
       "page": "/shop-token",

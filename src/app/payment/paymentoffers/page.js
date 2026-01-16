@@ -49,7 +49,7 @@ export default function PaymentOffersPage() {
       if (status && status !== 'All') params.append('status', status.toLowerCase());
       if (couponCode.trim()) params.append('couponCode', couponCode.trim());
 
-      const url = `http://10.27.4.11:3000/api/payment-offers?${params.toString()}`;
+      const url = `https://adminrocket,megascale.co.in/api/payment-offers?${params.toString()}`;
 
       const response = await fetch(url, {
         method: 'GET',
@@ -138,7 +138,7 @@ export default function PaymentOffersPage() {
     try {
       setLoading(true);
 
-      const response = await fetch(`http://10.27.4.11:3000/api/payment-offers/${selectedOffer._id}`, {
+      const response = await fetch(`https://adminrocket,megascale.co.in/api/payment-offers/${selectedOffer._id}`, {
         method: 'PUT',
         headers: {
           'X-Shop-Id': STORE_ID,
@@ -172,7 +172,7 @@ export default function PaymentOffersPage() {
     try {
       setLoading(true);
 
-      const response = await fetch(`http://10.27.4.11:3000/api/payment-offers/${offerId}`, {
+      const response = await fetch(`https://adminrocket,megascale.co.in/api/payment-offers/${offerId}`, {
         method: 'DELETE',
         headers: {
           'X-Shop-Id': STORE_ID,

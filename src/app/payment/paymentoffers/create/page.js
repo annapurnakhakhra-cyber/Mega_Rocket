@@ -35,7 +35,7 @@ export default function CreatePaymentOfferPage() {
    const [user, setUser] = useState(null);
 
   // ── API Config (change in production!) ──────────────────────────
-  const API_BASE_URL = 'http://10.27.4.11:3000';
+  const API_BASE_URL = 'https://adminrocket,megascale.co.in';
  
 
   

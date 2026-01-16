@@ -91,7 +91,7 @@ export default function CODSettings() {
     };
 
     try {
-      const response = await fetch('http://10.27.4.11:3000/api/cod-settings', {
+      const response = await fetch('https://adminrocket,megascale.co.in/api/cod-settings', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

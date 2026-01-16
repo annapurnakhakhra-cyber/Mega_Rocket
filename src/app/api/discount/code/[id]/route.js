@@ -6,7 +6,7 @@ import DiscountCode from "@/models/DiscountCode";
 const allowedOrigins = [
   "http://10.27.4.16:3001",
   "http://10.27.4.16:3000",
-  "http://10.27.4.11:3000",
+  "https://adminrocket,megascale.co.in",
   "https://annapurnakhakhra.megascale.co.in",
   "http://localhost:3000",
   "http://localhost:3001",

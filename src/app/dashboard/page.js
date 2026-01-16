@@ -13,7 +13,7 @@ import { jwtDecode } from "jwt-decode";
 
 export default function Dashboard() {
   const router = useRouter();
-  const API_URL = "http://10.27.4.11:3000";
+  const API_URL = "https://adminrocket,megascale.co.in";
 
   const [currentTime, setCurrentTime] = useState(new Date());
   const [dashboardData, setDashboardData] = useState(null);

@@ -120,7 +120,7 @@ const CreateManualDiscount = () => {
     };
 
     try {
-      const response = await fetch('http://10.27.4.11:3000/api/discount/manual', {
+      const response = await fetch('https://adminrocket,megascale.co.in/api/discount/manual', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
