@@ -2,9 +2,9 @@
 
 import React, { useState, useEffect } from 'react';
 
-const API_BASE = 'https://adminrocket,megascale.co.in/api/payments/cod';
+const API_BASE = 'https://adminrocket.megascale.co.in/api/payments/cod';
 // const STORE_ID = 'annapurnakhakhra';
-const ORIGIN = 'https://adminrocket,megascale.co.in';
+const ORIGIN = 'https://adminrocket.megascale.co.in';
 
 
 

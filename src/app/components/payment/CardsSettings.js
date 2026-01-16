@@ -23,7 +23,7 @@ export default function CardsSettings() {
   // Original values (for revert)
   const [original, setOriginal] = useState(null);
 
-  const API_URL = 'https://adminrocket,megascale.co.in/api/cards-settings';
+  const API_URL = 'https://adminrocket.megascale.co.in/api/cards-settings';
 
   // ── Color input helper ────────────────────────────────────────────────────
   const handleColorChange = (setter) => (e) => {

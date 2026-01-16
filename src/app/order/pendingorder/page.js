@@ -12,7 +12,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { jwtDecode } from "jwt-decode";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://adminrocket,megascale.co.in";
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://adminrocket.megascale.co.in";
 
 const PendingOrdersPage = () => {
   const router = useRouter();

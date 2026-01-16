@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 
 const OrdersPage = () => {
   const router = useRouter();
-  const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://adminrocket,megascale.co.in";
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://adminrocket.megascale.co.in";
 
   const [orders, setOrders] = useState([]);
   const [filteredOrders, setFilteredOrders] = useState([]);

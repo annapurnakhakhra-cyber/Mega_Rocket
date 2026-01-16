@@ -34,7 +34,7 @@ const RefundsDashboard = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
-  const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "https://adminrocket,megascale.co.in";
+  const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "https://adminrocket.megascale.co.in";
 
   // Check token from localStorage + validate
   useEffect(() => {
