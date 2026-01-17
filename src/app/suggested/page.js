@@ -14,7 +14,7 @@ export default function ManageSuggestedProducts() {
   const [selectedVendor, setSelectedVendor] = useState("all");
   const [sortBy, setSortBy] = useState("default");
 
-  const API_BASE = process.env.NEXT_PUBLIC_BASE_URL || "https://adminrocket.megascale.co.in";
+  const API_BASE = process.env.NEXT_PUBLIC_BASE_URL || "http://10.27.4.11:3000";
 
   useEffect(() => {
     fetchData();

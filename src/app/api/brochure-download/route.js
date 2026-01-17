@@ -8,7 +8,7 @@ import BrochureDownload from "@/models/BrochureDownload";
 const allowedOrigins = [
   "http://10.27.4.16:3001",
   "http://10.27.4.16:3000",
-  "https://adminrocket.megascale.co.in",
+  "http://10.27.4.11:3000",
   "https://hit-megascale.myshopify.com",
   "https://swing-9926.myshopify.com",
   "https://annapurnakhakhra.megascale.co.in"
