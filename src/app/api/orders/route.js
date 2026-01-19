@@ -66,7 +66,7 @@ export async function GET(req) {
       );
     }
 
-    // Shopify GraphQL query - Full fields for screenshot match
+    // Updated GraphQL query - Added phone fields only
     const graphqlQuery = {
       query: `
         {
@@ -90,7 +90,12 @@ export async function GET(req) {
                 publication { name }  # Channel
                 tags
 
-                customer { firstName lastName email }
+                customer { 
+                  firstName 
+                  lastName 
+                  email 
+                  phone                  # <-- Added customer phone
+                }
 
                 lineItems(first: 250) {
                   edges {
@@ -107,16 +112,17 @@ export async function GET(req) {
                   edges {
                     node {
                       title
-                      code  # Additional for method
+                      code
                     }
                   }
                 }
 
                 shippingAddress {
                   name address1 address2 city province zip country
+                  phone                      # <-- Added shipping phone (most reliable)
                 }
 
-                sourceIdentifier  # For delivery status if needed
+                sourceIdentifier
               }
             }
           }
@@ -154,9 +160,13 @@ export async function GET(req) {
 
     const edges = result?.data?.orders?.edges || [];
 
-    // Clean formatted response - Matched to frontend fields
+    // Clean formatted response - Only added phone to customer object
     const orders = edges.map((edge) => {
       const o = edge.node;
+
+      // Phone priority: shippingAddress.phone (from checkout) > customer.phone
+      const phone = o.shippingAddress?.phone || o.customer?.phone || null;
+
       return {
         id: o.id,
         name: o.name,
@@ -172,7 +182,10 @@ export async function GET(req) {
         tax: o.totalTaxSet?.shopMoney?.amount || "0.00",
         channel: o.publication?.name || o.app?.name || "Online Store",
         tags: o.tags?.join(", ") || "",
-        customer: o.customer || {},
+        customer: o.customer ? {
+          ...o.customer,
+          phone: phone  // <-- Added phone with priority
+        } : {},
         deliveryStatus: o.displayFulfillmentStatus || "Not Delivered",
         deliveryMethod: o.shippingLines?.edges?.[0]?.node?.title || o.shippingLines?.edges?.[0]?.node?.code || "Standard Shipping",
         shippingAddress: o.shippingAddress || {},
