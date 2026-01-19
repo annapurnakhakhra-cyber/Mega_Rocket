@@ -11,7 +11,7 @@ const allowedOrigins = [
   "http://10.27.4.11:3000",
   "https://hit-megascale.myshopify.com",
   "https://swing-9926.myshopify.com",
-  "https://annapurnakhakhra.megascale.co.in"
+  "https://annapurnakhakhra.megascale.co.in",
   "https://annapurnakhakhra.storeview.in"
 ];
 
