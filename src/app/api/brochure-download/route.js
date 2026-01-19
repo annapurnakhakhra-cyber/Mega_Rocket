@@ -12,6 +12,7 @@ const allowedOrigins = [
   "https://hit-megascale.myshopify.com",
   "https://swing-9926.myshopify.com",
   "https://annapurnakhakhra.megascale.co.in"
+  "https://annapurnakhakhra.storeview.in"
 ];
 
 /**
