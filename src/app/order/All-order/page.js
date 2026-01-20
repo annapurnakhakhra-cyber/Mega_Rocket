@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from "react";
-import { Download, Filter, RefreshCw, Eye, X, Phone, Mail, User, Calendar, Package, Truck, Tag } from "lucide-react";
+import { Download, Filter, RefreshCw, Eye, X, Phone, Mail, User, Calendar, Package, Truck, Tag, MapPin } from "lucide-react";
 import * as XLSX from 'xlsx';
 import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
@@ -188,6 +188,19 @@ const OrdersPage = () => {
     return "Guest";
   };
 
+  const formatAddress = (addr) => {
+    if (!addr) return "No shipping address";
+    const parts = [
+      addr.name,
+      addr.address1,
+      addr.address2,
+      `${addr.city}${addr.province ? `, ${addr.province}` : ""}`,
+      addr.zip,
+      addr.country
+    ].filter(Boolean);
+    return parts.join(" • ") || "No address provided";
+  };
+
   if (loading && orders.length === 0) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
@@ -203,10 +216,10 @@ const OrdersPage = () => {
     <>
       <Toaster position="top-right" />
 
-      {/* Modal - Professional & Minimal with Blurred Background */}
+      {/* Enhanced Modal with Shipping Address & Price Breakdown */}
       {isModalOpen && selectedOrder && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div 
+          <div
             className="absolute inset-0 bg-slate-900/40 backdrop-blur-md"
             onClick={closeModal}
           />
@@ -300,6 +313,87 @@ const OrdersPage = () => {
                   {!selectedOrder.customer && <p className="text-slate-500 font-medium mt-4">Guest Checkout</p>}
                 </div>
 
+                {/* Shipping Address */}
+                {/* Shipping Address - Beautiful New Presentation */}
+                {selectedOrder.shippingAddress && (
+                  <div className="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-2xl p-8 border border-emerald-200 shadow-sm">
+                    <div className="flex items-center gap-4 mb-6">
+                      <div className="p-3 bg-emerald-600 rounded-xl">
+                        <MapPin className="w-6 h-6 text-white" />
+                      </div>
+                      <h3 className="text-xl font-bold text-slate-900">Shipping Address</h3>
+                    </div>
+
+                    <div className="space-y-4 ml-1">
+                      {selectedOrder.shippingAddress.name && (
+                        <div className="flex items-start gap-3">
+                          <User className="w-5 h-5 text-emerald-600 mt-0.5" />
+                          <div>
+                            <p className="text-sm font-semibold text-slate-600 uppercase tracking-wide">Recipient</p>
+                            <p className="text-lg font-bold text-slate-900">{selectedOrder.shippingAddress.name}</p>
+                          </div>
+                        </div>
+                      )}
+
+                      <div className="flex items-start gap-3">
+                        <MapPin className="w-5 h-5 text-emerald-600 mt-0.5" />
+                        <div>
+                          <p className="text-sm font-semibold text-slate-600 uppercase tracking-wide">Address</p>
+                          <p className="text-base font-medium text-slate-800 leading-relaxed max-w-2xl">
+                            {selectedOrder.shippingAddress.address1}
+                            {selectedOrder.shippingAddress.address2 && <><br />{selectedOrder.shippingAddress.address2}</>}
+                            <br />
+                            {selectedOrder.shippingAddress.city}
+                            {selectedOrder.shippingAddress.province && `, ${selectedOrder.shippingAddress.province}`}
+                            {selectedOrder.shippingAddress.zip && ` - ${selectedOrder.shippingAddress.zip}`}
+                            <br />
+                            {selectedOrder.shippingAddress.country}
+                          </p>
+                        </div>
+                      </div>
+
+                      {selectedOrder.shippingAddress.phone && (
+                        <div className="flex items-center gap-3">
+                          <Phone className="w-5 h-5 text-emerald-600" />
+                          <div>
+                            <p className="text-sm font-semibold text-slate-600 uppercase tracking-wide">Phone</p>
+                            <p className="text-base font-medium text-slate-900">{selectedOrder.shippingAddress.phone}</p>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                {/* Price Breakdown */}
+                <div className="bg-white rounded-xl p-6 border border-slate-200">
+                  <h3 className="text-lg font-bold text-slate-900 mb-6">Price Breakdown</h3>
+                  <div className="space-y-4">
+                    <div className="flex justify-between items-center py-3 border-b border-slate-100">
+                      <span className="text-slate-600">Subtotal</span>
+                      <span className="font-semibold text-slate-900">₹{selectedOrder.subtotal || "0.00"}</span>
+                    </div>
+                    <div className="flex justify-between items-center py-3 border-b border-slate-100">
+                      <span className="text-slate-600">Shipping</span>
+                      <span className="font-semibold text-slate-900">₹{selectedOrder.shippingCost || "0.00"}</span>
+                    </div>
+                    <div className="flex justify-between items-center py-3 border-b border-slate-100">
+                      <span className="text-slate-600">Tax</span>
+                      <span className="font-semibold text-slate-900">₹{selectedOrder.tax || "0.00"}</span>
+                    </div>
+                    {parseFloat(selectedOrder.outstanding || 0) > 0 && (
+                      <div className="flex justify-between items-center py-3 border-b border-dashed border-amber-300">
+                        <span className="text-amber-700 font-medium">Outstanding</span>
+                        <span className="font-bold text-amber-700">₹{selectedOrder.outstanding}</span>
+                      </div>
+                    )}
+                    <div className="flex justify-between items-center pt-4">
+                      <span className="text-lg font-bold text-slate-900">Total Paid</span>
+                      <span className="text-2xl font-bold text-blue-600">₹{selectedOrder.total || "0.00"}</span>
+                    </div>
+                  </div>
+                </div>
+
                 {/* Status Section */}
                 <div className="bg-white rounded-xl p-6 border border-slate-200">
                   <h3 className="text-lg font-bold text-slate-900 mb-6">Order Status</h3>
@@ -354,9 +448,9 @@ const OrdersPage = () => {
                                   {item.quantity || 1}
                                 </span>
                               </td>
-                              <td className="px-6 py-4 text-right text-slate-700 font-medium">₹{parseFloat(item.price || 0).toFixed(2)}</td>
+                              <td className="px-6 py-4 text-right text-slate-700 font-medium">₹{item.price || "0.00"}</td>
                               <td className="px-6 py-4 text-right font-bold text-blue-600 text-lg">
-                                ₹{parseFloat((item.price || 0) * (item.quantity || 1)).toFixed(2)}
+                                ₹{item.total || "0.00"}
                               </td>
                             </tr>
                           ))
@@ -400,7 +494,7 @@ const OrdersPage = () => {
         </div>
       )}
 
-      {/* Main Dashboard */}
+      {/* Main Dashboard - unchanged except for table */}
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
         <div className="container mx-auto p-4 sm:p-6 lg:p-8">
           {/* Header */}
@@ -439,7 +533,7 @@ const OrdersPage = () => {
             </div>
           )}
 
-          {/* Orders Table - Row Clickable + View Button Always Visible */}
+          {/* Orders Table */}
           <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full min-w-[1600px]">
@@ -467,8 +561,8 @@ const OrdersPage = () => {
                     </tr>
                   ) : (
                     currentOrders.map(order => (
-                      <tr 
-                        key={order.id} 
+                      <tr
+                        key={order.id}
                         className="hover:bg-blue-50 transition-all duration-200 cursor-pointer"
                         onClick={() => openOrderDetail(order)}
                       >
