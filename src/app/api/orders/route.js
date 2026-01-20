@@ -27,7 +27,7 @@ export async function GET(req) {
 
     // Authorization check
     const authHeader = req.headers.get("authorization");
-    if (!authHeader) {
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
       return new Response(JSON.stringify({ error: "Unauthorized" }), {
         status: 401,
         headers: corsHeaders,
@@ -66,7 +66,7 @@ export async function GET(req) {
       );
     }
 
-    // Updated GraphQL query - Added phone fields only
+    // GraphQL query with full address and pricing details
     const graphqlQuery = {
       query: `
         {
@@ -86,15 +86,15 @@ export async function GET(req) {
                 totalTaxSet { shopMoney { amount currencyCode } }
                 totalOutstandingSet { shopMoney { amount currencyCode } }
 
-                app { name }  # For channel if publication not available
-                publication { name }  # Channel
+                app { name }
+                publication { name }
                 tags
 
                 customer { 
                   firstName 
                   lastName 
                   email 
-                  phone                  # <-- Added customer phone
+                  phone
                 }
 
                 lineItems(first: 250) {
@@ -108,7 +108,7 @@ export async function GET(req) {
                   }
                 }
 
-                shippingLines(first: 10) {  # Delivery method
+                shippingLines(first: 10) {
                   edges {
                     node {
                       title
@@ -118,8 +118,14 @@ export async function GET(req) {
                 }
 
                 shippingAddress {
-                  name address1 address2 city province zip country
-                  phone                      # <-- Added shipping phone (most reliable)
+                  name
+                  address1
+                  address2
+                  city
+                  province
+                  zip
+                  country
+                  phone
                 }
 
                 sourceIdentifier
@@ -146,6 +152,7 @@ export async function GET(req) {
     const result = await shopifyRes.json();
 
     if (result.errors) {
+      console.error("Shopify GraphQL Errors:", result.errors);
       return new Response(
         JSON.stringify({
           error: "Shopify GraphQL errors",
@@ -160,50 +167,88 @@ export async function GET(req) {
 
     const edges = result?.data?.orders?.edges || [];
 
-    // Clean formatted response - Only added phone to customer object
+    // Enhanced mapping with full address and pricing breakdown
     const orders = edges.map((edge) => {
       const o = edge.node;
 
-      // Phone priority: shippingAddress.phone (from checkout) > customer.phone
+      // Phone priority: shipping > customer profile
       const phone = o.shippingAddress?.phone || o.customer?.phone || null;
 
+      // Full shipping address
+      const shippingAddress = o.shippingAddress ? {
+        name: o.shippingAddress.name || "",
+        address1: o.shippingAddress.address1 || "",
+        address2: o.shippingAddress.address2 || "",
+        city: o.shippingAddress.city || "",
+        province: o.shippingAddress.province || "",
+        zip: o.shippingAddress.zip || "",
+        country: o.shippingAddress.country || "",
+        phone: o.shippingAddress.phone || null,
+      } : null;
+
+      // Delivery method
+      const deliveryMethod =
+        o.shippingLines?.edges?.[0]?.node?.title ||
+        o.shippingLines?.edges?.[0]?.node?.code ||
+        "Standard Shipping";
+
       return {
-        id: o.id,
+        id: o.id.split("/").pop(), // Clean numeric ID
         name: o.name,
         createdAt: o.createdAt,
-        fulfillmentStatus: o.displayFulfillmentStatus || "Unfulfilled",
-        financialStatus: o.displayFinancialStatus || "Pending",
-        subtotal: o.subtotalPriceSet?.shopMoney?.amount || "0.00",
-        originalTotal: o.totalPriceSet?.shopMoney?.amount || "0.00",
-        total: o.currentTotalPriceSet?.shopMoney?.amount || "0.00",
-        outstanding: o.totalOutstandingSet?.shopMoney?.amount || "0.00",
+        fulfillmentStatus: o.displayFulfillmentStatus || "UNFULFILLED",
+        financialStatus: o.displayFinancialStatus || "PENDING",
+
+        // Pricing details
+        subtotal: parseFloat(o.subtotalPriceSet?.shopMoney?.amount || "0.00").toFixed(2),
+        shippingCost: parseFloat(o.totalShippingPriceSet?.shopMoney?.amount || "0.00").toFixed(2),
+        tax: parseFloat(o.totalTaxSet?.shopMoney?.amount || "0.00").toFixed(2),
+        total: parseFloat(o.currentTotalPriceSet?.shopMoney?.amount || "0.00").toFixed(2),
+        originalTotal: parseFloat(o.totalPriceSet?.shopMoney?.amount || "0.00").toFixed(2),
+        outstanding: parseFloat(o.totalOutstandingSet?.shopMoney?.amount || "0.00").toFixed(2),
         currency: o.currentTotalPriceSet?.shopMoney?.currencyCode || "INR",
-        shipping: o.totalShippingPriceSet?.shopMoney?.amount || "0.00",
-        tax: o.totalTaxSet?.shopMoney?.amount || "0.00",
+
         channel: o.publication?.name || o.app?.name || "Online Store",
         tags: o.tags?.join(", ") || "",
+
         customer: o.customer ? {
-          ...o.customer,
-          phone: phone  // <-- Added phone with priority
-        } : {},
+          firstName: o.customer.firstName || null,
+          lastName: o.customer.lastName || null,
+          email: o.customer.email || null,
+          phone: phone,
+        } : null,
+
+        shippingAddress: shippingAddress,
+
         deliveryStatus: o.displayFulfillmentStatus || "Not Delivered",
-        deliveryMethod: o.shippingLines?.edges?.[0]?.node?.title || o.shippingLines?.edges?.[0]?.node?.code || "Standard Shipping",
-        shippingAddress: o.shippingAddress || {},
-        items: o.lineItems?.edges?.map((i) => ({
-          title: i.node.title,
-          quantity: i.node.quantity,
-          price: i.node.discountedTotalSet?.shopMoney?.amount || "0.00",
-          originalPrice: i.node.originalTotalSet?.shopMoney?.amount || "0.00",
-          currency: i.node.discountedTotalSet?.shopMoney?.currencyCode || "INR",
-        })) || [],
+        deliveryMethod: deliveryMethod,
+
+        items: o.lineItems?.edges?.map((i) => {
+          const item = i.node;
+          const unitPrice = item.quantity > 0
+            ? (parseFloat(item.discountedTotalSet?.shopMoney?.amount || 0) / item.quantity).toFixed(2)
+            : "0.00";
+
+          return {
+            title: item.title || "Unknown Product",
+            quantity: item.quantity || 1,
+            price: unitPrice, // per unit after discount
+            total: parseFloat(item.discountedTotalSet?.shopMoney?.amount || "0.00").toFixed(2),
+            originalTotal: parseFloat(item.originalTotalSet?.shopMoney?.amount || "0.00").toFixed(2),
+          };
+        }) || [],
       };
     });
 
     return new Response(JSON.stringify({ orders }), {
       status: 200,
-      headers: corsHeaders,
+      headers: {
+        ...corsHeaders,
+        "Content-Type": "application/json",
+      },
     });
   } catch (err) {
+    console.error("Orders API Error:", err);
     return new Response(
       JSON.stringify({
         error: "Failed to fetch orders",
