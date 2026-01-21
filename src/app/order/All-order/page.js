@@ -365,34 +365,6 @@ const OrdersPage = () => {
                   </div>
                 )}
 
-                {/* Price Breakdown */}
-                <div className="bg-white rounded-xl p-6 border border-slate-200">
-                  <h3 className="text-lg font-bold text-slate-900 mb-6">Price Breakdown</h3>
-                  <div className="space-y-4">
-                    <div className="flex justify-between items-center py-3 border-b border-slate-100">
-                      <span className="text-slate-600">Subtotal</span>
-                      <span className="font-semibold text-slate-900">₹{selectedOrder.subtotal || "0.00"}</span>
-                    </div>
-                    <div className="flex justify-between items-center py-3 border-b border-slate-100">
-                      <span className="text-slate-600">Shipping</span>
-                      <span className="font-semibold text-slate-900">₹{selectedOrder.shippingCost || "0.00"}</span>
-                    </div>
-                    <div className="flex justify-between items-center py-3 border-b border-slate-100">
-                      <span className="text-slate-600">Tax</span>
-                      <span className="font-semibold text-slate-900">₹{selectedOrder.tax || "0.00"}</span>
-                    </div>
-                    {parseFloat(selectedOrder.outstanding || 0) > 0 && (
-                      <div className="flex justify-between items-center py-3 border-b border-dashed border-amber-300">
-                        <span className="text-amber-700 font-medium">Outstanding</span>
-                        <span className="font-bold text-amber-700">₹{selectedOrder.outstanding}</span>
-                      </div>
-                    )}
-                    <div className="flex justify-between items-center pt-4">
-                      <span className="text-lg font-bold text-slate-900">Total Paid</span>
-                      <span className="text-2xl font-bold text-blue-600">₹{selectedOrder.total || "0.00"}</span>
-                    </div>
-                  </div>
-                </div>
 
                 {/* Status Section */}
                 <div className="bg-white rounded-xl p-6 border border-slate-200">
@@ -461,6 +433,35 @@ const OrdersPage = () => {
                         )}
                       </tbody>
                     </table>
+                  </div>
+                </div>
+
+   {/* Price Breakdown */}
+                <div className="bg-white rounded-xl p-6 border border-slate-200">
+                  <h3 className="text-lg font-bold text-slate-900 mb-6">Price Breakdown</h3>
+                  <div className="space-y-4">
+                    <div className="flex justify-between items-center py-3 border-b border-slate-100">
+                      <span className="text-slate-600">Subtotal</span>
+                      <span className="font-semibold text-slate-900">₹{selectedOrder.subtotal || "0.00"}</span>
+                    </div>
+                    <div className="flex justify-between items-center py-3 border-b border-slate-100">
+                      <span className="text-slate-600">Shipping</span>
+                      <span className="font-semibold text-slate-900">₹{selectedOrder.shippingCost || "0.00"}</span>
+                    </div>
+                    <div className="flex justify-between items-center py-3 border-b border-slate-100">
+                      <span className="text-slate-600">Tax</span>
+                      <span className="font-semibold text-slate-900">₹{selectedOrder.tax || "0.00"}</span>
+                    </div>
+                    {parseFloat(selectedOrder.outstanding || 0) > 0 && (
+                      <div className="flex justify-between items-center py-3 border-b border-dashed border-amber-300">
+                        <span className="text-amber-700 font-medium">Outstanding</span>
+                        <span className="font-bold text-amber-700">₹{selectedOrder.outstanding}</span>
+                      </div>
+                    )}
+                    <div className="flex justify-between items-center pt-4">
+                      <span className="text-lg font-bold text-slate-900">Total Paid</span>
+                      <span className="text-2xl font-bold text-blue-600">₹{selectedOrder.total || "0.00"}</span>
+                    </div>
                   </div>
                 </div>
 
