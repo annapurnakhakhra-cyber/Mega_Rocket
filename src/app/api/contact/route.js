@@ -5,6 +5,7 @@ import nodemailer from "nodemailer";
 
 const allowedOrigins = [
   "*",
+  "http://10.27.1.244:3000"
   "http://10.27.4.16:3001",
   "http://10.27.4.16:3000",
   "https://annapurnakhakhra.megascale.co.in",
