@@ -8,6 +8,7 @@ const allowedOrigins = [
   "http://10.27.4.16:3000",
   "https://annapurnakhakhra.megascale.co.in",
   "https://annapurnakhakhra.storeview.in",
+  *
 ];
 
 const corsHeaders = (origin) => {
