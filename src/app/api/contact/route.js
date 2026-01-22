@@ -4,11 +4,12 @@ import Contact from "@/models/Contact";
 import nodemailer from "nodemailer";
 
 const allowedOrigins = [
+  "*",
   "http://10.27.4.16:3001",
   "http://10.27.4.16:3000",
   "https://annapurnakhakhra.megascale.co.in",
   "https://annapurnakhakhra.storeview.in",
-  *
+ 
 ];
 
 const corsHeaders = (origin) => {
