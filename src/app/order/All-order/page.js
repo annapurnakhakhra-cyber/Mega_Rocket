@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from "react";
-import { Download, Filter, RefreshCw, Eye, X, Phone, Mail, User, Calendar, Package, Truck, Tag, MapPin } from "lucide-react";
+import { Download, Filter, RefreshCw, Eye, X, Phone, Mail, User, Calendar, Package, Truck, Tag, MapPin, Printer } from "lucide-react";
 import * as XLSX from 'xlsx';
 import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
@@ -22,6 +22,9 @@ const OrdersPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedOrderIds, setSelectedOrderIds] = useState(new Set());
+  const [isEditStickerModalOpen, setIsEditStickerModalOpen] = useState(false);
+  const [stickersToEdit, setStickersToEdit] = useState([]);
 
   const ordersPerPage = 10;
 
@@ -30,7 +33,7 @@ const OrdersPage = () => {
     const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
     if (!token) {
       toast.error("Please login first");
-      router.push("/login");
+      router.push("/auth/login");
       return;
     }
     try {
@@ -39,17 +42,17 @@ const OrdersPage = () => {
         localStorage.removeItem("token");
         localStorage.removeItem("user");
         toast.error("Session expired. Please login again.");
-        router.push("/login");
+        router.push("/auth/login");
       }
     } catch (err) {
       localStorage.removeItem("token");
-      router.push("/login");
+      router.push("/auth/login");
     }
   }, [router]);
 
   const fetchOrders = async () => {
     const token = localStorage.getItem("token");
-    if (!token) return router.push("/login");
+    if (!token) return router.push("/auth/login");
 
     setLoading(true);
     try {
@@ -67,7 +70,7 @@ const OrdersPage = () => {
         localStorage.removeItem("token");
         localStorage.removeItem("user");
         toast.error("Unauthorized. Logging you out...");
-        router.push("/login");
+        router.push("/auth/login");
       } else {
         toast.error(err.response?.data?.message || "Failed to load orders");
       }
@@ -168,6 +171,388 @@ const OrdersPage = () => {
     return "bg-gray-200 text-gray-700";
   };
 
+  const getPaymentStatusText = (status) => {
+    if (!status) return "Unknown";
+    const s = status.toLowerCase();
+    if (s === "paid") return "full amount paid";
+    if (s === "pending") return "paid amount 50 and other COD";
+    return status;
+  };
+
+  const handlePrintSticker = (order) => {
+    // This function will now open the edit modal instead of printing directly
+    handleOpenSingleEdit(order);
+  };
+
+  const handleOpenBulkEdit = () => {
+    if (selectedOrderIds.size === 0) {
+      toast.error("Please select at least one order");
+      return;
+    }
+    const selectedOrders = orders.filter(o => selectedOrderIds.has(o.id));
+    const stickers = selectedOrders.map(order => ({
+      id: order.id,
+      name: order.name,
+      createdAt: order.createdAt,
+      financialStatus: order.financialStatus,
+      total: order.total,
+      items: order.items,
+      shippingName: order.shippingAddress?.name || getCustomerDisplay(order.customer),
+      address1: order.shippingAddress?.address1 || '',
+      address2: order.shippingAddress?.address2 || '',
+      city: order.shippingAddress?.city || '',
+      province: order.shippingAddress?.province || '',
+      zip: order.shippingAddress?.zip || '',
+      country: order.shippingAddress?.country || '',
+      phone: order.shippingAddress?.phone || order.customer?.phone || '',
+      email: order.customer?.email || '',
+      length: '',
+      width: '',
+      height: '',
+      actualWeight: '',
+      weightUnit: 'kg'
+    }));
+    setStickersToEdit(stickers);
+    setIsEditStickerModalOpen(true);
+  };
+
+  const handleOpenSingleEdit = (order) => {
+    const sticker = {
+      id: order.id,
+      name: order.name,
+      createdAt: order.createdAt,
+      financialStatus: order.financialStatus,
+      total: order.total,
+      items: order.items,
+      shippingName: order.shippingAddress?.name || getCustomerDisplay(order.customer),
+      address1: order.shippingAddress?.address1 || '',
+      address2: order.shippingAddress?.address2 || '',
+      city: order.shippingAddress?.city || '',
+      province: order.shippingAddress?.province || '',
+      zip: order.shippingAddress?.zip || '',
+      country: order.shippingAddress?.country || '',
+      phone: order.shippingAddress?.phone || order.customer?.phone || '',
+      email: order.customer?.email || '',
+      length: '',
+      width: '',
+      height: '',
+      actualWeight: '',
+      weightUnit: 'kg'
+    };
+    setStickersToEdit([sticker]);
+    setIsEditStickerModalOpen(true);
+  };
+
+  const handleStickerChange = (id, field, value) => {
+    setStickersToEdit(prev => prev.map(s => s.id === id ? { ...s, [field]: value } : s));
+  };
+
+  const toggleSelectAll = () => {
+    if (selectedOrderIds.size === filteredOrders.length) {
+      setSelectedOrderIds(new Set());
+    } else {
+      setSelectedOrderIds(new Set(filteredOrders.map(o => o.id)));
+    }
+  };
+
+  const toggleSelectOrder = (id) => {
+    const newSelected = new Set(selectedOrderIds);
+    if (newSelected.has(id)) {
+      newSelected.delete(id);
+    } else {
+      newSelected.add(id);
+    }
+    setSelectedOrderIds(newSelected);
+  };
+
+  const handlePrintAll = () => {
+    const printWindow = window.open('', '_blank');
+    const user = typeof window !== "undefined" ? JSON.parse(localStorage.getItem("user") || "{}") : {};
+    const shopifyUrl = user.shopUrl || user.shopifyStoreUrl || "";
+    const isMegaScale = shopifyUrl.toLowerCase().includes("hit-megascale.myshopify.com");
+    const logoUrl = isMegaScale ? "https://cdn.shopify.com/s/files/1/0953/6284/2993/files/logoedited.jpg?v=1770121430" : null;
+
+    // Validation
+    for (const sticker of stickersToEdit) {
+      if (!sticker.length || !sticker.width || !sticker.height || !sticker.actualWeight) {
+        toast.error(`Please fill all dimension and weight details for sticker: ${sticker.name}`);
+        return;
+      }
+    }
+
+    let allStickersHtml = `
+      <html>
+        <head>
+          <title>Print Stickers</title>
+          <style>
+            @page { size: 4in 6in; margin: 0; }
+            body { 
+              font-family: 'Inter', system-ui, sans-serif; 
+              margin: 0; 
+              padding: 0;
+              color: #1a1a1a;
+            }
+            .sticker-container {
+              page-break-after: always;
+              height: 6in;
+              width: 4in;
+              padding: 6px 6px 8px 6px;
+              box-sizing: border-box;
+              display: flex;
+              flex-direction: column;
+              border: 1px solid #000; /* Outer border for the physical label */
+            }
+            .sticker {
+              padding: 10px;
+              height: 100%;
+              display: flex;
+              flex-direction: column;
+              box-sizing: border-box;
+            }
+            .header {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              border-bottom: 1px solid #000;
+              padding-bottom: 0px;
+              margin-bottom: 4px;
+            }
+            .payment-badge {
+              font-family: 'Inter', sans-serif;
+            }
+            .payment-label {
+              font-size: 12px;
+              font-weight: 800;
+              text-transform: uppercase;
+              margin-bottom: 0px;
+              padding:0px;
+            }
+            .payment-amount {
+              font-size: 20px;
+              font-weight: 900;
+              margin:0px;
+              padding:0px;
+            }
+            .logo-placeholder {
+              width: 165px;
+              height: 75px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              font-size: 10px;
+              color: #999;
+            }
+            .body-section {
+              flex: 1;
+            }
+            .address-box {
+              display: flex;
+              justify-content: space-between;
+              margin-bottom: 12px;
+            }
+            .to-section {
+              flex: 2;
+            }
+            .order-id-section {
+              flex: 1;
+              text-align: right;
+            }
+            .label-small {
+              font-size: 10px;
+              font-weight: 700;
+              text-transform: uppercase;
+              color: #666;
+              margin-bottom: 2px;
+            }
+            .recipient-name {
+              font-size: 18px;
+              font-weight: 600;
+              margin-bottom: 2px;
+            }
+            .address-text {
+              font-size: 13px;
+              line-height: 1.3;
+              font-weight: 500;
+            }
+            .order-id {
+              font-size: 15px;
+              font-weight: 800;
+              font-family: monospace;
+            }
+            .product-section {
+              border-top: 1px solid #eee;
+              padding: 8px 0 0 0;
+              margin-bottom: 12px;
+            }
+            .product-stat {
+              text-align: center;
+            }
+            .stat-value {
+              font-size: 16px;
+              font-weight: 800;
+            }
+            .stat-label {
+              font-size: 10px;
+              color: #666;
+              text-transform: uppercase;
+            }
+            .footer-section {
+              margin-top: auto;
+              padding-top: 10px;
+              border-top: 1px solid #000;
+            }
+            .from-text {
+              font-size: 11px;
+              line-height: 1.3;
+              font-weight: 500;
+            }
+            .product-table {
+              width: 100%;
+              border-collapse: collapse;
+            }
+            .product-table td {
+              padding: 3px 0;
+              border-bottom: 1px dotted #eee;
+            }
+            .product-table tr:last-child td {
+              border-bottom: none;
+            }
+            .product-table .label {
+              font-size: 12px;
+              font-weight: 600;
+              color: #555;
+              text-transform: uppercase;
+            }
+            .product-table .value {
+              font-size: 14px;
+              font-weight: 600;
+              text-align: right;
+            }
+            .highlight-row td {
+              background-color: #f9f9f9;
+              padding: 4px 4px !important;
+              border-top: 1px solid #000 !important;
+            }
+            .highlight-row .value {
+              font-size: 18px;
+              color: #000;
+            }
+          </style>
+        </head>
+        <body onload="window.print(); window.close();">
+    `;
+
+    stickersToEdit.forEach(sticker => {
+      const isCod = sticker.financialStatus?.toLowerCase() === 'pending';
+      const codAmount = (parseFloat(sticker.total || 0) - 50).toFixed(2);
+      const totalItems = sticker.items?.length || 0;
+      const totalPacks = sticker.items?.reduce((sum, item) => sum + (item.quantity || 1), 0) || 0;
+
+      const volKg = (parseFloat(sticker.length || 0) * parseFloat(sticker.width || 0) * parseFloat(sticker.height || 0)) / 5000;
+      const volDisplay = volKg < 1 ? `${(volKg * 1000).toFixed(0)} g` : `${volKg.toFixed(2)} kg`;
+
+      const actualWeightVal = parseFloat(sticker.actualWeight || 0);
+      const isGrams = sticker.weightUnit === 'g' || sticker.weightUnit === 'gm';
+      const actualWeightInKg = isGrams ? actualWeightVal / 1000 : actualWeightVal;
+
+      const chargeableKg = Math.max(actualWeightInKg, volKg);
+      const chargeableDisplay = chargeableKg < 1 ? `${(chargeableKg * 1000).toFixed(0)} g` : `${chargeableKg.toFixed(0)} kg`;
+
+      const actualWeightDisplay = `${sticker.actualWeight} ${sticker.weightUnit || 'kg'}`;
+
+      allStickersHtml += `
+        <div class="sticker-container">
+          <div class="sticker">
+            <div class="header">
+              <div class="logo-placeholder">
+                 ${logoUrl ? `<img src="${logoUrl}" style="  max-width: 100%;  max-height: 100%;  object-fit: contain;  filter: grayscale(100%) contrast(120%); "/>` : 'LOGO HERE'}
+              </div>
+              <div class="payment-badge">
+                ${isCod ? `
+                  <div class="payment-label" style="">COD COLLECT</div>
+                  <div class="payment-amount" style="">₹${codAmount}</div>
+                ` : `
+                  <div class="payment-label" style="">PREPAID ORDER</div>
+                `}
+              </div>
+            </div>
+            
+            <div class="body-section">
+              <div class="address-box">
+                
+                <div class="to-section" style="flex: 1; text-align: left;  ">
+                  <div class="label-small">TO:</div>
+                  <div class="recipient-name">${sticker.shippingName}</div>
+                  <div class="address-text">
+                    ${sticker.address1 || ''}${sticker.address2 ? '<br/>' + sticker.address2 : ''}<br/>
+                    ${sticker.city || ''}${sticker.province ? ', ' + sticker.province : ''} - ${sticker.zip || ''}<br/>
+                    ${sticker.country || ''}<br/>
+                    <strong>Phone:</strong> ${sticker.phone || 'N/A'}${sticker.email ? `<br/><strong>Email:</strong> ${sticker.email}` : ''}
+                  </div>
+                </div>
+                <div class="order-id-section" style="text-align: left; padding-left: 5px; flex: 0 0 140px; border-left: 1px solid #eee;">
+                  <div class="label-small">ORDER ID:</div>
+                  <div class="order-id">${sticker.name}</div>
+                  
+                  <!-- Dimensions & Weight Display -->
+                  <div style="margin-top: 8px; font-size: 10px; font-weight: 600; text-align: left; border-top: 1px dotted #ccc; padding-top: 4px;">
+                    <div>Dead Weight : ${actualWeightDisplay}</div>
+                    <div>Dimensional Weight : ${volDisplay}</div>
+                    <div>Chargeable Weight : ${chargeableDisplay}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="product-section">
+              <table class="product-table">
+               <tr>
+                  <td class="label">Items</td>
+                  <td class="value">${totalItems}</td>
+                </tr>
+                <tr>
+                  <td class="label">Qty (Packs)</td>
+                  <td class="value">${totalPacks}</td>
+                </tr>
+                <tr>
+                  <td class="label">Total Amount</td>
+                  <td class="value">₹${parseFloat(sticker.total || 0).toFixed(2)}</td>
+                </tr>
+                <tr>
+                  <td class="label">Paid Amount</td>
+                  <td class="value">₹${isCod ? '50.00' : parseFloat(sticker.total || 0).toFixed(2)}</td>
+                </tr>
+                ${isCod ? `
+                <tr class="highlight-row" style="border-bottom: none;">
+                  <td class="label" style="border-bottom: none;">AMOUNT TO COLLECT</td>
+                  <td class="value" style="border-bottom: none;">₹${(parseFloat(sticker.total || 0) - 50).toFixed(2)}</td>
+                </tr>
+                ` : ''}
+              </table>
+            </div>
+            <div class="footer-section">
+              <div class="label-small">FROM:</div>
+              <div class="from-text">
+                <strong>Storeview</strong> - 412, New Escon Plaza,<br/>
+                Chhaprabhatha Road, Amroli,<br/>
+                Surat, Gujarat - 394107<br/>
+                +91 9638478118
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    });
+
+    allStickersHtml += `
+        </body>
+      </html>
+    `;
+
+    printWindow.document.write(allStickersHtml);
+    printWindow.document.close();
+    setIsEditStickerModalOpen(false);
+  };
+
   const openOrderDetail = (order) => {
     setSelectedOrder(order);
     setIsModalOpen(true);
@@ -216,6 +601,211 @@ const OrdersPage = () => {
     <>
       <Toaster position="top-right" />
 
+      {/* Edit Sticker Modal */}
+      {isEditStickerModalOpen && stickersToEdit.length > 0 && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
+          <div
+            className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"
+            onClick={() => setIsEditStickerModalOpen(false)}
+          />
+
+          <div className="relative bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] flex flex-col overflow-hidden">
+            <div className="bg-slate-50 border-b border-slate-200 px-8 py-5 flex justify-between items-center">
+              <div>
+                <h2 className="text-xl font-bold text-slate-900">Review & Edit Stickers</h2>
+                <p className="text-sm text-slate-500">Edit shipping details before printing</p>
+              </div>
+              <button
+                onClick={() => setIsEditStickerModalOpen(false)}
+                className="p-2 rounded-lg hover:bg-slate-200 transition-colors text-slate-400 hover:text-slate-600"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="overflow-y-auto flex-1 p-6 space-y-8">
+              {stickersToEdit.map((sticker, idx) => (
+                <div key={sticker.id} className="bg-slate-50 rounded-xl p-6 border border-slate-200 relative">
+                  <div className="absolute -top-3 left-6 bg-blue-600 text-white px-3 py-1 rounded-full text-xs font-bold shadow-sm">
+                    Sticker {idx + 1}: {sticker.name}
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-2">
+                    {/* Dimensions & Weight Section */}
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:col-span-2 border-b pb-4 mb-2">
+                      <div className="space-y-1">
+                        <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Length (cm) <span className="text-red-500">*</span></label>
+                        <input
+                          type="number"
+                          value={sticker.length}
+                          onChange={(e) => handleStickerChange(sticker.id, 'length', e.target.value)}
+                          className="w-full px-4 py-2 bg-white border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none"
+                          placeholder="0"
+                        />
+                      </div>
+                      <div className="space-y-1">
+                        <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Width (cm) <span className="text-red-500">*</span></label>
+                        <input
+                          type="number"
+                          value={sticker.width}
+                          onChange={(e) => handleStickerChange(sticker.id, 'width', e.target.value)}
+                          className="w-full px-4 py-2 bg-white border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none"
+                          placeholder="0"
+                        />
+                      </div>
+                      <div className="space-y-1">
+                        <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Height (cm) <span className="text-red-500">*</span></label>
+                        <input
+                          type="number"
+                          value={sticker.height}
+                          onChange={(e) => handleStickerChange(sticker.id, 'height', e.target.value)}
+                          className="w-full px-4 py-2 bg-white border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none"
+                          placeholder="0"
+                        />
+                      </div>
+                      <div className="space-y-1">
+                        <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Dimensional Wgt</label>
+                        <div className="w-full px-4 py-2 bg-slate-100 border border-slate-200 rounded-lg text-slate-700 font-semibold">
+                          {(() => {
+                            if (sticker.length && sticker.width && sticker.height) {
+                              const volKg = (parseFloat(sticker.length) * parseFloat(sticker.width) * parseFloat(sticker.height)) / 5000;
+                              return volKg < 1
+                                ? `${(volKg * 1000).toFixed(0)} g`
+                                : `${volKg.toFixed(2)} kg`;
+                            }
+                            return '-';
+                          })()}
+                        </div>
+                      </div>
+                      <div className="space-y-1 md:col-span-4">
+                        <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Dead Weight <span className="text-red-500">*</span></label>
+                        <div className="flex gap-2">
+                          <input
+                            type="number"
+                            step="0.01"
+                            value={sticker.actualWeight}
+                            onChange={(e) => handleStickerChange(sticker.id, 'actualWeight', e.target.value)}
+                            className="w-full px-4 py-2 bg-white border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none"
+                            placeholder="0.00"
+                          />
+                          <select
+                            value={sticker.weightUnit || 'kg'}
+                            onChange={(e) => handleStickerChange(sticker.id, 'weightUnit', e.target.value)}
+                            className="px-4 py-2 bg-white border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none font-semibold text-slate-700"
+                          >
+                            <option value="kg">Kg</option>
+                            <option value="gm">Gm</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="space-y-1">
+                      <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Recipient Name</label>
+                      <input
+                        type="text"
+                        value={sticker.shippingName}
+                        onChange={(e) => handleStickerChange(sticker.id, 'shippingName', e.target.value)}
+                        className="w-full px-4 py-2 bg-white border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Phone Number</label>
+                      <input
+                        type="text"
+                        value={sticker.phone}
+                        onChange={(e) => handleStickerChange(sticker.id, 'phone', e.target.value)}
+                        className="w-full px-4 py-2 bg-white border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Email Address (Optional)</label>
+                      <input
+                        type="email"
+                        value={sticker.email}
+                        onChange={(e) => handleStickerChange(sticker.id, 'email', e.target.value)}
+                        className="w-full px-4 py-2 bg-white border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none"
+                      />
+                    </div>
+                    <div className="space-y-1 md:col-span-2">
+                      <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Address Line 1</label>
+                      <input
+                        type="text"
+                        value={sticker.address1}
+                        onChange={(e) => handleStickerChange(sticker.id, 'address1', e.target.value)}
+                        className="w-full px-4 py-2 bg-white border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none"
+                      />
+                    </div>
+                    <div className="space-y-1 md:col-span-2">
+                      <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Address Line 2 (Optional)</label>
+                      <input
+                        type="text"
+                        value={sticker.address2}
+                        onChange={(e) => handleStickerChange(sticker.id, 'address2', e.target.value)}
+                        className="w-full px-4 py-2 bg-white border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none"
+                      />
+                    </div>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:col-span-2">
+                      <div className="space-y-1">
+                        <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">City</label>
+                        <input
+                          type="text"
+                          value={sticker.city}
+                          onChange={(e) => handleStickerChange(sticker.id, 'city', e.target.value)}
+                          className="w-full px-4 py-2 bg-white border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none"
+                        />
+                      </div>
+                      <div className="space-y-1">
+                        <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Province</label>
+                        <input
+                          type="text"
+                          value={sticker.province}
+                          onChange={(e) => handleStickerChange(sticker.id, 'province', e.target.value)}
+                          className="w-full px-4 py-2 bg-white border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none"
+                        />
+                      </div>
+                      <div className="space-y-1">
+                        <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Zip Code</label>
+                        <input
+                          type="text"
+                          value={sticker.zip}
+                          onChange={(e) => handleStickerChange(sticker.id, 'zip', e.target.value)}
+                          className="w-full px-4 py-2 bg-white border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none"
+                        />
+                      </div>
+                      <div className="space-y-1">
+                        <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Country</label>
+                        <input
+                          type="text"
+                          value={sticker.country}
+                          onChange={(e) => handleStickerChange(sticker.id, 'country', e.target.value)}
+                        />
+                      </div>
+                    </div>
+
+
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="p-6 bg-slate-50 border-t border-slate-200 flex justify-end gap-3">
+              <button
+                onClick={() => setIsEditStickerModalOpen(false)}
+                className="px-6 py-2.5 bg-white border border-slate-300 text-slate-700 font-semibold rounded-xl hover:bg-slate-50 transition-all"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handlePrintAll}
+                className="px-8 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-all shadow-md hover:shadow-lg flex items-center gap-2 cursor-pointer"
+              >
+                <Printer className="w-5 h-5" /> Confirm & Print All
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Enhanced Modal with Shipping Address & Price Breakdown */}
       {isModalOpen && selectedOrder && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
@@ -233,7 +823,7 @@ const OrdersPage = () => {
               </div>
               <button
                 onClick={closeModal}
-                className="p-2.5 rounded-xl hover:bg-slate-100 transition-colors text-slate-400 hover:text-slate-600"
+                className="cursor-pointer p-2.5 rounded-xl hover:bg-slate-100 transition-colors text-slate-400 hover:text-slate-600"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -436,7 +1026,7 @@ const OrdersPage = () => {
                   </div>
                 </div>
 
-   {/* Price Breakdown */}
+                {/* Price Breakdown */}
                 <div className="bg-white rounded-xl p-6 border border-slate-200">
                   <h3 className="text-lg font-bold text-slate-900 mb-6">Price Breakdown</h3>
                   <div className="space-y-4">
@@ -449,7 +1039,7 @@ const OrdersPage = () => {
                       <span className="font-semibold text-slate-900">₹{selectedOrder.shippingCost || "0.00"}</span>
                     </div>
                     <div className="flex justify-between items-center py-3 border-b border-slate-100">
-                      <span className="text-slate-600">Tax</span>
+                      <span className="text-slate-600">Tax (Included)</span>
                       <span className="font-semibold text-slate-900">₹{selectedOrder.tax || "0.00"}</span>
                     </div>
                     {parseFloat(selectedOrder.outstanding || 0) > 0 && (
@@ -485,8 +1075,14 @@ const OrdersPage = () => {
             {/* Footer */}
             <div className="sticky bottom-0 bg-white border-t border-slate-200 px-8 py-5 flex justify-end">
               <button
+                onClick={() => handlePrintSticker(selectedOrder)}
+                className="cursor-pointer mr-3 flex items-center gap-2 px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl transition-all duration-200 shadow-sm hover:shadow-md"
+              >
+                <Printer className="w-5 h-5" /> Print Sticker
+              </button>
+              <button
                 onClick={closeModal}
-                className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-all duration-200 shadow-sm hover:shadow-md"
+                className="cursor-pointer px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-all duration-200 shadow-sm hover:shadow-md"
               >
                 Close
               </button>
@@ -506,13 +1102,16 @@ const OrdersPage = () => {
                 <p className="text-gray-600 mt-1">Track and manage all orders</p>
               </div>
               <div className="flex flex-wrap gap-3">
-                <button onClick={() => setShowFilters(!showFilters)} className="flex items-center gap-2 px-4 py-3 bg-gray-100 hover:bg-gray-200 rounded-lg transition">
+                <button onClick={() => setShowFilters(!showFilters)} className="cursor-pointer flex items-center gap-2 px-4 py-3 bg-gray-100 hover:bg-gray-200 rounded-lg transition">
                   <Filter className="w-5 h-5" /> Filters
                 </button>
-                <button onClick={fetchOrders} disabled={loading} className="flex items-center gap-2 px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition disabled:opacity-70">
+                <button onClick={fetchOrders} disabled={loading} className="cursor-pointer flex items-center gap-2 px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition disabled:opacity-70">
                   <RefreshCw className={`w-5 h-5 ${loading ? "animate-spin" : ""}`} /> Refresh
                 </button>
-                <button onClick={downloadExcel} className="flex items-center gap-2 px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg transition">
+                <button onClick={handleOpenBulkEdit} className="cursor-pointer flex items-center gap-2 px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg transition">
+                  <Printer className="w-5 h-5" /> Generate Labels
+                </button>
+                <button onClick={downloadExcel} className="cursor-pointer flex items-center gap-2 px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg transition">
                   <Download className="w-5 h-5" /> Excel
                 </button>
               </div>
@@ -540,6 +1139,14 @@ const OrdersPage = () => {
               <table className="w-full min-w-[1600px]">
                 <thead className="bg-gray-900 text-white">
                   <tr>
+                    <th className="px-4 py-3 text-left w-10">
+                      <input
+                        type="checkbox"
+                        className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                        checked={selectedOrderIds.size === filteredOrders.length && filteredOrders.length > 0}
+                        onChange={toggleSelectAll}
+                      />
+                    </th>
                     <th className="px-4 py-3 text-left text-sm font-medium">Order</th>
                     <th className="px-4 py-3 text-left text-sm font-medium">Date</th>
                     <th className="px-4 py-3 text-left text-sm font-medium">Customer</th>
@@ -564,9 +1171,17 @@ const OrdersPage = () => {
                     currentOrders.map(order => (
                       <tr
                         key={order.id}
-                        className="hover:bg-blue-50 transition-all duration-200 cursor-pointer"
+                        className={`hover:bg-blue-50 transition-all duration-200 cursor-pointer ${selectedOrderIds.has(order.id) ? 'bg-blue-50/50' : ''}`}
                         onClick={() => openOrderDetail(order)}
                       >
+                        <td className="px-4 py-3" onClick={(e) => e.stopPropagation()}>
+                          <input
+                            type="checkbox"
+                            className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                            checked={selectedOrderIds.has(order.id)}
+                            onChange={() => toggleSelectOrder(order.id)}
+                          />
+                        </td>
                         <td className="px-4 py-3 font-bold text-blue-600">{order.name || "-"}</td>
                         <td className="px-4 py-3 text-gray-700">{new Date(order.createdAt).toLocaleDateString('en-IN')}</td>
                         <td className="px-4 py-3 text-gray-700 font-medium">{getCustomerDisplay(order.customer)}</td>
@@ -590,12 +1205,20 @@ const OrdersPage = () => {
                           <span className="text-xs bg-gray-100 px-2 py-1 rounded">{order.tags || "-"}</span>
                         </td>
                         <td className="px-4 py-3" onClick={(e) => e.stopPropagation()}>
-                          <button
-                            onClick={() => openOrderDetail(order)}
-                            className="flex items-center gap-1.5 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition shadow-sm"
-                          >
-                            <Eye className="w-4 h-4" /> View
-                          </button>
+                          <div className="flex items-center gap-2">
+                            <button
+                              onClick={(e) => { e.stopPropagation(); handlePrintSticker(order); }}
+                              className="cursor-pointer flex items-center gap-1.5 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium rounded-lg transition shadow-sm"
+                            >
+                              <Printer className="w-4 h-4" /> Generate
+                            </button>
+                            <button
+                              onClick={() => openOrderDetail(order)}
+                              className="cursor-pointer flex items-center gap-1.5 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition shadow-sm"
+                            >
+                              <Eye className="w-4 h-4" /> View
+                            </button>
+                          </div>
                         </td>
                       </tr>
                     ))
