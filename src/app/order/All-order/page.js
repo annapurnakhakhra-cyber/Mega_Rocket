@@ -449,16 +449,24 @@ const OrdersPage = () => {
       const totalPacks = sticker.items?.reduce((sum, item) => sum + (item.quantity || 1), 0) || 0;
 
       const volKg = (parseFloat(sticker.length || 0) * parseFloat(sticker.width || 0) * parseFloat(sticker.height || 0)) / 5000;
-      const volDisplay = volKg < 1 ? `${(volKg * 1000).toFixed(0)} g` : `${volKg.toFixed(2)} kg`;
+      const volDisplay = volKg < 1
+        ? `${(volKg * 1000).toFixed(2)} g`
+        : `${volKg.toFixed(2)} kg`;
 
       const actualWeightVal = parseFloat(sticker.actualWeight || 0);
       const isGrams = sticker.weightUnit === 'g' || sticker.weightUnit === 'gm';
       const actualWeightInKg = isGrams ? actualWeightVal / 1000 : actualWeightVal;
 
       const chargeableKg = Math.max(actualWeightInKg, volKg);
-      const chargeableDisplay = chargeableKg < 1 ? `${(chargeableKg * 1000).toFixed(0)} g` : `${chargeableKg.toFixed(0)} kg`;
+      const chargeableDisplay =
+        chargeableKg < 1
+          ? `${(chargeableKg * 1000).toFixed(2)} g`
+          : `${chargeableKg.toFixed(2)} kg`;
 
-      const actualWeightDisplay = `${sticker.actualWeight} ${sticker.weightUnit || 'kg'}`;
+      const actualWeightDisplay =
+        actualWeightInKg < 1
+          ? `${(actualWeightInKg * 1000).toFixed(2)} g`
+          : `${actualWeightInKg.toFixed(2)} kg`;
 
       allStickersHtml += `
         <div class="sticker-container">
