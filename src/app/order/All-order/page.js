@@ -175,7 +175,7 @@ const OrdersPage = () => {
     if (!status) return "Unknown";
     const s = status.toLowerCase();
     if (s === "paid") return "full amount paid";
-    if (s === "pending") return "paid amount 50 and other COD";
+    if (s === "pending") return "partial amount paid and other COD";
     return status;
   };
 
@@ -190,39 +190,45 @@ const OrdersPage = () => {
       return;
     }
     const selectedOrders = orders.filter(o => selectedOrderIds.has(o.id));
-    const stickers = selectedOrders.map(order => ({
-      id: order.id,
-      name: order.name,
-      createdAt: order.createdAt,
-      financialStatus: order.financialStatus,
-      total: order.total,
-      items: order.items,
-      shippingName: order.shippingAddress?.name || getCustomerDisplay(order.customer),
-      address1: order.shippingAddress?.address1 || '',
-      address2: order.shippingAddress?.address2 || '',
-      city: order.shippingAddress?.city || '',
-      province: order.shippingAddress?.province || '',
-      zip: order.shippingAddress?.zip || '',
-      country: order.shippingAddress?.country || '',
-      phone: order.shippingAddress?.phone || order.customer?.phone || '',
-      email: order.customer?.email || '',
-      length: '',
-      width: '',
-      height: '',
-      actualWeight: '',
-      weightUnit: 'kg'
-    }));
+    const stickers = selectedOrders.map(order => {
+      const isCod = order.financialStatus?.toLowerCase() === 'pending';
+      return {
+        id: order.id,
+        name: order.name,
+        createdAt: order.createdAt,
+        financialStatus: order.financialStatus,
+        total: order.total,
+        paidAmount: isCod ? '50.00' : parseFloat(order.total || 0).toFixed(2),
+        items: order.items,
+        shippingName: order.shippingAddress?.name || getCustomerDisplay(order.customer),
+        address1: order.shippingAddress?.address1 || '',
+        address2: order.shippingAddress?.address2 || '',
+        city: order.shippingAddress?.city || '',
+        province: order.shippingAddress?.province || '',
+        zip: order.shippingAddress?.zip || '',
+        country: order.shippingAddress?.country || '',
+        phone: order.shippingAddress?.phone || order.customer?.phone || '',
+        email: order.customer?.email || '',
+        length: '',
+        width: '',
+        height: '',
+        actualWeight: '',
+        weightUnit: 'kg'
+      };
+    });
     setStickersToEdit(stickers);
     setIsEditStickerModalOpen(true);
   };
 
   const handleOpenSingleEdit = (order) => {
+    const isCod = order.financialStatus?.toLowerCase() === 'pending';
     const sticker = {
       id: order.id,
       name: order.name,
       createdAt: order.createdAt,
       financialStatus: order.financialStatus,
       total: order.total,
+      paidAmount: isCod ? '50.00' : parseFloat(order.total || 0).toFixed(2),
       items: order.items,
       shippingName: order.shippingAddress?.name || getCustomerDisplay(order.customer),
       address1: order.shippingAddress?.address1 || '',
@@ -444,11 +450,13 @@ const OrdersPage = () => {
 
     stickersToEdit.forEach(sticker => {
       const isCod = sticker.financialStatus?.toLowerCase() === 'pending';
-      const codAmount = (parseFloat(sticker.total || 0) - 50).toFixed(2);
+      const paidAmountVal = parseFloat(sticker.paidAmount || 0);
+      const codAmount = (parseFloat(sticker.total || 0) - paidAmountVal).toFixed(2);
       const totalItems = sticker.items?.length || 0;
       const totalPacks = sticker.items?.reduce((sum, item) => sum + (item.quantity || 1), 0) || 0;
 
       const volKg = (parseFloat(sticker.length || 0) * parseFloat(sticker.width || 0) * parseFloat(sticker.height || 0)) / 5000;
+
       const volDisplay = volKg < 1
         ? `${(volKg * 1000).toFixed(2)} g`
         : `${volKg.toFixed(2)} kg`;
@@ -467,6 +475,7 @@ const OrdersPage = () => {
         actualWeightInKg < 1
           ? `${(actualWeightInKg * 1000).toFixed(2)} g`
           : `${actualWeightInKg.toFixed(2)} kg`;
+
 
       allStickersHtml += `
         <div class="sticker-container">
@@ -527,12 +536,12 @@ const OrdersPage = () => {
                 </tr>
                 <tr>
                   <td class="label">Paid Amount</td>
-                  <td class="value">₹${isCod ? '50.00' : parseFloat(sticker.total || 0).toFixed(2)}</td>
+                  <td class="value">₹${paidAmountVal.toFixed(2)}</td>
                 </tr>
                 ${isCod ? `
                 <tr class="highlight-row" style="border-bottom: none;">
                   <td class="label" style="border-bottom: none;">AMOUNT TO COLLECT</td>
-                  <td class="value" style="border-bottom: none;">₹${(parseFloat(sticker.total || 0) - 50).toFixed(2)}</td>
+                  <td class="value" style="border-bottom: none;">₹${codAmount}</td>
                 </tr>
                 ` : ''}
               </table>
@@ -685,7 +694,7 @@ const OrdersPage = () => {
                           })()}
                         </div>
                       </div>
-                      <div className="space-y-1 md:col-span-4">
+                      <div className="space-y-1">
                         <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Dead Weight <span className="text-red-500">*</span></label>
                         <div className="flex gap-2">
                           <input
@@ -706,6 +715,19 @@ const OrdersPage = () => {
                           </select>
                         </div>
                       </div>
+                      {sticker.financialStatus?.toLowerCase() === 'pending' && (
+                        <div className="space-y-1">
+                          <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Paid Amount (₹)</label>
+                          <input
+                            type="number"
+                            step="0.01"
+                            value={sticker.paidAmount}
+                            onChange={(e) => handleStickerChange(sticker.id, 'paidAmount', e.target.value)}
+                            className="w-full px-4 py-2 bg-white border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none font-bold text-blue-600"
+                            placeholder="0.00"
+                          />
+                        </div>
+                      )}
                     </div>
                     <div className="space-y-1">
                       <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Recipient Name</label>
