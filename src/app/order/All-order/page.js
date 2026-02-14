@@ -462,7 +462,7 @@ const OrdersPage = () => {
         : `${volKg.toFixed(2)} kg`;
 
       const actualWeightVal = parseFloat(sticker.actualWeight || 0);
-      const isGrams = sticker.weightUnit === 'g' || sticker.weightUnit === 'gm';
+      const isGrams = sticker.weightUnit === 'g' || sticker.weightUnit === 'g';
       const actualWeightInKg = isGrams ? actualWeightVal / 1000 : actualWeightVal;
 
       const chargeableKg = Math.max(actualWeightInKg, volKg);
@@ -514,6 +514,7 @@ const OrdersPage = () => {
                   <!-- Dimensions & Weight Display -->
                   <div style="margin-top: 8px; font-size: 10px; font-weight: 600; text-align: left; border-top: 1px dotted #ccc; padding-top: 4px;">
                     <div>Dead Weight : ${actualWeightDisplay}</div>
+                    <div>Dimensions : (${sticker.length || 0}x${sticker.height || 0}x${sticker.width || 0})cm</div>
                     <div>Dimensional Weight : ${volDisplay}</div>
                     <div>Chargeable Weight : ${chargeableDisplay}</div>
                   </div>
@@ -711,7 +712,7 @@ const OrdersPage = () => {
                             className="px-4 py-2 bg-white border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none font-semibold text-slate-700"
                           >
                             <option value="kg">Kg</option>
-                            <option value="gm">Gm</option>
+                            <option value="g">G</option>
                           </select>
                         </div>
                       </div>
