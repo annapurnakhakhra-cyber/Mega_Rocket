@@ -109,9 +109,13 @@ const OrdersPage = () => {
     }
 
     if (statusFilter !== "all") {
-      filtered = filtered.filter(o =>
-        o.financialStatus?.toLowerCase() === statusFilter.toLowerCase()
-      );
+      filtered = filtered.filter(o => {
+        const status = o.financialStatus?.toLowerCase();
+        if (statusFilter === "pending") {
+          return status === "pending" || status === "partially_paid";
+        }
+        return status === statusFilter.toLowerCase();
+      });
     }
 
     setFilteredOrders(filtered);
@@ -157,8 +161,8 @@ const OrdersPage = () => {
   const getStatusColor = (status) => {
     if (!status) return "bg-gray-200 text-gray-700";
     const s = status.toUpperCase();
+    if (s.includes("PENDING") || s.includes("PARTIALLY")) return "bg-amber-100 text-amber-800";
     if (s.includes("PAID")) return "bg-green-100 text-green-800";
-    if (s.includes("PENDING")) return "bg-amber-100 text-amber-800";
     if (s.includes("REFUNDED")) return "bg-red-100 text-red-800";
     return "bg-gray-200 text-gray-700";
   };
@@ -175,7 +179,7 @@ const OrdersPage = () => {
     if (!status) return "Unknown";
     const s = status.toLowerCase();
     if (s === "paid") return "full amount paid";
-    if (s === "pending") return "partial amount paid and other COD";
+    if (s === "pending" || s === "partially_paid") return "partial amount paid and other COD";
     return status;
   };
 
@@ -191,7 +195,7 @@ const OrdersPage = () => {
     }
     const selectedOrders = orders.filter(o => selectedOrderIds.has(o.id));
     const stickers = selectedOrders.map(order => {
-      const isCod = order.financialStatus?.toLowerCase() === 'pending';
+      const isCod = order.financialStatus?.toLowerCase() === 'pending' || order.financialStatus?.toLowerCase() === 'partially_paid';
       return {
         id: order.id,
         name: order.name,
@@ -221,7 +225,7 @@ const OrdersPage = () => {
   };
 
   const handleOpenSingleEdit = (order) => {
-    const isCod = order.financialStatus?.toLowerCase() === 'pending';
+    const isCod = order.financialStatus?.toLowerCase() === 'pending' || order.financialStatus?.toLowerCase() === 'partially_paid';
     const sticker = {
       id: order.id,
       name: order.name,
@@ -449,7 +453,7 @@ const OrdersPage = () => {
     `;
 
     stickersToEdit.forEach(sticker => {
-      const isCod = sticker.financialStatus?.toLowerCase() === 'pending';
+      const isCod = sticker.financialStatus?.toLowerCase() === 'pending' || sticker.financialStatus?.toLowerCase() === 'partially_paid';
       const paidAmountVal = parseFloat(sticker.paidAmount || 0);
       const codAmount = (parseFloat(sticker.total || 0) - paidAmountVal).toFixed(2);
       const totalItems = sticker.items?.length || 0;
@@ -716,7 +720,7 @@ const OrdersPage = () => {
                           </select>
                         </div>
                       </div>
-                      {sticker.financialStatus?.toLowerCase() === 'pending' && (
+                      {(sticker.financialStatus?.toLowerCase() === 'pending' || sticker.financialStatus?.toLowerCase() === 'partially_paid') && (
                         <div className="space-y-1">
                           <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Paid Amount (₹)</label>
                           <input
