@@ -278,8 +278,8 @@ const PendingOrdersPage = () => {
                       <div className="flex-1 w-full">
                         <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-4">
                           <p className="text-xl sm:text-2xl font-bold text-gray-800">{order.name || "N/A"}</p>
-                          <span className="px-4 py-2 bg-yellow-100 text-yellow-800 rounded-full text-sm font-bold self-start">
-                            PENDING PAYMENT
+                          <span className={`px-4 py-2 ${order.financialStatus?.toLowerCase().includes('partially') ? 'bg-orange-100 text-orange-800' : 'bg-yellow-100 text-yellow-800'} rounded-full text-sm font-bold self-start`}>
+                            {order.financialStatus?.toLowerCase().includes('partially') ? 'PARTIALLY PAID' : 'PENDING PAYMENT'}
                           </span>
                         </div>
                         <p className="text-sm sm:text-base text-gray-600 mb-4">
