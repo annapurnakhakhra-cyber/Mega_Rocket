@@ -438,16 +438,17 @@ import {
   ChevronLeft,
   ChevronRight,
   Link as LinkIcon,
-   Key,
-   FileText,
-   RotateCcw,
-   ShoppingCartOff,
-   UserCircle,
-   Settings,
-   XCircle,
-   Wallet,
-   BadgePercent ,
-   WalletCards,
+  Key,
+  FileText,
+  RotateCcw,
+  ShoppingCartOff,
+  UserCircle,
+  Settings,
+  XCircle,
+  Wallet,
+  BadgePercent,
+  WalletCards,
+  Heart,
 } from "lucide-react";
 
 export default function Sidebar({ isOpen, setIsOpen }) {
@@ -457,11 +458,12 @@ export default function Sidebar({ isOpen, setIsOpen }) {
   const menuItems = [
     { label: "Dashboard", href: "/dashboard", icon: BarChart3 },
     { label: "Abandoned Carts", href: "/abandoned-checkouts", icon: Clock },
+    { label: "Wishlist", href: "/wishlist", icon: Heart },
     {
       label: "Orders",
       icon: ShoppingCart,
       children: [
-        { label: "All Orders", href: "/order/All-order", icon: FileText  },
+        { label: "All Orders", href: "/order/All-order", icon: FileText },
         { label: "Pending Orders", href: "/order/pendingorder", icon: Clock },
       ],
     },
@@ -482,24 +484,24 @@ export default function Sidebar({ isOpen, setIsOpen }) {
       label: "payment",
       icon: Wallet,
       children: [
-        { label: "Payment Configs", href: "/payment/paymentconfigs", icon: Settings  },
-        { label: "Payment Offers", href: "/payment/paymentoffers", icon: BadgePercent   },
+        { label: "Payment Configs", href: "/payment/paymentconfigs", icon: Settings },
+        { label: "Payment Offers", href: "/payment/paymentoffers", icon: BadgePercent },
       ],
     },
     {
       label: "Finance",
       icon: WalletCards,
       children: [
-        { label: "Refunds", href: "/finance/refunds", icon: RotateCcw  },
+        { label: "Refunds", href: "/finance/refunds", icon: RotateCcw },
         { label: "Prepaid Orders", href: "/finance/prepaid", icon: CreditCard },
       ],
     },
-    { label: "Customers", href: "/customer_data", icon: UserCircle  },
+    { label: "Customers", href: "/customer_data", icon: UserCircle },
     { label: "Contacts List", href: "/ContactsList", icon: Contact },
     { label: "Suggested Cart List", href: "/suggested", icon: ShoppingBag },
     { label: "Expert Assistance Requests", href: "/ask-expert", icon: MailQuestionMark },
     { label: "Brochure Download History", href: "/brochure-download", icon: Download },
-    { label: "Shopify Admin Access Token", href: "/shop-token", icon: Key  },
+    { label: "Shopify Admin Access Token", href: "/shop-token", icon: Key },
   ];
 
   const [openMenu, setOpenMenu] = useState(null);
@@ -522,9 +524,8 @@ export default function Sidebar({ isOpen, setIsOpen }) {
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-gray-800 shrink-0">
           <h1
-            className={`text-2xl font-bold transition-all duration-300 overflow-hidden whitespace-nowrap ${
-              isCollapsed ? "w-0 opacity-0" : "w-auto opacity-100"
-            }`}
+            className={`text-2xl font-bold transition-all duration-300 overflow-hidden whitespace-nowrap ${isCollapsed ? "w-0 opacity-0" : "w-auto opacity-100"
+              }`}
           >
             MegaShiprocket
           </h1>
@@ -555,9 +556,8 @@ export default function Sidebar({ isOpen, setIsOpen }) {
                 <>
                   <button
                     onClick={() => toggleMenu(item.label)}
-                    className={`w-full flex items-center p-3 rounded-xl hover:bg-gray-800 transition-all group cursor-pointer ${
-                      isCollapsed ? "justify-center" : "justify-between"
-                    }`}
+                    className={`w-full flex items-center p-3 rounded-xl hover:bg-gray-800 transition-all group cursor-pointer ${isCollapsed ? "justify-center" : "justify-between"
+                      }`}
                   >
                     <div className={`flex items-center ${isCollapsed ? "" : "gap-3"}`}>
                       <item.icon className="w-5 h-5 flex-shrink-0" />
@@ -565,9 +565,8 @@ export default function Sidebar({ isOpen, setIsOpen }) {
                     </div>
                     {!isCollapsed && (
                       <ChevronDown
-                        className={`w-4 h-4 transition-transform ${
-                          openMenu === item.label ? "rotate-180" : ""
-                        }`}
+                        className={`w-4 h-4 transition-transform ${openMenu === item.label ? "rotate-180" : ""
+                          }`}
                       />
                     )}
                   </button>
@@ -579,11 +578,10 @@ export default function Sidebar({ isOpen, setIsOpen }) {
                           key={sub.href}
                           href={sub.href}
                           onClick={() => setIsOpen(false)}
-                          className={`flex items-center gap-3 p-2.5 rounded-lg text-sm transition-all ${
-                            pathname === sub.href
-                              ? "bg-blue-600 text-white"
-                              : "hover:bg-gray-700 text-gray-300"
-                          }`}
+                          className={`flex items-center gap-3 p-2.5 rounded-lg text-sm transition-all ${pathname === sub.href
+                            ? "bg-blue-600 text-white"
+                            : "hover:bg-gray-700 text-gray-300"
+                            }`}
                         >
                           <sub.icon className="w-4 h-4 flex-shrink-0" />
                           <span>{sub.label}</span>
@@ -596,13 +594,11 @@ export default function Sidebar({ isOpen, setIsOpen }) {
                 <Link
                   href={item.href}
                   onClick={() => setIsOpen(false)}
-                  className={`relative flex items-center p-3 rounded-xl transition-all group ${
-                    isCollapsed ? "justify-center" : "gap-3"
-                  } ${
-                    pathname === item.href
+                  className={`relative flex items-center p-3 rounded-xl transition-all group ${isCollapsed ? "justify-center" : "gap-3"
+                    } ${pathname === item.href
                       ? "bg-blue-600 text-white"
                       : "hover:bg-gray-800 text-gray-300"
-                  }`}
+                    }`}
                 >
                   <item.icon className="w-5 h-5 flex-shrink-0" />
                   {!isCollapsed && <span className="font-medium">{item.label}</span>}
@@ -621,9 +617,8 @@ export default function Sidebar({ isOpen, setIsOpen }) {
 
         {/* Footer */}
         <div
-          className={`p-4 border-t border-gray-800 text-center text-xs text-gray-400 shrink-0 transition-all duration-300 ${
-            isCollapsed ? "opacity-0 h-0 py-0" : "opacity-100"
-          }`}
+          className={`p-4 border-t border-gray-800 text-center text-xs text-gray-400 shrink-0 transition-all duration-300 ${isCollapsed ? "opacity-0 h-0 py-0" : "opacity-100"
+            }`}
         >
           MegaShiprocket v1.0
         </div>
